@@ -166,6 +166,35 @@ details summary{cursor:pointer;font-weight:600;color:var(--accent);padding:6px 0
 .mood{font-size:11px;padding:0 6px;border-radius:999px;background:var(--land);margin-right:3px;white-space:nowrap}
 .review{font-size:13px;background:var(--nt-soft);border-radius:8px;padding:8px 10px;display:flex;flex-direction:column;gap:2px}
 .card .meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.htable table{min-width:980px;font-size:13px}
+.stable table{min-width:900px}
+.htable th{position:sticky;top:0;background:var(--surface);z-index:1;padding:0}
+.htable th button{font:inherit;font-weight:600;color:var(--muted);background:none;border:0;padding:10px;cursor:pointer;width:100%;text-align:left;white-space:nowrap}
+.htable th[aria-sort] button{color:var(--ink)}
+.htable th.n button,.htable td.n{text-align:right}
+.htable td{padding:8px 10px;vertical-align:top}
+.htable td.n{font-variant-numeric:tabular-nums}
+.htable td.wrap{white-space:normal;min-width:180px;max-width:280px;color:var(--muted);font-size:12px}
+.htable td:first-child,.htable th:first-child{position:sticky;left:0;background:var(--surface);z-index:2}
+.htable tbody tr[data-no]{cursor:pointer}
+.htable tbody tr[data-no]:hover td,.htable tbody tr.sel td{background:var(--land)}
+.htable .vn{font-weight:600;display:flex;align-items:center;gap:6px;white-space:nowrap}
+.htable .vn i{width:18px;height:18px;border-radius:50%;color:#fff;font:700 10px/18px var(--font-body);text-align:center;font-style:normal;flex:none}
+.htable td.dim{color:var(--muted)}
+.sortsel{font:inherit;font-size:13px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);min-height:34px}
+.sortdir{font:inherit;font-size:13px;padding:6px 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);cursor:pointer;min-height:34px}
+.vendors{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));gap:10px}
+.vendor{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.vendor b{font-size:15px}
+.vendor .k{font-size:12px;color:var(--muted)}
+.via{font-size:11px;font-weight:700;padding:1px 7px;border-radius:999px;white-space:nowrap;display:inline-block;border:1px solid var(--line);color:var(--muted)}
+.via.이마이웨딩{background:var(--yu-soft);color:var(--yu);border-color:transparent}
+.via.함웨딩{background:var(--dong-soft);color:var(--dong);border-color:transparent}
+.via.직접{background:var(--seo-soft);color:var(--seo);border-color:transparent}
+.same{display:flex;flex-direction:column;gap:6px}
+.same .it{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:13px;display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center}
+.same .it b{font-size:14px}
+.same .diff{color:var(--seo);font-weight:600}
 .lpin-dot{width:24px;height:24px;font-size:12px}
 .lpin-dot.sel{width:32px;height:32px;margin:-4px;font-size:14px}
 </style>
@@ -202,16 +231,34 @@ details summary{cursor:pointer;font-weight:600;color:var(--accent);padding:6px 0
 </section>
 
 <section>
-  <div class="sec-head"><h2>대관료 비교</h2><p class="muted small">낮은 순서입니다. 두 자료에 모두 있으면 줄을 나눠 보여줍니다. 진한 부분은 최저가, 옅은 부분은 홀·인원에 따른 최고가까지입니다.</p></div>
-  <div class="seg" id="rentSeg" role="group" aria-label="참소비자원 비교 기준">
-    <button type="button" data-m="rent" aria-pressed="true">대관료만</button>
-    <button type="button" data-m="sum" aria-pressed="false">대관료 + 필수 장식</button>
-  </div>
+  <div class="sec-head"><h2>대관료 비교</h2><p class="muted small">대관료에 필수 장식(생화·꽃장식)까지 더한 금액이고, 낮은 순서입니다. 두 자료에 모두 있으면 줄을 나눠 보여줍니다. 진한 부분은 최저가, 옅은 부분은 홀·인원에 따른 최고가까지입니다.</p></div>
   <div class="key" id="rentKey"></div>
   <div class="panel"><div class="rows" id="rentRows"></div><div class="scale" id="rentScale"></div></div>
   <p class="muted small" id="rentNote"></p>
 </section>
 </div>
+
+<section id="table">
+  <div class="sec-head"><h2>홀별 정리표</h2><p class="muted small">열 이름을 누르면 정렬되고, 한 번 더 누르면 반대로 바뀝니다. 노션(ver)은 홀마다 한 줄, 참소비자원은 가격표 기준으로 업체마다 한 줄입니다. 위 필터가 그대로 적용되고, 줄을 누르면 지도에서 위치를 보여줍니다.</p></div>
+  <div class="frow"><label class="lbl" for="sortSel">정렬</label>
+    <select id="sortSel" class="sortsel"></select>
+    <button type="button" id="sortDir" class="sortdir">낮은 순 ↑</button>
+    <span class="count" id="tCount"></span></div>
+  <div class="table-wrap htable"><table>
+    <thead id="tHead"></thead><tbody id="tBody"></tbody>
+  </table></div>
+  <p class="muted small">참소비자원 줄의 대관료는 대관료 + 필수 장식의 최저값, 식대는 최저값입니다. 빈칸(–)은 그 자료에 값이 없다는 뜻이고, 정렬하면 맨 아래로 갑니다. 표는 옆으로 밀어서 볼 수 있습니다.</p>
+</section>
+
+<section id="sdm">
+  <div class="sec-head"><h2>스드메 업체 비교</h2><p class="muted small" id="sdmIntro"></p></div>
+  <div class="vendors" id="vendors"></div>
+  <div class="frow"><div class="seg" id="sdmCat" role="group" aria-label="분류"></div><span class="count" id="sdmCount"></span></div>
+  <div class="same" id="sdmSame"></div>
+  <div class="frow"><label class="lbl" for="sdmSort">정렬</label><select id="sdmSort" class="sortsel"></select><button type="button" id="sdmDir" class="sortdir">낮은 순 ↑</button></div>
+  <div class="table-wrap htable stable"><table><thead id="sHead"></thead><tbody id="sBody"></tbody></table></div>
+  <p class="muted small">기본가격은 VAT 포함입니다. 스튜디오는 모두 20페이지 앨범 기준입니다. 헬퍼비·야외 추가금 일부는 현금 결제 조건입니다. 대행(이마이웨딩·함웨딩)은 업체에 직접 결제하는 방식이라, 대행사 자체 위약금은 없고 계약금 규정만 있습니다.</p>
+</section>
 
 <section>
   <div class="sec-head"><h2>1인 식대</h2><p class="muted small">낮은 순서입니다. 참소비자원의 롯데시티(5~10%)·씨엘드레브(최대 20%)는 할인 전 정상가, 노션의 선샤인 파라다이스·씨엘드 포레는 부가세 별도 금액입니다.</p></div>
@@ -319,11 +366,11 @@ V.forEach(v=>{
   else v.moods=[];
 });
 V.sort((p,q)=>ORDER.indexOf(p.d)-ORDER.indexOf(q.d)||p.n.localeCompare(q.n,"ko")).forEach((v,i)=>{v.no=i+1;v.x=(v.lon-P.lo0)*P.k*P.s+(v.dx||0);v.y=(P.la1-v.lat)*P.s+(v.dy||0)});
-let sel=null, zoom="all", mode="rent", fD="전체", fM="전체", fS="전체";
+let sel=null, zoom="all", mode="sum", fD="전체", fM="전체", fS="전체";
 const shown=()=>V.filter(v=>(fD==="전체"||v.d===fD)&&(fM==="전체"||v.moods.includes(fM))&&(fS==="전체"||(fS==="둘 다"?v.kca&&v.nt:fS==="참소비자원"?v.kca:v.nt)));
 
 const nK=V.filter(v=>v.kca).length, nN=V.filter(v=>v.nt).length, nB=V.filter(v=>v.kca&&v.nt).length, nH=V.reduce((s,v)=>s+(v.nt?v.nt.h.length:0),0);
-document.getElementById("summary").textContent=`모두 ${V.length}곳입니다. 참소비자원 가격표 ${nK}곳, 노션(ver) ${nN}곳(홀 ${nH}개)이고 두 자료에 다 있는 곳이 ${nB}곳입니다. 금액은 프로모션·날짜·시간대에 따라 달라집니다.`;
+document.getElementById("summary").textContent=`모두 ${V.length}곳입니다. 참소비자원 가격표 ${nK}곳, 노션(ver) ${nN}곳(홀 ${nH}개)이고 두 자료에 다 있는 곳이 ${nB}곳입니다. 스드메 업체 6곳도 아래에서 비교합니다. 금액은 프로모션·날짜·시간대에 따라 달라집니다.`;
 document.getElementById("legend").innerHTML=ORDER.map(d=>`<span><i class="dot d-${d}"></i>${d} ${V.filter(v=>v.d===d).length}곳</span>`).join("");
 
 // 필터
@@ -408,7 +455,7 @@ function select(no,fromList){
   sel=V.find(v=>v.no===no)||null;
   if(LM&&sel) LM.setView([sel.lat,sel.lon],Math.max(LM.getZoom(),16));
   if(!LM&&sel&&zoom==="all"&&sel.x>VIEW.dunsan[0]&&sel.x<VIEW.dunsan[0]+VIEW.dunsan[2]&&sel.y>VIEW.dunsan[1]&&sel.y<VIEW.dunsan[1]+VIEW.dunsan[3]&&V.some(o=>o!==sel&&Math.hypot(o.x-sel.x,o.y-sel.y)<18)) setZoom("dunsan");
-  drawMap();drawInfo();drawRent();drawMeal();
+  drawMap();drawInfo();drawRent();drawMeal();drawTable();
   if(fromList) document.querySelector(".map-box").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"center"});
 }
 function setZoom(z){zoom=z;document.querySelectorAll("#zoomSeg button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.z===z));if(LM)fitLeaflet();else drawMap()}
@@ -451,14 +498,9 @@ function drawRent(){
   }).join(""):empty;
   document.getElementById("rentScale").innerHTML=scaleHTML(MAX,MAX/(sum?4:3),t=>man(t));
   document.getElementById("rentKey").innerHTML=`<span><i class="sw"></i>최저가</span>${sum?`<span><i class="sw deco"></i>필수 장식(최저)</span>`:""}<span><i class="sw range"></i>최고가까지</span>`;
-  document.getElementById("rentNote").textContent=(sum
-   ?"‘대관료 + 필수 장식’은 참소비자원 값에만 적용됩니다. 업체가 대관과 함께 표기한 생화·꽃장식·플라워데코를 더했고, 호텔 오노마는 꽃장식이 최대 3,000만원이라 막대가 잘려 있습니다."
-   :"참소비자원의 ‘장식 포함’은 대관료와 생화장식이 한 금액으로만 공개된 곳입니다. ‘장식 별도’는 위의 ‘대관료 + 필수 장식’에서 합계를 비교하세요.")
-   +" 노션(ver)의 홀 대관료는 노션에 적힌 값 그대로이며 장식 포함 여부는 표에 따로 적혀 있지 않습니다.";
+  document.getElementById("rentNote").textContent="참소비자원 값은 업체가 대관과 함께 표기한 생화·꽃장식·플라워데코를 더한 금액입니다(‘장식 포함’은 원래 한 금액으로 공개된 곳). 호텔 오노마는 꽃장식이 최대 3,000만원이라 막대가 잘려 있습니다. 노션(ver)의 홀 대관료는 노션에 적힌 값 그대로입니다.";
   bindRows(el);
 }
-document.getElementById("rentSeg").addEventListener("click",e=>{const b=e.target.closest("button"); if(!b) return; mode=b.dataset.m;
-  document.querySelectorAll("#rentSeg button").forEach(x=>x.setAttribute("aria-pressed",x===b)); drawRent()});
 
 function drawMeal(){
   const MAX=180000, pct=x=>Math.min(100,x/MAX*100);
@@ -502,13 +544,147 @@ function drawDates(){
   document.getElementById("dateRows").innerHTML=V.filter(v=>v.kca).sort((p,q)=>q.kca.post.localeCompare(p.kca.post)||q.kca.mod.localeCompare(p.kca.mod)).map(v=>`
    <tr><td>${esc(v.n)}</td><td class="num">${v.kca.mod}</td><td class="num">${v.kca.post}${v.kca.post!=="2026-09-29"?' <span class="flag">추가 게시</span>':''}</td><td class="num">${v.kca.created}</td><td>${esc(v.kca.by)}</td></tr>`).join("");
 }
+const KG={"라비에벨웨딩홀":[200,300],"더BMK컨벤션":[150,250],"더시그너스웨딩뷔페":[200,null],"라도무스아트센터":[200,300],"라미컨벤션웨딩":[30,null],"롯데시티호텔 대전":[100,270],"루이비스컨벤션 대전":[200,300],"메리비아포레 웨딩홀":[150,300],"베스타뷔페":[70,130],"빌라 드 알티오라":[150,null],"씨엘드레브":[250,null],"에스가든웨딩 대전":[150,250],"팔레드오페라":[200,300],"호텔 오노마":[100,350]};
+const COLS=[
+ {k:"venue",t:"웨딩홀"},{k:"d",t:"구"},{k:"src",t:"자료"},{k:"hall",t:"홀 / 층"},{k:"mood",t:"분위기"},{k:"form",t:"예식 형태"},
+ {k:"time",t:"예식 시간",n:1,u:"분"},{k:"rent",t:"대관료",n:1,f:x=>man(x)},{k:"vr",t:"버진로드",n:1,u:"m"},{k:"min",t:"최소 인원",n:1},{k:"seat",t:"좌석 수",n:1},{k:"max",t:"최대 인원",n:1},
+ {k:"mealType",t:"식사"},{k:"meal",t:"식대",n:1,f:x=>x.toLocaleString("ko-KR")+"원"},{k:"drink",t:"음주류"}];
+function sorter(cols,key,asc,tie){
+  const c=cols.find(c=>c.k===key), dir=asc?1:-1, val=r=>{const x=r[key]; return Array.isArray(x)?x.join(","):x};
+  return (a,b)=>{const x=val(a),y=val(b);
+    if(x==null||x==="") return (y==null||y==="")?0:1; if(y==null||y==="") return -1;
+    const r=c.n?x-y:String(x).localeCompare(String(y),"ko"); return (r||tie(a,b))*dir};
+}
+function sortUI(selId,dirId,cols,st,redraw){
+  const sl=document.getElementById(selId), dr=document.getElementById(dirId);
+  if(!sl.options.length){sl.innerHTML=cols.map(c=>`<option value="${c.k}">${c.t}</option>`).join(""); sl.onchange=()=>{st.k=sl.value;st.asc=true;redraw()}; dr.onclick=()=>{st.asc=!st.asc;redraw()}}
+  sl.value=st.k; const c=cols.find(c=>c.k===st.k);
+  dr.textContent=c.n?(st.asc?"낮은 순 ↑":"높은 순 ↓"):(st.asc?"가나다순 ↑":"역순 ↓");
+  return "<tr>"+cols.map(c=>`<th class="${c.n?"n":""}"${c.k===st.k?` aria-sort="${st.asc?"ascending":"descending"}"`:""}><button type="button" data-k="${c.k}">${c.t}${c.k===st.k?(st.asc?" ↑":" ↓"):""}</button></th>`).join("")+"</tr>";
+}
+function headClick(id,st,redraw){document.getElementById(id).addEventListener("click",e=>{const b=e.target.closest("button"); if(!b) return; const k=b.dataset.k; if(k===st.k) st.asc=!st.asc; else {st.k=k;st.asc=true} redraw()})}
+const TS={k:"rent",asc:true};
+function tableRows(){
+  const out=[];
+  for(const v of shown()){
+    if(v.nt) for(const h of v.nt.h) out.push({v,venue:v.n,d:v.d,src:"nt",hall:h[0]+" / "+h[1]+(h[2]!=="단독홀"?" ("+h[2]+")":""),mood:h[4],form:h[3],time:h[5],rent:h[6],vr:h[7],min:h[8],seat:h[9],max:h[10],mealType:h[11],meal:h[12],drink:h[13]});
+    if(v.kca){const k=v.kca,g=KG[v.n]||[null,null];
+      out.push({v,venue:v.n,d:v.d,src:"kca",hall:k.hall,mood:[],form:null,time:null,rent:k.rent[0]+(k.deco?k.deco[0]:0),vr:null,min:g[0],seat:null,max:g[1],mealType:null,meal:k.meal[0],drink:null});}
+  }
+  return out.sort(sorter(COLS,TS.k,TS.asc,(a,b)=>a.v.no-b.v.no));
+}
+const cell=(c,x)=>{
+  if(x==null||x===""||(Array.isArray(x)&&!x.length)) return `<td class="${c.n?"n ":""}dim">–</td>`;
+  if(c.n) return `<td class="n">${c.f?c.f(x):x.toLocaleString("ko-KR")+(c.u||"")}</td>`;
+  if(c.wrap) return `<td class="wrap">${esc(x)}</td>`;
+  return `<td>${esc(x)}</td>`;
+};
+function drawTable(){
+  document.getElementById("tHead").innerHTML=sortUI("sortSel","sortDir",COLS,TS,drawTable);
+  const rows=tableRows();
+  document.getElementById("tCount").textContent=`${rows.length}줄`;
+  document.getElementById("tBody").innerHTML=rows.length?rows.map(r=>`<tr data-no="${r.v.no}" class="${r.v===sel?"sel":""}">`+COLS.map(c=>{
+    const x=r[c.k];
+    if(c.k==="venue") return `<td><span class="vn"><i style="background:${cvar(r.d)}">${r.v.no}</i>${esc(x)}</span></td>`;
+    if(c.k==="src") return `<td>${x==="nt"?NT:KCA}</td>`;
+    if(c.k==="mood") return x.length?`<td>${x.map(m=>`<span class="mood">${m}</span>`).join("")}</td>`:'<td class="dim">–</td>';
+    if(c.k==="d") return `<td><span class="chip ${x}">${x}</span></td>`;
+    return cell(c,x);
+  }).join("")+"</tr>").join(""):`<tr><td colspan="${COLS.length}" class="dim">조건에 맞는 웨딩홀이 없습니다. 필터를 바꿔 보세요.</td></tr>`;
+}
+headClick("tHead",TS,drawTable);
+document.getElementById("tBody").addEventListener("click",e=>{const tr=e.target.closest("tr[data-no]"); if(tr) select(+tr.dataset.no,true)});
+
+// 스드메 업체 (준비업체 폴더)
+const VENDORS=[
+ {n:"라메종블랑쉬",kind:"드레스샵",file:"엑셀",src:"참소비자원",mod:"2026-06-01",cancel:"예식 15일 전까지 30%, 14~1일 전 50% 공제 후 환급"},
+ {n:"바비블랑브라이드",kind:"드레스샵",file:"엑셀",src:"참소비자원",mod:"2026-04-20",cancel:"소비자 귀책 시에만 위약금 적용(세부 금액 미기재)"},
+ {n:"블랙라벨 웨딩샵",kind:"드레스·메이크업",file:"엑셀",src:"참소비자원",mod:"2026-10-07",cancel:"예식 1달·2주·1주 전 취소 모두 정상가의 30%"},
+ {n:"루아스포사",kind:"드레스·메이크업",file:"이미지",src:"업체 자료",mod:null,cancel:"예식 30일 미만 30%, 15일 미만 50%, 7일 미만 100%"},
+ {n:"이마이웨딩",kind:"웨딩 대행",file:"엑셀",src:"참소비자원",mod:"2026-10-07",cancel:"계약금 5만(박람회)·10만(내사), 상담 진행 후 반환 안 됨"},
+ {n:"함께하는 함웨딩",kind:"웨딩 대행",file:"엑셀",src:"참소비자원",mod:"2026-10-01",cancel:"계약금 10만, 상담 진행 후 반환 안 됨"}
+];
+// [분류, 샵, 경로, 기본가 최저, 최고, 기본 구성, 헬퍼비, 원본·재피팅 등, 주요 옵션, 위약금 요약]
+const S=[
+ ["드레스","라메종블랑쉬","직접",900000,900000,"본식 피팅 1회 5벌",150000,"추가 피팅 2만/벌","디자인 추가 30~300만 · 턱시도 25만","15일 전까지 30%, 14~1일 전 50%"],
+ ["드레스","바비블랑브라이드","직접",1000000,1500000,"본식 + 피팅 1회",120000,"재피팅 15만","디자인 추가 100~250만 · 2부 드레스 50~100만","소비자 귀책 시 적용"],
+ ["드레스","블랙라벨 웨딩샵","직접",1375000,5500000,"본식 피팅 1회 3벌",150000,"재피팅 없음","디자인 추가 없음 · 드레스 1벌 기본 제공","1달~1주 전 30%"],
+ ["드레스","루아스포사","직접",1600000,1900000,"피팅 1회 4벌",170000,"","디자인 추가 없음 · 2부·외부 피팅 시 헬퍼비 +3만","30일 미만 30%, 7일 미만 100%"],
+ ["드레스","더루아","직접",2500000,3400000,"본식 피팅 1회 4벌 (촬영 30~80만 별도)",200000,"","디자인 추가 본식 60만 · 촬영 드레스 30만 · 헬퍼비 20~50만(지역별)","30일 미만 30%, 7일 미만 100%"],
+ ["드레스","클라라 대전점","이마이웨딩",1375000,1375000,"본식",150000,"재가봉 5만","디자인 추가 33~220만 · 드레스 추가 20~30만","90일 전 20% ~ 15일 전 100%"],
+ ["드레스","하우스오브에이미 대전점","이마이웨딩",1650000,1870000,"본식 (에이미 165만 / 하오에 187만, 헤메·부케 미포함)",170000,"재가봉 2벌 5만","디자인 추가 0~55만 · 턱시도 0~45만","별도 시트 참고"],
+ ["드레스","르메리","이마이웨딩",1650000,1650000,"본식",220000,"재가봉 10만","디자인 추가 55~198만(제휴가) · 턱시도 25~35만","45일 전 취소 30만"],
+ ["드레스","드메리","이마이웨딩",1320000,1320000,"본식",170000,"재가봉 2벌 10만","디자인 추가 0~200만","확정 후 45~15일 전 80%, 14일~ 100%"],
+ ["드레스","웨이비웨딩","이마이웨딩",1540000,1540000,"본식",150000,"재가봉 3벌 8.8만","디자인 추가 0~143만 · 퍼스트웨어 110~220만 · 턱시도 22~33만","확정 후 30%, 2주 전 50%, 1주 전 100%"],
+ ["드레스","루즈앤모니끄","이마이웨딩",1540000,1540000,"본식",150000,"재가봉 5만","추가금 없음 · 턱시도 서비스","확정 후·1달 전 50%, 1주 전 100%"],
+ ["드레스","레아브","이마이웨딩",1705000,1705000,"본식",170000,"재가봉 3만","추가금 없음 · 턱시도 서비스","초이스 후 30%, 2주 전 100%"],
+ ["드레스","블랙스완","함웨딩",1540000,1540000,"본식",150000,"재피팅 5만","퍼스트웨어·신상·스페셜라인 추가비 없음","1달 전 30%, 2주 전 50%, 1주 전 100%"],
+ ["드레스","레아브","함웨딩",1430000,1430000,"본식",150000,"재피팅 5만","셀프촬영 드레스 22~44만 · 2부 드레스 44만 · 부케 27.5만","셀렉 후 50%, 1주 전 100%"],
+ ["드레스","루즈앤모니끄","함웨딩",1540000,1540000,"본식",150000,"재피팅 5만","퍼스트웨어·신상·스페셜라인 추가비 없음","1달 전 50%, 1주 전 100%"],
+ ["스튜디오","그레이스케일","이마이웨딩",1265000,1265000,"20p 앨범",null,"원본 25만","야간 10만 · 주말 10만 · 페이지 추가 4만","90일 전 10% ~ 15일 전 100%"],
+ ["스튜디오","청주비마이","이마이웨딩",1100000,1100000,"20p 앨범",null,"원본 33만","야외·야간 컨셉 15~30만 · 주말 10만","60~90일 30% ~ 촬영 후 100%"],
+ ["스튜디오","달콤","이마이웨딩",1210000,1210000,"20p 앨범",null,"원본 38.5만","야외·야간·로드씬 각 16.5만","2주 전 20%, 1주 전 30%"],
+ ["스튜디오","올제","이마이웨딩",1000000,1000000,"20p 앨범",null,"원본 22만","야외 22만 · 페이지 추가 3.3만","30일 전 20만 ~ 당일 100%"],
+ ["스튜디오","바로오늘그날 대전점","이마이웨딩",1100000,1100000,"20p 앨범",null,"원본 40만","야외 20만 · 선수정본 5장","30일 이내 20만"],
+ ["스튜디오","더숲","이마이웨딩",1980000,1980000,"20p 앨범",null,"원본 포함","대표 지정 30만 · 주말 27만 · 시간 추가 10만/30분","60일 전 30% ~ 10일 내 100%"],
+ ["스튜디오","오브하우스","이마이웨딩",2090000,2090000,"20p 앨범",null,"원본 포함","대표 지정 30만 · 주말 27만","60일 전 30% ~ 10일 내 100%"],
+ ["스튜디오","밀라드","이마이웨딩",1870000,1870000,"20p 앨범",null,"원본 포함","야외 30만 · 대표 지정 30만 · 주말 27만","60일 전 30% ~ 10일 내 100%"],
+ ["스튜디오","블랙라벨","함웨딩",1650000,1650000,"20p 앨범",130000,"원본 33만","의상·배경 추가 각 11만 · 주말 11만","2주 전 10%"],
+ ["스튜디오","시크릿가든","함웨딩",1870000,1870000,"20p 앨범",150000,"원본 33만","야외·노을 촬영 추가비 없음","1달 전 30%"],
+ ["스튜디오","바라봄","함웨딩",1100000,1100000,"20p 앨범",130000,"원본 33만","유색 드레스 22만 · 한복 27.5만 · 주말 11만","30일 전 40% ~ 당일 100%"],
+ ["스튜디오","오드스튜디오","함웨딩",1650000,1650000,"20p 앨범",130000,"원본 33만","야외 33만 · 주말 11만","2주 전 10%"],
+ ["스튜디오","더숲","함웨딩",1980000,1980000,"20p 앨범",170000,"","드레스 추가 16.5~27.5만 · 주말 27만 · 시간 추가 11만","60일 전 30% ~ 10일 전 100%"],
+ ["스튜디오","클라르떼","함웨딩",1650000,1650000,"20p 앨범",130000,"원본 33만","야외 33만 · 주말 11만","2주 전 10%"],
+ ["스튜디오","밀라드","함웨딩",1870000,1870000,"20p 앨범",180000,"","야외 33만 · 플라워 디렉팅 50만 · 주말 27만","60일 전 30% ~ 10일 전 100%"],
+ ["스튜디오","오브하우스","함웨딩",2090000,2090000,"20p 앨범",200000,"","야외 33만 · 플라워 디렉팅 50만 · 주말 27만","60일 전 30% ~ 10일 전 100%"],
+ ["스튜디오","올제","함웨딩",1000000,1000000,"20p 앨범",100000,"원본 22만","야외 11만 · 아크릴 액자 22만","30일 전 40% ~ 당일 100%"],
+ ["메이크업","블랙라벨 웨딩샵","직접",330000,550000,"신랑·신부",null,"","여자 혼주 17~20만 · 남자 혼주 5.5~7만 · 테스트 22만","1달~1주 전 30%"],
+ ["메이크업","루아스포사 메이크업","직접",550000,550000,"신랑·신부",null,"","여자 혼주 20만 · 남자 혼주 7만 · 테스트 22만","30일 미만 30%, 7일 미만 100%"],
+ ["메이크업","리라메이크업","이마이웨딩",440000,440000,"본식",null,"","헤어피스 8.8만 · 헤어 변경 27.5만 · 가발 3.3~5.5만","3개월 전 이후 환불 불가"],
+ ["메이크업","온뉴아","함웨딩",330000,330000,"신부 (신랑 포함)",null,"","여자 혼주 17만 · 남자 혼주 6만 · 테스트 20만(현금)","1달 전 50%, 1주 전 100%"],
+ ["메이크업","레아브","함웨딩",550000,550000,"신부 (신랑 포함)",null,"","여자 혼주 16만 · 남자 혼주 5만(현금)","1달 전 50%, 1주 전 100%"],
+ ["메이크업","루즈앤모니끄","함웨딩",550000,550000,"신부 (신랑 포함)",null,"","여자 혼주 17만 · 남자 혼주 6만 · 테스트 20만(현금)","1달 전 50%, 1주 전 100%"]
+].map(r=>({cat:r[0],shop:r[1],via:r[2],price:r[3],pmax:r[4],base:r[5],helper:r[6],extra:r[7],opts:r[8],cancel:r[9]}));
+const SCOLS=[{k:"shop",t:"샵"},{k:"via",t:"경로"},{k:"price",t:"기본가격",n:1,f:(x,r)=>manR([x,r.pmax])},{k:"base",t:"기본 구성"},{k:"helper",t:"헬퍼비",n:1,f:x=>man(x)},{k:"extra",t:"원본·재피팅"},{k:"opts",t:"주요 옵션",wrap:1},{k:"cancel",t:"위약금 요약",wrap:1}];
+const SS={k:"price",asc:true}; let sdmCat="드레스";
+function drawSdm(){
+  const cats=["드레스","스튜디오","메이크업"];
+  const cs=document.getElementById("sdmCat");
+  cs.innerHTML=cats.map(c=>`<button type="button" data-c="${c}" aria-pressed="${c===sdmCat}">${c} ${S.filter(r=>r.cat===c).length}</button>`).join("");
+  document.getElementById("sHead").innerHTML=sortUI("sdmSort","sdmDir",SCOLS,SS,drawSdm);
+  const rows=S.filter(r=>r.cat===sdmCat).sort(sorter(SCOLS,SS.k,SS.asc,(a,b)=>a.price-b.price));
+  document.getElementById("sdmCount").textContent=`${rows.length}곳`;
+  const multi=new Set(); const by={}; S.filter(r=>r.cat===sdmCat).forEach(r=>{(by[r.shop]=by[r.shop]||[]).push(r)});
+  Object.entries(by).forEach(([k,a])=>{if(a.length>1) multi.add(k)});
+  document.getElementById("sBody").innerHTML=rows.map(r=>"<tr>"+SCOLS.map(c=>{
+    const x=r[c.k];
+    if(c.k==="shop") return `<td><b>${esc(x)}</b>${multi.has(x)?' <span class="tag muted small">두 경로</span>':""}</td>`;
+    if(c.k==="via") return `<td><span class="via ${x}">${x==="직접"?"샵 직접":x}</span></td>`;
+    if(c.n&&x!=null) return `<td class="n">${c.f(x,r)}</td>`;
+    return cell(c,x);
+  }).join("")+"</tr>").join("");
+  document.getElementById("sdmSame").innerHTML=[...multi].map(k=>{const a=by[k]; const ps=a.map(r=>r.price), d=Math.max(...ps)-Math.min(...ps);
+    return `<div class="it"><b>${esc(k)}</b>${a.map(r=>`<span><span class="via ${r.via}">${r.via}</span> ${manR([r.price,r.pmax])}${r.helper?` · 헬퍼비 ${man(r.helper)}`:""}</span>`).join("")}${d?`<span class="diff">${man(d)} 차이</span>`:'<span class="muted">기본가 같음</span>'}</div>`}).join("");
+}
+document.getElementById("sdmCat").addEventListener("click",e=>{const b=e.target.closest("button"); if(!b) return; sdmCat=b.dataset.c; drawSdm()});
+headClick("sHead",SS,drawSdm);
+function drawVendors(){
+  document.getElementById("sdmIntro").textContent=`준비업체 폴더의 업체 ${VENDORS.length}곳입니다. 드레스샵 4곳은 샵에 직접, 웨딩 대행 2곳(이마이웨딩·함웨딩)은 여러 샵을 묶어 소개합니다. 같은 샵이 두 경로에 다 있으면 위에 가격을 나란히 보여줍니다.`;
+  document.getElementById("vendors").innerHTML=VENDORS.map(v=>{const via=v.kind==="웨딩 대행"?v.n.replace("함께하는 ",""):"직접";
+    const rs=S.filter(r=>via==="직접"?(r.via==="직접"&&(r.shop.startsWith(v.n.split(" ")[0])||(v.n==="루아스포사"&&r.shop==="더루아"))):r.via===via);
+    const cats=[...new Set(rs.map(r=>r.cat))].map(c=>`${c} ${rs.filter(r=>r.cat===c).length}`).join(" · ");
+    return `<div class="vendor"><b>${esc(v.n)}</b><span class="k">${v.kind} · ${cats}</span>
+     <span class="small">${manR([Math.min(...rs.map(r=>r.price)),Math.max(...rs.map(r=>r.pmax))])}</span>
+     <span class="k">${v.src==="참소비자원"?KCA:'<span class="via">업체 자료(이미지)</span>'} ${v.mod?`수정 ${v.mod}`:"작성일 정보 없음"}</span>
+     <span class="k">${esc(v.cancel)}</span></div>`}).join("");
+}
 function refresh(){
   if(sel&&!shown().includes(sel)) sel=null;
   document.getElementById("fCount").textContent=`${shown().length}곳 표시 중`;
-  drawMap();drawInfo();drawRent();drawMeal();drawCards();
+  drawMap();drawInfo();drawRent();drawMeal();drawTable();drawCards();
   if(LM&&zoom==="all") fitLeaflet();
 }
-initLeaflet();drawDates();refresh();
+initLeaflet();drawDates();drawVendors();drawSdm();refresh();
 </script>
 </body>
 </html>
