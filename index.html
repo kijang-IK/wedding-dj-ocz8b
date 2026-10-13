@@ -11,7 +11,7 @@
 <title>대전 웨딩홀 가격비교</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Nanum+Myeongjo:wght@700;800&display=swap">
 <style>
-/* Layout: 모바일 우선 한 열. 지도(+선택 정보) → 대관료 비교 → 1인 식대 → 업체 상세 → 작성·공개일. 넓은 화면에서는 지도와 대관료를 두 열로 */
+/* Layout: 모바일 우선 한 열. 필터 → 지도(+선택 정보) → 대관료 비교(출처별 줄) → 1인 식대 → 업체 상세(합친 요약+홀 표) → 작성·공개일. 넓은 화면에서는 지도와 대관료를 두 열로 */
 :root{
   --bg:#f6f7f9; --surface:#ffffff; --ink:#1b2230; --muted:#5d6676; --line:#dde1e8; --land:#eef0f4; --land-line:#c9ced8;
   --accent:#2f4a7a;
@@ -128,14 +128,62 @@ details summary{cursor:pointer;font-weight:600;color:var(--accent);padding:6px 0
 </style>
 </head>
 <body>
+<style>
+/* 합본 추가: 동구, 출처 배지, 필터, 홀 표 */
+:root{--dong:#2f8458;--dong-soft:#e1f2e7;--kca:#2f4a7a;--nt:#7a5a1e;--kca-soft:#e6ebf5;--nt-soft:#f5eddc}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--dong:#6cc48f;--dong-soft:#18301f;--kca:#9db6e6;--nt:#e0bf7a;--kca-soft:#1e2738;--nt-soft:#33291a}}
+:root[data-theme="dark"]{--dong:#6cc48f;--dong-soft:#18301f;--kca:#9db6e6;--nt:#e0bf7a;--kca-soft:#1e2738;--nt-soft:#33291a}
+.d-동구{background:var(--dong)}
+.chip.동구{background:var(--dong-soft);color:var(--dong)}
+.src{font-size:11px;font-weight:700;padding:1px 7px;border-radius:999px;white-space:nowrap;display:inline-block;line-height:1.6}
+.src.kca{background:var(--kca-soft);color:var(--kca)} .src.nt{background:var(--nt-soft);color:var(--nt)}
+.filters{display:flex;flex-direction:column;gap:8px}
+.filters .lbl{font-size:12px;color:var(--muted);font-weight:600;min-width:44px}
+.frow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:5px 12px;border-radius:999px;cursor:pointer;min-height:34px}
+.chips button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.count{font-size:13px;color:var(--muted)}
+/* 출처별 막대 줄 */
+.row{grid-template-columns:22px minmax(0,1fr);grid-template-areas:"no name" "no lines" "no sub"}
+.lines{grid-area:lines;display:flex;flex-direction:column;gap:5px}
+.ln{display:grid;grid-template-columns:74px minmax(0,1fr) auto;align-items:center;gap:8px}
+.ln .val{grid-area:auto;font-size:13px;font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right;min-width:70px}
+.ln .bar{grid-area:auto;position:relative;height:10px;background:var(--land);border-radius:5px;overflow:hidden}
+.ln .bar i{position:absolute;top:0;bottom:0;border-radius:5px}
+.ln .bar i.range{opacity:.35}
+.ln .bar i.deco{opacity:.55;background-image:repeating-linear-gradient(45deg,transparent 0 4px,rgba(255,255,255,.45) 4px 7px)}
+.ln .tag{font-size:11px;color:var(--muted);margin-left:4px}
+.row .sub{grid-area:sub;grid-column:auto}
+.scale{padding-left:120px;padding-right:86px}
+/* 카드 */
+.both{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 12px;font-size:14px;margin:0}
+.both dd{display:flex;flex-direction:column;gap:2px}
+.both dd span{display:flex;gap:6px;align-items:baseline;flex-wrap:wrap}
+.halls{overflow-x:auto;border:1px solid var(--line);border-radius:8px}
+.halls table{min-width:520px;font-size:13px}
+.halls th,.halls td{padding:6px 8px}
+.mood{font-size:11px;padding:0 6px;border-radius:999px;background:var(--land);margin-right:3px;white-space:nowrap}
+.review{font-size:13px;background:var(--nt-soft);border-radius:8px;padding:8px 10px;display:flex;flex-direction:column;gap:2px}
+.card .meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.lpin-dot{width:24px;height:24px;font-size:12px}
+.lpin-dot.sel{width:32px;height:32px;margin:-4px;font-size:14px}
+</style>
 
 <div class="wrap">
 <header>
-  <div class="eyebrow">한국소비자원 참가격 · 중요정보 공개(예식장) · 대전</div>
+  <div class="eyebrow">참소비자원(한국소비자원 참가격) 공개자료 + 노션(ver) 분석 합본</div>
   <h1>대전 웨딩홀 가격비교</h1>
-  <p class="muted small">업체가 제출한 엑셀 15곳 기준, 금액은 VAT 포함입니다. 프로모션·날짜·시간대에 따라 달라집니다.</p>
+  <p class="muted small" id="summary"></p>
   <div class="legend" id="legend"></div>
+  <div class="legend"><span><span class="src kca">참소비자원</span>업체가 소비자원에 낸 가격표(VAT 포함)</span><span><span class="src nt">노션(ver)</span>직접 정리한 홀별 분석</span></div>
 </header>
+
+<section class="filters" aria-label="필터">
+  <div class="frow"><span class="lbl">지역</span><div class="chips" id="fDist"></div></div>
+  <div class="frow"><span class="lbl">분위기</span><div class="chips" id="fMood"></div></div>
+  <div class="frow"><span class="lbl">자료</span><div class="chips" id="fSrc"></div><span class="count" id="fCount"></span></div>
+</section>
 
 <div class="top">
 <section>
@@ -154,8 +202,8 @@ details summary{cursor:pointer;font-weight:600;color:var(--accent);padding:6px 0
 </section>
 
 <section>
-  <div class="sec-head"><h2>대관료 비교</h2><p class="muted small">낮은 순서입니다. 진한 부분은 최저가, 옅은 부분은 홀·인원에 따른 최고가까지의 범위입니다.</p></div>
-  <div class="seg" id="rentSeg" role="group" aria-label="비교 기준">
+  <div class="sec-head"><h2>대관료 비교</h2><p class="muted small">낮은 순서입니다. 두 자료에 모두 있으면 줄을 나눠 보여줍니다. 진한 부분은 최저가, 옅은 부분은 홀·인원에 따른 최고가까지입니다.</p></div>
+  <div class="seg" id="rentSeg" role="group" aria-label="참소비자원 비교 기준">
     <button type="button" data-m="rent" aria-pressed="true">대관료만</button>
     <button type="button" data-m="sum" aria-pressed="false">대관료 + 필수 장식</button>
   </div>
@@ -166,18 +214,18 @@ details summary{cursor:pointer;font-weight:600;color:var(--accent);padding:6px 0
 </div>
 
 <section>
-  <div class="sec-head"><h2>1인 식대</h2><p class="muted small">낮은 순서입니다. 롯데시티호텔(5~10%)과 씨엘드레브(최대 20%)는 할인 전 정상가입니다.</p></div>
+  <div class="sec-head"><h2>1인 식대</h2><p class="muted small">낮은 순서입니다. 참소비자원의 롯데시티(5~10%)·씨엘드레브(최대 20%)는 할인 전 정상가, 노션의 선샤인 파라다이스·씨엘드 포레는 부가세 별도 금액입니다.</p></div>
   <div class="panel"><div class="rows" id="mealRows"></div><div class="scale" id="mealScale"></div></div>
 </section>
 
 <section>
-  <div class="sec-head"><h2>업체별 상세</h2></div>
+  <div class="sec-head"><h2>업체별 상세</h2><p class="muted small">위쪽은 두 자료를 합친 요약, 아래는 노션의 홀별 정보와 참소비자원 가격표 원문입니다.</p></div>
   <div class="cards" id="cards"></div>
 </section>
 
 <section id="dates">
   <div class="sec-head"><h2>언제 작성되고 공개됐나</h2>
-  <p class="muted small">작성은 엑셀 파일 속성, 공개는 참가격 게시판의 게시일입니다(2026-10-13 확인). 표는 옆으로 밀어서 볼 수 있습니다.</p></div>
+  <p class="muted small">참소비자원 자료 기준입니다. 작성은 엑셀 파일 속성, 공개는 참가격 게시판 게시일입니다(2026-10-13 확인). 노션(ver)에는 작성일 정보가 없습니다.</p></div>
   <div class="table-wrap"><table>
     <thead><tr><th>업체</th><th>업체 최종 수정</th><th>참가격 게시일</th><th>서식 생성</th><th>수정자</th></tr></thead>
     <tbody id="dateRows"></tbody>
@@ -185,7 +233,7 @@ details summary{cursor:pointer;font-weight:600;color:var(--accent);padding:6px 0
   <ul class="note">
     <li>서식 생성일 2025-11-11(작성자 smartkca)은 공통 양식이 만들어진 날입니다. 라비에벨·라도무스·메리비아포레는 2026-05-30 양식, 시그너스는 업체가 2026-09-14에 새로 만든 파일입니다.</li>
     <li>2026-09-29에 12곳이 한꺼번에 게시됐고, 라비에벨(10-01), 메리비아포레(10-06), 베스타(10-08)가 이후 추가로 게시됐습니다.</li>
-    <li>게시판에는 있지만 받은 엑셀에 없는 곳: 비브레스 가든(09-30), 호텔ICC웨딩홀(09-29), 호텔인터시티(09-29).</li>
+    <li>게시판에는 있지만 받은 엑셀에 없는 곳: 비브레스 가든(09-30), 호텔ICC웨딩홀(09-29), 호텔인터시티(09-29). ICC와 인터시티는 노션(ver) 값으로 넣었습니다.</li>
   </ul>
 </section>
 </div>
@@ -193,61 +241,109 @@ details summary{cursor:pointer;font-weight:600;color:var(--accent);padding:6px 0
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
 const M=1e4;
-// rent/deco 단위: 원. bundled=대관료에 장식 포함
+// 노션(ver) 홀: [홀, 층, 배치, 예식형태, 분위기, 예식시간(분), 대관료, 버진로드(m), 최소인원, 좌석, 최대인원, 식사, 식대, 음주류]
+// 참소비자원(kca): 엑셀 원문 정리. rent/deco 단위 원, bundled=대관료에 장식 포함
 const V=[
- {n:"라비에벨웨딩홀",d:"서구",a:"대전 서구 계백로 1108",q:"라비에벨웨딩홀",lat:36.30251,lon:127.34704,tel:"042-485-1515",hall:"단독홀",guest:"200~300명",meal:[54000,54000],
-  rent:[330*M,330*M],deco:null,bundled:true,rentTxt:"대관+생화장식 330만원",pkg:"패키지+생화장식 530만원 (드레스·턱시도·헤메·부케·원판)",opts:"스튜디오 90만 · 본식스냅 ~44만 · 혼주메이크업 여 17만 / 남 5.5만",created:"2026-05-30",mod:"2026-07-07",by:"smartkca",post:"2026-10-01"},
- {n:"더BMK컨벤션",d:"중구",a:"대전 중구 서문로 133",q:"더BMK컨벤션",lat:36.31983,lon:127.40508,tel:"042-334-1000",hall:"4층 아스틴 / 5층 하모니볼룸",guest:"150~250명 / 200~250명",meal:[40000,60000],
-  rent:[0,200*M],deco:[130*M,130*M],rentTxt:"아스틴 0~150만 · 하모니볼룸 50~200만 + 생화 130만",pkg:"패키지 350만원",opts:"사진 55~88만 · 영상 40~90만 · 스튜디오 98만 · 사회 18~35만",created:"2025-11-11",mod:"2026-03-16",by:"smartkca",post:"2026-09-29"},
- {n:"계룡스파텔",d:"유성구",a:"대전 유성구 온천로 81",q:"계룡스파텔",lat:36.35569,lon:127.34832,tel:"042-602-1155",hall:"무궁화홀(실내) / 테마공원(야외)",guest:"50명 미만 한정식, 50명 이상 뷔페",meal:[44000,59000],mealNote:"뷔페 4.4만/4.8만/5.9만 · 50명 미만 한정식 4.6~7.5만",
-  rent:[22*M,64*M],deco:[70*M,70*M],rentTxt:"실내 22만 · 야외 64만 (토탈업체 필수상품 미이용 시) · 꽃장식 70만",pkg:"드레스 40~80만 · 원판 50~80만 · 본식화장 30만",opts:"군 회원 할인: 현역·군무원 뷔페 3.6~4.9만, 대관 20만",created:"2025-11-11",mod:"2026-05-14",by:"user",post:"2026-09-29"},
- {n:"더시그너스웨딩뷔페",d:"서구",a:"대전 서구 둔산중로 8 지하1층",q:"더시그너스웨딩뷔페 대전",lat:36.34707,lon:127.38742,tel:"042-488-1111",hall:"컨벤션홀",guest:"기본 200명~",meal:[49000,49000],
-  rent:[180*M,180*M],deco:null,rentTxt:"대관 180만 (장식비 별도 표기 없음)",pkg:"패키지(드+메+대관+원판) A 270만 · B 250만",opts:"스튜디오 122만 · 영상 50만~ · 사회 15~35만",created:"2026-09-14",mod:"2026-09-15",by:"smartkca",post:"2026-09-29"},
- {n:"라도무스아트센터",d:"유성구",a:"대전 유성구 동서대로 639 3층",q:"라도무스아트센터",lat:36.33306,lon:127.33364,tel:"042-823-5220",hall:"아시시·라도무스·아트리움 / 아모리움·루미니스",guest:"200~300명",meal:[62000,66000],
-  rent:[530*M,790*M],deco:null,bundled:true,rentTxt:"대관+생화 530만 / 790만",pkg:"패키지+생화 750만 / 1,010만",opts:"스튜디오 80만 · 본식스냅 69만 · 영상 50만~ · 폐백 24만~",created:"2026-05-30",mod:"2026-05-31",by:"연희 남",post:"2026-09-29"},
- {n:"라미컨벤션웨딩",d:"유성구",a:"대전 유성구 봉명로 27-27",q:"라미컨벤션웨딩",lat:36.34302,lon:127.34387,tel:"042-368-8912",hall:"라미컨벤션홀 (소규모)",guest:"최소보증 30명",meal:[49000,76000],mealNote:"30명 보증 177~228만(1인 5.9만/7.6만) · 50명 이상 1인 4.9~7.6만",
-  rent:[190*M,190*M],deco:null,rentTxt:"대관 190만 (장식비 금액 미기재)",pkg:"대관+장식+드메 330만",opts:"사진 80~100만 · 영상 45만 · 스튜디오 115만 · 장식 추가 50~200만",created:"2025-11-11",mod:"2026-02-20",by:"smartkca",post:"2026-09-29"},
- {n:"롯데시티호텔 대전",d:"유성구",a:"대전 유성구 엑스포로123번길 33",q:"롯데시티호텔 대전",lat:36.37619,lon:127.39303,tel:"042-333-1000",hall:"크리스탈볼룸",guest:"100~270명",meal:[75000,120000],mealNote:"정상가 7.5만/9.2만/12만 · 프로모션 5~10% 할인",
-  rent:[0,330*M],deco:[550*M,770*M],rentTxt:"150명 이상 무료 · 100~149명 330만 · 생화 550~770만",pkg:"패키지 없음",opts:"프리미엄단상 440만 · 포토테이블 55만 · 피아노3중주 66만",created:"2025-11-11",mod:"2026-05-11",by:"smartkca",post:"2026-09-29"},
- {n:"루이비스컨벤션 대전",d:"유성구",a:"대전 유성구 테크노중앙로 161 스카이파크호텔 1층",q:"루이비스컨벤션 대전점",lat:36.42474,lon:127.39808,tel:"042-933-2500",hall:"아모리스홀 / 그레이스홀",guest:"200~300명",meal:[73000,73000],
-  rent:[500*M,500*M],deco:[150*M,150*M],rentTxt:"대관 500만 + 플라워데코 150만",pkg:"패키지(드+메+대관+원판) 700만 + 플라워데코 150만",opts:"스튜디오 88만 · 사진 66~198만 · 영상 49~148.5만",created:"2025-11-11",mod:"2026-09-22",by:"현욱 위",post:"2026-09-29"},
- {n:"메리비아포레 웨딩홀",d:"서구",a:"대전 서구 둔산중로134번길 13 KW컨벤션 2층",q:"메리비아포레웨딩홀",lat:36.35903,lon:127.38764,tel:"042-486-2388",dx:-3,dy:-3,hall:"단독홀",guest:"150~300명",meal:[50000,60000],
-  rent:[330*M,390*M],deco:null,bundled:true,rentTxt:"대관+생화 330~390만",pkg:"패키지+생화 450~510만",opts:"스튜디오 95만~ · 본식스냅 66만~ · 포토부스 45만 · 사회 30만",created:"2026-05-30",mod:"2026-10-06",by:"smartkca",post:"2026-10-06"},
- {n:"베스타뷔페",d:"서구",a:"대전 서구 만년로 70 2층",q:"베스타 대전 만년로",lat:36.36717,lon:127.38053,tel:"042-487-3366",hall:"베가룸 (소규모)",guest:"기본 70~130명",meal:[79000,79000],
-  rent:[80*M,80*M],deco:null,bundled:true,rentTxt:"대관·장식 80만",pkg:"의상·헤메·부케 100만",opts:"원판 5판 50만 · 스냅 20만 · 사회자 추가 20만",created:"2025-11-11",mod:"2026-10-08",by:"프런트B",post:"2026-10-08"},
- {n:"빌라 드 알티오라",d:"서구",a:"대전 서구 한밭대로 809 사학연금회관 3층",q:"빌라드알티오라",lat:36.35826,lon:127.38886,tel:"042-478-6600",dx:3,dy:3,hall:"2층 단독홀",guest:"최소 150명",meal:[55000,55000],
-  rent:[350*M,350*M],deco:null,bundled:true,rentTxt:"대관+생화 350만",pkg:"본식 패키지+대관 700만",opts:"혼주 헤메 여 18.7만 / 남 5.5만 · 폐백 24만~ · 사회 33만",created:"2025-11-11",mod:"2026-06-08",by:"smartkca",post:"2026-09-29"},
- {n:"씨엘드레브",d:"서구",a:"대전 서구 계룡로314번길 8",q:"씨엘드레브",lat:36.35335,lon:127.36297,tel:"",hall:"르자뎅홀",guest:"기본 250명",meal:[82000,82000],mealNote:"정상가 8.2만 · 프로모션 최대 20% 할인",
-  rent:[700*M,700*M],deco:[300*M,300*M],rentTxt:"대관 700만 + 장식 300만",pkg:"토탈 패키지(홀+스드메) 990만",opts:"사회 38.5만 · 예식도우미 33만 · 혼주메이크업 30만",created:"2025-11-11",mod:"2026-05-13",by:"smartkca",post:"2026-09-29"},
- {n:"에스가든웨딩 대전",d:"서구",a:"대전 서구 월드컵대로484번안길 10",q:"에스가든웨딩 대전",lat:36.3457,lon:127.3545,tel:"042-538-9946",hall:"르씨엘홀",guest:"기본 150~250명",meal:[59000,65000],
-  rent:[275*M,330*M],deco:[220*M,275*M],rentTxt:"대관 275~330만 + 장식 220~275만",pkg:"패키지 없음",opts:"사진·영상 각 77~195만 · 폐백 33~126.5만",created:"2025-11-11",mod:"2026-05-31",by:"연희 남",post:"2026-09-29"},
- {n:"팔레드오페라",d:"서구",a:"대전 서구 둔산남로 50",q:"팔레드오페라",lat:36.34804,lon:127.38355,tel:"042-300-5000",hall:"3층 트리아농 / 4층 가르니에",guest:"200~300명",meal:[72000,72000],
-  rent:[550*M,650*M],deco:[200*M,200*M],rentTxt:"트리아농 550만 · 가르니에 650만 + 생화 200만",pkg:"패키지 850만",opts:"스냅 65만~ · DVD 80만~ · 스튜디오 90만 · 포토부스 48만~",created:"2025-11-11",mod:"2026-05-26",by:"smartkca",post:"2026-09-29"},
- {n:"호텔 오노마",d:"유성구",a:"대전 유성구 엑스포로 1",q:"호텔오노마 대전",lat:36.37497,lon:127.38339,tel:"042-259-8007",hall:"그랜드볼룸",guest:"100~350명",meal:[140000,175000],mealNote:"양식 14만/15.5만/17만 · 퓨전한식 15.5만/17.5만",
-  rent:[0,0],deco:[960*M,3000*M],rentTxt:"100명 이상 대관 무료 · 꽃장식 960만~3,000만 · 무대연출 500만",pkg:"패키지 없음",opts:"폐백실 88만 · 샹들리에 240만 · 포토테이블 80만 · 사회자 50만",created:"2025-11-11",mod:"2026-09-09",by:"smartkca",post:"2026-09-29"}
+ {n:"라비에벨웨딩홀",d:"서구",a:"대전 서구 계백로 1108",q:"라비에벨웨딩홀",lat:36.30251,lon:127.34704,tel:"042-485-1515",
+  nt:{h:[["단독홀","2F","단독홀","분리",["밝음","어두움","하우스"],60,330*M,15,200,200,650,"뷔페",54000,"식대포함"]],note:"토요일 60분 / 일요일 70분 간격 · 27년도 홀 사용료 330만, 스드메 포함 530만 · 밝음·어두움 조명 연출 가능"},
+  kca:{hall:"단독홀",guest:"200~300명",meal:[54000,54000],rent:[330*M,330*M],deco:null,bundled:true,rentTxt:"대관+생화장식 330만원",pkg:"패키지+생화장식 530만원 (드레스·턱시도·헤메·부케·원판)",opts:"스튜디오 90만 · 본식스냅 ~44만 · 혼주메이크업 여 17만 / 남 5.5만",created:"2026-05-30",mod:"2026-07-07",by:"smartkca",post:"2026-10-01"}},
+ {n:"더BMK컨벤션",d:"중구",a:"대전 중구 서문로 133",q:"더BMK컨벤션",lat:36.31983,lon:127.40508,tel:"042-334-1000",
+  nt:{h:[["아스틴홀","4F","단독홀","분리",["어두움"],60,280*M,21,300,130,800,"뷔페",60000,"식대포함"],["하모니볼룸","5F","단독홀","분리",["어두움"],60,380*M,30,350,160,800,"뷔페",60000,"식대포함"]],note:"헬퍼비 12만 필수 · 식권 10% 답례품 가능 · 아스틴홀은 사이드 버진로드"},
+  kca:{hall:"4층 아스틴 / 5층 하모니볼룸",guest:"150~250명 / 200~250명",meal:[40000,60000],rent:[0,200*M],deco:[130*M,130*M],rentTxt:"아스틴 0~150만 · 하모니볼룸 50~200만 + 생화 130만",pkg:"패키지 350만원",opts:"사진 55~88만 · 영상 40~90만 · 스튜디오 98만 · 사회 18~35만",created:"2025-11-11",mod:"2026-03-16",by:"smartkca",post:"2026-09-29"}},
+ {n:"계룡스파텔",d:"유성구",a:"대전 유성구 온천로 81",q:"계룡스파텔",lat:36.35569,lon:127.34832,tel:"042-602-1155",
+  kca:{hall:"무궁화홀(실내) / 테마공원(야외)",guest:"50명 미만 한정식, 50명 이상 뷔페",meal:[44000,59000],mealNote:"뷔페 4.4만/4.8만/5.9만 · 50명 미만 한정식 4.6~7.5만",rent:[22*M,64*M],deco:[70*M,70*M],rentTxt:"실내 22만 · 야외 64만 (토탈업체 필수상품 미이용 시) · 꽃장식 70만",pkg:"드레스 40~80만 · 원판 50~80만 · 본식화장 30만",opts:"군 회원 할인: 현역·군무원 뷔페 3.6~4.9만, 대관 20만",created:"2025-11-11",mod:"2026-05-14",by:"user",post:"2026-09-29"}},
+ {n:"더시그너스웨딩뷔페",d:"서구",a:"대전 서구 둔산중로 8 지하1층",q:"더시그너스웨딩뷔페 대전",lat:36.34707,lon:127.38742,tel:"042-488-1111",
+  kca:{hall:"컨벤션홀",guest:"기본 200명~",meal:[49000,49000],rent:[180*M,180*M],deco:null,rentTxt:"대관 180만 (장식비 별도 표기 없음)",pkg:"패키지(드+메+대관+원판) A 270만 · B 250만",opts:"스튜디오 122만 · 영상 50만~ · 사회 15~35만",created:"2026-09-14",mod:"2026-09-15",by:"smartkca",post:"2026-09-29"}},
+ {n:"라도무스아트센터",d:"유성구",a:"대전 유성구 동서대로 639 3층",q:"라도무스아트센터",lat:36.33306,lon:127.33364,tel:"042-823-5220",
+  nt:{h:[["라도무스홀","3F","층당 2개","동시",["밝음"],60,510*M,18,200,200,500,"뷔페",62000,"식대포함"],["아트리움홀","3F","층당 2개","분리",["밝음"],90,510*M,18,200,200,500,"뷔페",62000,"식대포함"],["아시시홀","1F","단독홀","분리",["밝음"],60,510*M,17.5,200,200,500,"뷔페",62000,"식대포함"],["아모리움홀","8F","층당 2개","분리",["밝음"],60,710*M,25,300,210,300,"뷔페",64000,"식대포함"],["루미니스홀","8F","층당 2개","분리",["밝음"],60,710*M,25,300,210,300,"뷔페",64000,"식대포함"]]},
+  kca:{hall:"아시시·라도무스·아트리움 / 아모리움·루미니스",guest:"200~300명",meal:[62000,66000],rent:[530*M,790*M],deco:null,bundled:true,rentTxt:"대관+생화 530만 / 790만",pkg:"패키지+생화 750만 / 1,010만",opts:"스튜디오 80만 · 본식스냅 69만 · 영상 50만~ · 폐백 24만~",created:"2026-05-30",mod:"2026-05-31",by:"연희 남",post:"2026-09-29"}},
+ {n:"라미컨벤션웨딩",d:"유성구",a:"대전 유성구 봉명로 27-27",q:"라미컨벤션웨딩",lat:36.34302,lon:127.34387,tel:"042-368-8912",
+  kca:{hall:"라미컨벤션홀 (소규모)",guest:"최소보증 30명",meal:[49000,76000],mealNote:"30명 보증 177~228만(1인 5.9만/7.6만) · 50명 이상 1인 4.9~7.6만",rent:[190*M,190*M],deco:null,rentTxt:"대관 190만 (장식비 금액 미기재)",pkg:"대관+장식+드메 330만",opts:"사진 80~100만 · 영상 45만 · 스튜디오 115만 · 장식 추가 50~200만",created:"2025-11-11",mod:"2026-02-20",by:"smartkca",post:"2026-09-29"}},
+ {n:"롯데시티호텔 대전",d:"유성구",a:"대전 유성구 엑스포로123번길 33",q:"롯데시티호텔 대전",lat:36.37619,lon:127.39303,tel:"042-333-1000",
+  nt:{h:[["크리스탈볼룸","1F","단독홀","동시",["어두움"],300,330*M,14,100,270,270,"코스 선택",75000,"당일 소모량"]],note:"꽃 비용 따로 0원~770만원 · 식대 7.5만~10.5만"},
+  kca:{hall:"크리스탈볼룸",guest:"100~270명",meal:[75000,120000],mealNote:"정상가 7.5만/9.2만/12만 · 프로모션 5~10% 할인",rent:[0,330*M],deco:[550*M,770*M],rentTxt:"150명 이상 무료 · 100~149명 330만 · 생화 550~770만",pkg:"패키지 없음",opts:"프리미엄단상 440만 · 포토테이블 55만 · 피아노3중주 66만",created:"2025-11-11",mod:"2026-05-11",by:"smartkca",post:"2026-09-29"}},
+ {n:"루이비스컨벤션 대전",d:"유성구",a:"대전 유성구 테크노중앙로 161 스카이파크호텔 1층",q:"루이비스컨벤션 대전점",lat:36.42474,lon:127.39808,tel:"042-933-2500",
+  nt:{h:[["그레이스홀","1F","층당 2개","분리",["어두움"],70,850*M,25,300,200,500,"뷔페",73000,"식대포함"],["아모리스홀","1F","층당 2개","분리",["어두움"],80,850*M,25,300,200,500,"뷔페",73000,"식대포함"]]},
+  kca:{hall:"아모리스홀 / 그레이스홀",guest:"200~300명",meal:[73000,73000],rent:[500*M,500*M],deco:[150*M,150*M],rentTxt:"대관 500만 + 플라워데코 150만",pkg:"패키지(드+메+대관+원판) 700만 + 플라워데코 150만",opts:"스튜디오 88만 · 사진 66~198만 · 영상 49~148.5만",created:"2025-11-11",mod:"2026-09-22",by:"현욱 위",post:"2026-09-29"}},
+ {n:"메리비아포레 웨딩홀",d:"서구",a:"대전 서구 둔산중로134번길 13 KW컨벤션 2층",q:"메리비아포레웨딩홀",lat:36.35903,lon:127.38764,tel:"042-486-2388",dx:-3,dy:-4,
+  nt:{h:[["단독홀","6F","단독홀","분리",["밝음","하우스","야외"],90,390*M,20,200,150,400,"뷔페",55000,"식대포함"]],note:"천장 돔 오픈/미오픈 선택 가능"},
+  kca:{hall:"단독홀",guest:"150~300명",meal:[50000,60000],rent:[330*M,390*M],deco:null,bundled:true,rentTxt:"대관+생화 330~390만",pkg:"패키지+생화 450~510만",opts:"스튜디오 95만~ · 본식스냅 66만~ · 포토부스 45만 · 사회 30만",created:"2026-05-30",mod:"2026-10-06",by:"smartkca",post:"2026-10-06"}},
+ {n:"베스타뷔페",d:"서구",a:"대전 서구 만년로 70 2층",q:"베스타 대전 만년로",lat:36.36717,lon:127.38053,tel:"042-487-3366",dy:4,
+  kca:{hall:"베가룸 (소규모)",guest:"기본 70~130명",meal:[79000,79000],rent:[80*M,80*M],deco:null,bundled:true,rentTxt:"대관·장식 80만",pkg:"의상·헤메·부케 100만",opts:"원판 5판 50만 · 스냅 20만 · 사회자 추가 20만",created:"2025-11-11",mod:"2026-10-08",by:"프런트B",post:"2026-10-08"}},
+ {n:"빌라 드 알티오라",d:"서구",a:"대전 서구 한밭대로 809 사학연금회관 3층",q:"빌라드알티오라",lat:36.35826,lon:127.38886,tel:"042-478-6600",dx:4,dy:3,
+  nt:{h:[["단독홀","2F","단독홀","분리",["밝음","하우스"],60,300*M,27,250,150,550,"뷔페",52000,"식대포함"]]},
+  kca:{hall:"2층 단독홀",guest:"최소 150명",meal:[55000,55000],rent:[350*M,350*M],deco:null,bundled:true,rentTxt:"대관+생화 350만",pkg:"본식 패키지+대관 700만",opts:"혼주 헤메 여 18.7만 / 남 5.5만 · 폐백 24만~ · 사회 33만",created:"2025-11-11",mod:"2026-06-08",by:"smartkca",post:"2026-09-29"}},
+ {n:"씨엘드레브",d:"서구",a:"대전 서구 계룡로314번길 8",q:"씨엘드레브",lat:36.35335,lon:127.36297,tel:"",
+  kca:{hall:"르자뎅홀",guest:"기본 250명",meal:[82000,82000],mealNote:"정상가 8.2만 · 프로모션 최대 20% 할인",rent:[700*M,700*M],deco:[300*M,300*M],rentTxt:"대관 700만 + 장식 300만",pkg:"토탈 패키지(홀+스드메) 990만",opts:"사회 38.5만 · 예식도우미 33만 · 혼주메이크업 30만",created:"2025-11-11",mod:"2026-05-13",by:"smartkca",post:"2026-09-29"}},
+ {n:"에스가든웨딩 대전",d:"서구",a:"대전 서구 월드컵대로484번안길 10",q:"에스가든웨딩 대전",lat:36.34570,lon:127.35450,tel:"042-538-9946",
+  nt:{h:[["S가든홀","4F","단독홀","분리",["밝음"],60,360*M,30,250,200,600,"뷔페",55000,"식대포함"]]},
+  kca:{hall:"르씨엘홀",guest:"기본 150~250명",meal:[59000,65000],rent:[275*M,330*M],deco:[220*M,275*M],rentTxt:"대관 275~330만 + 장식 220~275만",pkg:"패키지 없음",opts:"사진·영상 각 77~195만 · 폐백 33~126.5만",created:"2025-11-11",mod:"2026-05-31",by:"연희 남",post:"2026-09-29"}},
+ {n:"팔레드오페라",d:"서구",a:"대전 서구 둔산남로 50",q:"팔레드오페라",lat:36.34804,lon:127.38355,tel:"042-300-5000",
+  kca:{hall:"3층 트리아농 / 4층 가르니에",guest:"200~300명",meal:[72000,72000],rent:[550*M,650*M],deco:[200*M,200*M],rentTxt:"트리아농 550만 · 가르니에 650만 + 생화 200만",pkg:"패키지 850만",opts:"스냅 65만~ · DVD 80만~ · 스튜디오 90만 · 포토부스 48만~",created:"2025-11-11",mod:"2026-05-26",by:"smartkca",post:"2026-09-29"}},
+ {n:"호텔 오노마",d:"유성구",a:"대전 유성구 엑스포로 1",q:"호텔오노마 대전",lat:36.37497,lon:127.38339,tel:"042-259-8007",
+  kca:{hall:"그랜드볼룸",guest:"100~350명",meal:[140000,175000],mealNote:"양식 14만/15.5만/17만 · 퓨전한식 15.5만/17.5만",rent:[0,0],deco:[960*M,3000*M],rentTxt:"100명 이상 대관 무료 · 꽃장식 960만~3,000만 · 무대연출 500만",pkg:"패키지 없음",opts:"폐백실 88만 · 샹들리에 240만 · 포토테이블 80만 · 사회자 50만",created:"2025-11-11",mod:"2026-09-09",by:"smartkca",post:"2026-09-29"}},
+ // 노션(ver)에만 있는 곳
+ {n:"유성컨벤션웨딩",d:"유성구",a:"대전 유성구 온천북로 77",q:"유성컨벤션웨딩",lat:36.35660,lon:127.35153,tel:"042-825-7070",
+  nt:{h:[["펠리스홀","2F","단독홀","분리",["어두움"],60,220*M,18,300,180,2000,"뷔페",50000,"식대포함"],["그랜드홀","3F","단독홀","분리",["어두움"],60,220*M,18,300,180,2000,"뷔페",50000,"식대포함"]]}},
+ {n:"크리스탈컨벤션웨딩홀",d:"서구",a:"대전 서구 둔산대로117번길 127",q:"크리스탈컨벤션뷔페",lat:36.36948,lon:127.38098,tel:"042-488-9003",
+  nt:{h:[["단독홀","3F","단독홀","분리",["밝음"],60,300*M,null,200,150,700,"뷔페",38000,"식대포함"]]}},
+ {n:"호텔 선샤인 파라다이스",d:"동구",a:"대전 동구 동서대로 1700",q:"호텔선샤인 대전",lat:36.34908,lon:127.43848,tel:"042-620-6500",
+  nt:{h:[["컨벤션","2F","단독홀","분리",["어두움"],60,300*M,20,200,140,200,"뷔페",55000,"식대포함"],["그랜드볼룸","5F","단독홀","분리",["어두움"],60,300*M,25,200,180,200,"뷔페",55000,"식대포함"]],note:"식대 부가세 10% 별도 · 예식 간격 60~80분, 날짜마다 다름",vatEx:true}},
+ {n:"마리드엘",d:"서구",a:"대전 서구 만년로 69",q:"마리드엘웨딩",lat:36.36774,lon:127.38064,tel:"0502-5551-3306",dy:-4,
+  nt:{h:[["마리드홀","3F","단독홀","분리",["어두움"],60,380*M,25,200,150,450,"세미뷔페",59000,"식대포함"]]}},
+ {n:"메종드보네르",d:"서구",a:"대전 서구 한밭대로 797",q:"메종드보네르",lat:36.35826,lon:127.38741,tel:"042-603-1234",
+  nt:{h:[["보네르홀","1F","단독홀","분리",["어두움"],60,400*M,25,200,200,650,"뷔페",50000,"식대포함"]],note:"하객 대기 공간 잘 되어 있음"}},
+ {n:"호텔ICC",d:"유성구",a:"대전 유성구 엑스포로123번길 55",q:"호텔ICC 웨딩홀",lat:36.37708,lon:127.39281,tel:"042-866-5100",board:"2026-09-29",
+  nt:{h:[["그랜드볼룸","3F","단독홀","분리",["어두움"],60,430*M,30,300,400,600,"뷔페",62000,"식대포함"],["크리스탈볼룸","1F","단독홀","분리",["어두움"],60,430*M,30,300,400,600,"뷔페",62000,"식대포함"]]}},
+ {n:"라포르테",d:"서구",a:"대전 서구 문정로 40",q:"라포르테웨딩홀",lat:36.34644,lon:127.38406,tel:"042-483-0072",
+  nt:{h:[["단독홀","5F","단독홀","분리",["밝음"],70,470*M,22,180,180,240,"뷔페",63000,"식대포함"]]}},
+ {n:"씨엘드 포레",d:"동구",a:"대전 동구 동서대로 1700",q:"씨엘드포레",lat:36.34928,lon:127.43878,tel:"",
+  nt:{h:[["단독홀","7F","단독홀","분리",["밝음","야외","하우스"],120,600*M,25,150,120,240,"뷔페",55000,"식대포함"]],note:"부가세 제외 금액",vatEx:true}},
+ {n:"호텔인터시티",d:"유성구",a:"대전 유성구 온천로 92",q:"호텔인터시티 대전",lat:36.35430,lon:127.34787,tel:"042-600-6000",board:"2026-09-29",
+  nt:{h:[["그레이스홀","2F","단독홀","분리",["밝음"],120,770*M,13,100,100,200,"뷔페·코스 선택",88000,"당일 소모량"]],note:"식대 8.8만 / 11만 중 택1 · 꽃장식 270만 / 440만 중 택1",meal:[88000,110000]}}
 ];
-const ORDER=["유성구","서구","중구"];
-const DIST={"대덕구":{"d":"M472.1,164.6L409.4,237.3L397.4,291.2L426.2,341.1L321.6,382.2L302.1,366.6L286.6,311.3L318.3,289.3L332.9,204.0L279.0,142.1L301.6,108.4L367.8,106.0L401.2,122.0L452.6,103.1L498.5,124.0L472.1,164.6Z","cx":390,"cy":190},"유성구":{"d":"M301.6,108.4L279.0,142.1L332.9,204.0L318.3,289.3L286.6,311.3L257.9,310.9L196.1,367.1L174.7,410.3L177.9,453.5L113.1,556.7L83.3,576.5L0.0,529.5L19.2,498.2L20.3,422.5L56.0,369.4L64.7,209.0L88.2,190.3L152.2,191.0L204.0,127.4L216.0,35.8L259.3,0.0L287.9,20.6L304.7,40.8L301.6,108.4Z","cx":150,"cy":260},"서구":{"d":"M286.6,311.3L302.1,366.6L268.7,438.7L242.1,557.0L223.0,564.3L226.9,684.7L161.4,771.8L129.5,681.2L84.6,661.0L56.3,625.7L83.3,576.5L113.1,556.7L177.9,453.5L174.7,410.3L196.1,367.1L257.9,310.9L286.6,311.3Z","cx":180,"cy":560},"중구":{"d":"M302.1,366.6L321.6,382.2L406.4,487.3L356.7,513.2L372.5,567.1L355.9,593.3L380.1,638.3L340.4,713.2L312.7,702.0L269.6,609.4L275.5,574.9L242.1,557.0L268.7,438.7L302.1,366.6Z","cx":320,"cy":560},"동구":{"d":"M524.1,190.0L576.8,193.8L600.0,257.4L541.9,276.1L546.2,319.6L495.7,407.6L488.0,521.6L466.1,588.7L479.1,640.4L429.4,676.6L431.4,697.3L380.7,748.0L340.4,713.2L380.1,638.3L355.9,593.3L372.5,567.1L356.7,513.2L406.4,487.3L321.6,382.2L426.2,341.1L397.4,291.2L409.4,237.3L472.1,164.6L498.4,224.5L524.1,190.0Z","cx":450,"cy":450}};
+const ORDER=["유성구","서구","중구","동구"];
+const MOODS=["밝음","어두움","하우스","야외"];
+const DIST={"대덕구":{"d":"M472.1,164.6L409.4,237.3L397.4,291.2L426.2,341.1L321.6,382.2L302.1,366.6L286.6,311.3L318.3,289.3L332.9,204.0L279.0,142.1L301.6,108.4L367.8,106.0L401.2,122.0L452.6,103.1L498.5,124.0L472.1,164.6Z","cx":390,"cy":190},"유성구":{"d":"M301.6,108.4L279.0,142.1L332.9,204.0L318.3,289.3L286.6,311.3L257.9,310.9L196.1,367.1L174.7,410.3L177.9,453.5L113.1,556.7L83.3,576.5L0.0,529.5L19.2,498.2L20.3,422.5L56.0,369.4L64.7,209.0L88.2,190.3L152.2,191.0L204.0,127.4L216.0,35.8L259.3,0.0L287.9,20.6L304.7,40.8L301.6,108.4Z","cx":150,"cy":260},"서구":{"d":"M286.6,311.3L302.1,366.6L268.7,438.7L242.1,557.0L223.0,564.3L226.9,684.7L161.4,771.8L129.5,681.2L84.6,661.0L56.3,625.7L83.3,576.5L113.1,556.7L177.9,453.5L174.7,410.3L196.1,367.1L257.9,310.9L286.6,311.3Z","cx":180,"cy":560},"중구":{"d":"M302.1,366.6L321.6,382.2L406.4,487.3L356.7,513.2L372.5,567.1L355.9,593.3L380.1,638.3L340.4,713.2L312.7,702.0L269.6,609.4L275.5,574.9L242.1,557.0L268.7,438.7L302.1,366.6Z","cx":320,"cy":560},"동구":{"d":"M524.1,190.0L576.8,193.8L600.0,257.4L541.9,276.1L546.2,319.6L495.7,407.6L488.0,521.6L466.1,588.7L479.1,640.4L429.4,676.6L431.4,697.3L380.7,748.0L340.4,713.2L380.1,638.3L355.9,593.3L372.5,567.1L356.7,513.2L406.4,487.3L321.6,382.2L426.2,341.1L397.4,291.2L409.4,237.3L472.1,164.6L498.4,224.5L524.1,190.0Z","cx":470,"cy":470}};
 const P={lo0:127.2515722298603,la1:36.49710030650427,k:0.8054113464801033,s:2444.468653245113};
 const VIEW={all:[0,0,600,772],dunsan:[160,250,160,206]};
-const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
-const cvar=d=>d==="유성구"?"var(--yu)":d==="서구"?"var(--seo)":"var(--jung)";
+const cvar=d=>({"유성구":"var(--yu)","서구":"var(--seo)","중구":"var(--jung)","동구":"var(--dong)"})[d];
 const man=x=>x===0?"0원":(x/M).toLocaleString("ko-KR",{maximumFractionDigits:1})+"만";
 const manR=([a,b])=>a===b?man(a):man(a)+"~"+man(b);
 const kakao=v=>"https://map.kakao.com/?q="+encodeURIComponent(v.q);
-const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-// 번호: 구 → 이름순
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const KCA='<span class="src kca">참소비자원</span>', NT='<span class="src nt">노션(ver)</span>';
+const rng=a=>[Math.min(...a),Math.max(...a)];
+V.forEach(v=>{
+  if(v.nt){const h=v.nt.h; v.nt.rent=rng(h.map(x=>x[6])); v.nt.meal=v.nt.meal||rng(h.map(x=>x[12])); v.nt.guest=rng(h.map(x=>x[8])); v.moods=[...new Set(h.flatMap(x=>x[4]))];}
+  else v.moods=[];
+});
 V.sort((p,q)=>ORDER.indexOf(p.d)-ORDER.indexOf(q.d)||p.n.localeCompare(q.n,"ko")).forEach((v,i)=>{v.no=i+1;v.x=(v.lon-P.lo0)*P.k*P.s+(v.dx||0);v.y=(P.la1-v.lat)*P.s+(v.dy||0)});
-let sel=null, zoom="all", mode="rent";
+let sel=null, zoom="all", mode="rent", fD="전체", fM="전체", fS="전체";
+const shown=()=>V.filter(v=>(fD==="전체"||v.d===fD)&&(fM==="전체"||v.moods.includes(fM))&&(fS==="전체"||(fS==="둘 다"?v.kca&&v.nt:fS==="참소비자원"?v.kca:v.nt)));
 
+const nK=V.filter(v=>v.kca).length, nN=V.filter(v=>v.nt).length, nB=V.filter(v=>v.kca&&v.nt).length, nH=V.reduce((s,v)=>s+(v.nt?v.nt.h.length:0),0);
+document.getElementById("summary").textContent=`모두 ${V.length}곳입니다. 참소비자원 가격표 ${nK}곳, 노션(ver) ${nN}곳(홀 ${nH}개)이고 두 자료에 다 있는 곳이 ${nB}곳입니다. 금액은 프로모션·날짜·시간대에 따라 달라집니다.`;
 document.getElementById("legend").innerHTML=ORDER.map(d=>`<span><i class="dot d-${d}"></i>${d} ${V.filter(v=>v.d===d).length}곳</span>`).join("");
+
+// 필터
+function chips(id,opts,get,set){
+  const el=document.getElementById(id);
+  const draw=()=>{el.innerHTML=opts.map(o=>`<button type="button" aria-pressed="${o===get()}" data-v="${o}">${o}</button>`).join("")};
+  el.addEventListener("click",e=>{const b=e.target.closest("button"); if(!b) return; set(b.dataset.v); draw(); refresh()});
+  draw();
+}
+chips("fDist",["전체",...ORDER],()=>fD,x=>fD=x);
+chips("fMood",["전체",...MOODS],()=>fM,x=>fM=x);
+chips("fSrc",["전체","둘 다","참소비자원","노션(ver)"],()=>fS,x=>fS=x);
 
 // 지도
 const svg=document.getElementById("map");
 let LM=null; const LMK={};
 const lpinHTML=v=>`<span class="lpin-dot${v===sel?" sel":""}" style="background:${cvar(v.d)}">${v.no}</span>`;
-const BOUNDS={all:()=>V.map(v=>[v.lat,v.lon]),dunsan:()=>[[36.338,127.338],[36.380,127.398]]};
-function fitLeaflet(){LM.fitBounds(BOUNDS[zoom](),{padding:[24,24]})}
+const lIcon=v=>L.divIcon({className:"lpin",html:lpinHTML(v),iconSize:[24,24],iconAnchor:[12,12]});
+const BOUNDS={all:()=>{const s=shown();return (s.length?s:V).map(v=>[v.lat,v.lon])},dunsan:()=>[[36.338,127.338],[36.380,127.398]]};
+function fitLeaflet(){const b=BOUNDS[zoom](); if(b.length===1) LM.setView(b[0],15); else LM.fitBounds(b,{padding:[24,24],maxZoom:15})}
 function initLeaflet(){
   if(!window.L) return;
   const el=document.getElementById("lmap"); el.hidden=false; svg.hidden=true;
@@ -269,50 +365,63 @@ function initLeaflet(){
     timer=setTimeout(next,6000); };
   next();
   addEventListener("load",()=>LM&&LM.invalidateSize());
-  V.forEach(v=>{LMK[v.no]=L.marker([v.lat,v.lon],{icon:L.divIcon({className:"lpin",html:lpinHTML(v),iconSize:[28,28],iconAnchor:[14,14]}),title:v.n,alt:v.n}).addTo(LM).on("click",()=>select(v.no,false))});
+  V.forEach(v=>{LMK[v.no]=L.marker([v.lat,v.lon],{icon:lIcon(v),title:v.n,alt:v.n}).on("click",()=>select(v.no,false))});
   fitLeaflet();
 }
 function drawMap(){
-  if(LM){V.forEach(v=>{LMK[v.no].setIcon(L.divIcon({className:"lpin",html:lpinHTML(v),iconSize:[28,28],iconAnchor:[14,14]})).setZIndexOffset(v===sel?1000:0)});return}
+  const s=new Set(shown());
+  if(LM){V.forEach(v=>{const m=LMK[v.no]; if(s.has(v)){m.setIcon(lIcon(v)).setZIndexOffset(v===sel?1000:0); if(!LM.hasLayer(m)) m.addTo(LM)} else if(LM.hasLayer(m)) LM.removeLayer(m)});return}
   const vb=VIEW[zoom], u=vb[2]/600*(zoom==="all"?1:1.6);
   svg.setAttribute("viewBox",vb.join(" "));
-  let s="";
-  for(const [k,g] of Object.entries(DIST)) s+=`<path class="district${ORDER.includes(k)?" on":""}" d="${g.d}"/>`;
-  if(zoom==="all") for(const [k,g] of Object.entries(DIST)) s+=`<text class="dname" x="${g.cx}" y="${g.cy}" text-anchor="middle" font-size="22">${k}</text>`;
-  const r=11*u;
-  [...V].sort((a,b)=>(a===sel)-(b===sel)).forEach(v=>{
-    s+=`<g class="pin${v===sel?" sel":""}" data-no="${v.no}" tabindex="0" role="button" aria-label="${esc(v.n)}"><circle cx="${v.x.toFixed(1)}" cy="${v.y.toFixed(1)}" r="${(v===sel?r*1.25:r).toFixed(2)}" fill="${cvar(v.d)}"/><text x="${v.x.toFixed(1)}" y="${(v.y+r*0.38).toFixed(1)}" text-anchor="middle" font-size="${(r*1.05).toFixed(2)}">${v.no}</text></g>`;
+  let out="";
+  for(const [k,g] of Object.entries(DIST)) out+=`<path class="district${ORDER.includes(k)?" on":""}" d="${g.d}"/>`;
+  if(zoom==="all") for(const [k,g] of Object.entries(DIST)) out+=`<text class="dname" x="${g.cx}" y="${g.cy}" text-anchor="middle" font-size="22">${k}</text>`;
+  const r=10*u;
+  [...s].sort((a,b)=>(a===sel)-(b===sel)).forEach(v=>{
+    out+=`<g class="pin${v===sel?" sel":""}" data-no="${v.no}" tabindex="0" role="button" aria-label="${esc(v.n)}"><circle cx="${v.x.toFixed(1)}" cy="${v.y.toFixed(1)}" r="${(v===sel?r*1.25:r).toFixed(2)}" fill="${cvar(v.d)}"/><text x="${v.x.toFixed(1)}" y="${(v.y+r*0.38).toFixed(1)}" text-anchor="middle" font-size="${(r*1.05).toFixed(2)}">${v.no}</text></g>`;
   });
-  svg.innerHTML=s;
+  svg.innerHTML=out;
 }
 svg.addEventListener("click",e=>{const g=e.target.closest(".pin"); if(g) select(+g.dataset.no,false)});
 svg.addEventListener("keydown",e=>{const g=e.target.closest(".pin"); if(g&&(e.key==="Enter"||e.key===" ")){e.preventDefault();select(+g.dataset.no,false)}});
+
+// 두 출처 값 합치기
+function pair(k,n){
+  if(k&&n&&k===n) return `<span>${k} ${KCA}${NT}</span>`;
+  return (k?`<span>${k} ${KCA}</span>`:"")+(n?`<span>${n} ${NT}</span>`:"");
+}
+const rentN=v=>v.nt?manR(v.nt.rent)+(v.nt.h.length>1?` (${v.nt.h.map(h=>h[0]+" "+man(h[6])).join(", ")})`:""):"";
+const mealK=v=>v.kca?(v.kca.mealNote||manR(v.kca.meal)+"원"):"";
+const mealN=v=>v.nt?manR(v.nt.meal)+"원"+(v.nt.vatEx?" (부가세 별도)":""):"";
+const guestN=v=>v.nt?(v.nt.h.length>1?v.nt.h.map(h=>`${h[0]} 최소 ${h[8]}·좌석 ${h[9]}·최대 ${h[10]}`).join(" / "):`최소 ${v.nt.h[0][8]}명 · 좌석 ${v.nt.h[0][9]} · 최대 ${v.nt.h[0][10]}명`):"";
+
 function drawInfo(){
   const el=document.getElementById("info"), v=sel;
-  if(!v){el.innerHTML=`<p class="muted small">지도 위 번호나 아래 목록을 누르면 위치와 대관료가 여기 표시됩니다.</p>`;return}
-  el.innerHTML=`<div class="nm"><h3>${v.no}. ${esc(v.n)}</h3><span class="chip ${v.d}">${v.d}</span></div>
+  if(!v){el.innerHTML=`<p class="muted small">지도 위 번호나 아래 목록을 누르면 위치와 가격이 여기 표시됩니다.</p>`;return}
+  el.innerHTML=`<div class="nm"><h3>${v.no}. ${esc(v.n)}</h3><span class="chip ${v.d}">${v.d}</span>${v.kca?KCA:""}${v.nt?NT:""}</div>
    <p class="small muted">${esc(v.a)}</p>
-   <p class="small"><b>대관료</b> ${esc(v.rentTxt)}</p>
-   <p class="small"><b>1인 식대</b> ${esc(v.mealNote||manR(v.meal)+"원")} · ${esc(v.guest)}</p>
+   <dl class="both small"><dt>대관료</dt><dd>${pair(v.kca&&esc(v.kca.rentTxt),v.nt&&esc(rentN(v)))}</dd>
+   <dt>1인 식대</dt><dd>${pair(v.kca&&esc(mealK(v)),v.nt&&esc(mealN(v)))}</dd></dl>
    <p class="small">${v.tel?`전화 ${esc(v.tel)} · `:""}<a href="${kakao(v)}" target="_blank" rel="noopener">카카오맵에서 보기 ↗</a></p>`;
 }
 function select(no,fromList){
   sel=V.find(v=>v.no===no)||null;
-  if(LM&&sel) LM.setView([sel.lat,sel.lon],Math.max(LM.getZoom(),15));
+  if(LM&&sel) LM.setView([sel.lat,sel.lon],Math.max(LM.getZoom(),16));
   if(!LM&&sel&&zoom==="all"&&sel.x>VIEW.dunsan[0]&&sel.x<VIEW.dunsan[0]+VIEW.dunsan[2]&&sel.y>VIEW.dunsan[1]&&sel.y<VIEW.dunsan[1]+VIEW.dunsan[3]&&V.some(o=>o!==sel&&Math.hypot(o.x-sel.x,o.y-sel.y)<18)) setZoom("dunsan");
-  drawMap();drawInfo();drawRent();
+  drawMap();drawInfo();drawRent();drawMeal();
   if(fromList) document.querySelector(".map-box").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"center"});
 }
 function setZoom(z){zoom=z;document.querySelectorAll("#zoomSeg button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.z===z));if(LM)fitLeaflet();else drawMap()}
 document.getElementById("zoomSeg").addEventListener("click",e=>{const b=e.target.closest("button"); if(b) setZoom(b.dataset.z)});
 
-// 막대 행 공통
-function rowHTML(v,segs,val,tag,sub){
+// 막대
+const segHTML=(segs,c)=>segs.map(([a,b,cls])=>`<i class="${cls}" style="left:${a}%;width:${Math.max(b-a,0)}%;background-color:${c}"></i>`).join("");
+const lnHTML=(src,segs,val,c,tag)=>`<div class="ln">${src}<span class="bar">${segHTML(segs,c)}</span><span class="val">${val}${tag?`<span class="tag">${tag}</span>`:""}</span></div>`;
+function rowHTML(v,lines,sub){
   return `<div class="row${v===sel?" sel":""}" data-no="${v.no}" tabindex="0" role="button">
    <span class="no" style="background:${cvar(v.d)}">${v.no}</span>
-   <span class="name">${esc(v.n)}${tag?`<span class="tag">${tag}</span>`:""}</span>
-   <span class="val">${val}</span>
-   <span class="bar">${segs.map(([a,b,cls])=>`<i class="${cls}" style="left:${a}%;width:${Math.max(b-a,cls==="base"&&b===a?0:0.8)}%;background-color:${cvar(v.d)}"></i>`).join("")}</span>
+   <span class="name">${esc(v.n)}</span>
+   <div class="lines">${lines.join("")}</div>
    ${sub?`<span class="sub">${esc(sub)}</span>`:""}</div>`;
 }
 function bindRows(el){
@@ -320,64 +429,86 @@ function bindRows(el){
   el.onkeydown=e=>{const r=e.target.closest(".row"); if(r&&(e.key==="Enter"||e.key===" ")){e.preventDefault();select(+r.dataset.no,true)}};
 }
 const scaleHTML=(max,step,f)=>{let s="";for(let t=0;t<=max;t+=step)s+=`<span>${f(t)}</span>`;return s};
+const empty='<p class="muted small" style="padding:8px 6px">조건에 맞는 웨딩홀이 없습니다. 필터를 바꿔 보세요.</p>';
 
-// 대관료
 function drawRent(){
-  const sum=mode==="sum", MAX=sum?1600*M:800*M, pct=x=>Math.min(100,x/MAX*100);
-  const lo=v=>v.rent[0]+(sum&&v.deco?v.deco[0]:0), hi=v=>v.rent[1]+(sum&&v.deco?v.deco[1]:0);
-  const rows=[...V].sort((p,q)=>lo(p)-lo(q)||hi(p)-hi(q));
-  document.getElementById("rentRows").innerHTML=rows.map(v=>{
-    const segs=[];
-    if(sum&&v.deco){segs.push([0,pct(v.rent[0]),"base"]);segs.push([pct(v.rent[0]),pct(lo(v)),"deco"]);}
-    else segs.push([0,pct(lo(v)),"base"]);
-    if(hi(v)>lo(v)) segs.push([pct(lo(v)),pct(hi(v)),"range"]);
-    const val=hi(v)>MAX?`${man(lo(v))}~${man(hi(v))}`:manR([lo(v),hi(v)]);
-    let tag=v.bundled?"장식 포함":"";
-    if(!sum&&v.deco) tag="장식 별도";
-    if(v.rent[1]===0) tag="무료·장식 별도";
-    if(sum&&!v.deco&&!v.bundled) tag="장식비 미기재";
-    return rowHTML(v,segs,val,tag,v.rentTxt);
-  }).join("");
-  document.getElementById("rentScale").innerHTML=scaleHTML(MAX,MAX/4,t=>man(t));
+  const sum=mode==="sum", MAX=sum?1600*M:900*M, pct=x=>Math.min(100,x/MAX*100);
+  const kLo=v=>v.kca.rent[0]+(sum&&v.kca.deco?v.kca.deco[0]:0), kHi=v=>v.kca.rent[1]+(sum&&v.kca.deco?v.kca.deco[1]:0);
+  const lo=v=>Math.min(v.kca?kLo(v):Infinity,v.nt?v.nt.rent[0]:Infinity);
+  const rows=shown().sort((p,q)=>lo(p)-lo(q));
+  const el=document.getElementById("rentRows");
+  el.innerHTML=rows.length?rows.map(v=>{
+    const c=cvar(v.d), ls=[];
+    if(v.kca){const k=v.kca, a=kLo(v), b=kHi(v), segs=[];
+      if(sum&&k.deco){segs.push([0,pct(k.rent[0]),"base"]);segs.push([pct(k.rent[0]),pct(a),"deco"])} else segs.push([0,pct(a),"base"]);
+      if(b>a) segs.push([pct(a),pct(b),"range"]);
+      let tag=k.bundled?"장식 포함":""; if(!sum&&k.deco) tag="장식 별도"; if(k.rent[1]===0) tag="장식 별도"; if(sum&&!k.deco&&!k.bundled) tag="장식 미기재";
+      ls.push(lnHTML(KCA,segs,manR([a,b]),c,tag));}
+    if(v.nt){const [a,b]=v.nt.rent, segs=[[0,pct(a),"base"]]; if(b>a) segs.push([pct(a),pct(b),"range"]);
+      ls.push(lnHTML(NT,segs,manR([a,b]),c,""));}
+    const sub=[v.kca&&v.kca.rentTxt, v.nt&&v.nt.h.length>1&&("노션: "+v.nt.h.map(h=>h[0]+" "+man(h[6])).join(", "))].filter(Boolean).join(" · ");
+    return rowHTML(v,ls,sub);
+  }).join(""):empty;
+  document.getElementById("rentScale").innerHTML=scaleHTML(MAX,MAX/(sum?4:3),t=>man(t));
   document.getElementById("rentKey").innerHTML=`<span><i class="sw"></i>최저가</span>${sum?`<span><i class="sw deco"></i>필수 장식(최저)</span>`:""}<span><i class="sw range"></i>최고가까지</span>`;
-  document.getElementById("rentNote").textContent=sum
-   ?"필수 장식은 업체가 대관과 함께 표기한 생화·꽃장식·플라워데코입니다. 호텔 오노마의 꽃장식은 최대 3,000만원이라 막대가 잘려 있습니다."
-   :"‘장식 포함’은 대관료와 생화장식이 한 금액으로만 공개된 곳이라 대관료만 따로 떼어 볼 수 없습니다. ‘장식 별도’인 곳은 위의 ‘대관료 + 필수 장식’에서 합계를 비교하세요.";
-  bindRows(document.getElementById("rentRows"));
+  document.getElementById("rentNote").textContent=(sum
+   ?"‘대관료 + 필수 장식’은 참소비자원 값에만 적용됩니다. 업체가 대관과 함께 표기한 생화·꽃장식·플라워데코를 더했고, 호텔 오노마는 꽃장식이 최대 3,000만원이라 막대가 잘려 있습니다."
+   :"참소비자원의 ‘장식 포함’은 대관료와 생화장식이 한 금액으로만 공개된 곳입니다. ‘장식 별도’는 위의 ‘대관료 + 필수 장식’에서 합계를 비교하세요.")
+   +" 노션(ver)의 홀 대관료는 노션에 적힌 값 그대로이며 장식 포함 여부는 표에 따로 적혀 있지 않습니다.";
+  bindRows(el);
 }
 document.getElementById("rentSeg").addEventListener("click",e=>{const b=e.target.closest("button"); if(!b) return; mode=b.dataset.m;
   document.querySelectorAll("#rentSeg button").forEach(x=>x.setAttribute("aria-pressed",x===b)); drawRent()});
 
-// 식대
 function drawMeal(){
-  const MAX=180000, pct=x=>x/MAX*100;
-  const rows=[...V].sort((p,q)=>p.meal[0]-q.meal[0]||p.meal[1]-q.meal[1]);
-  document.getElementById("mealRows").innerHTML=rows.map(v=>{
-    const segs=[[0,pct(v.meal[0]),"base"]]; if(v.meal[1]>v.meal[0]) segs.push([pct(v.meal[0]),pct(v.meal[1]),"range"]);
-    return rowHTML(v,segs,manR(v.meal),"",v.guest);
-  }).join("");
+  const MAX=180000, pct=x=>Math.min(100,x/MAX*100);
+  const lo=v=>Math.min(v.kca?v.kca.meal[0]:Infinity,v.nt?v.nt.meal[0]:Infinity);
+  const rows=shown().sort((p,q)=>lo(p)-lo(q));
+  const el=document.getElementById("mealRows");
+  el.innerHTML=rows.length?rows.map(v=>{
+    const c=cvar(v.d), ls=[];
+    for(const [src,s,tag] of [[KCA,v.kca,""],[NT,v.nt,v.nt&&v.nt.vatEx?"VAT 별도":""]]){ if(!s) continue;
+      const [a,b]=s.meal, segs=[[0,pct(a),"base"]]; if(b>a) segs.push([pct(a),pct(b),"range"]); ls.push(lnHTML(src,segs,manR([a,b]),c,tag)); }
+    const sub=[v.kca&&("보증 "+v.kca.guest), v.nt&&("노션 최소 "+(v.nt.guest[0]===v.nt.guest[1]?v.nt.guest[0]:v.nt.guest.join("~"))+"명 · "+[...new Set(v.nt.h.map(h=>h[11]))].join("/"))].filter(Boolean).join(" · ");
+    return rowHTML(v,ls,sub);
+  }).join(""):empty;
   document.getElementById("mealScale").innerHTML=scaleHTML(MAX,45000,t=>man(t));
-  bindRows(document.getElementById("mealRows"));
+  bindRows(el);
 }
 
-// 카드, 날짜
-document.getElementById("cards").innerHTML=V.map(v=>`
- <article class="card">
-  <div class="card-top"><div><h3>${v.no}. ${esc(v.n)}</h3><p class="small muted">${esc(v.a)}</p></div><span class="chip ${v.d}">${v.d}</span></div>
-  <dl>
-   <dt>예식홀</dt><dd>${esc(v.hall)}</dd>
-   <dt>보증인원</dt><dd>${esc(v.guest)}</dd>
-   <dt>1인 식대</dt><dd>${esc(v.mealNote||manR(v.meal)+"원")}</dd>
-   <dt>대관·장식</dt><dd>${esc(v.rentTxt)}</dd>
-   <dt>패키지</dt><dd>${esc(v.pkg)}</dd>
-  </dl>
-  <p class="opts">${esc(v.opts)}</p>
-  <p class="dates">업체 수정 ${v.mod} · 참가격 게시 ${v.post} · <a href="${kakao(v)}" target="_blank" rel="noopener">카카오맵 ↗</a></p>
- </article>`).join("");
-document.getElementById("dateRows").innerHTML=[...V].sort((p,q)=>q.post.localeCompare(p.post)||q.mod.localeCompare(p.mod)).map(v=>`
- <tr><td>${esc(v.n)}</td><td class="num">${v.mod}</td><td class="num">${v.post}${v.post!=="2026-09-29"?' <span class="flag">추가 게시</span>':''}</td><td class="num">${v.created}</td><td>${esc(v.by)}</td></tr>`).join("");
-
-initLeaflet();drawMap();drawInfo();drawRent();drawMeal();
+function drawCards(){
+  const s=shown();
+  document.getElementById("cards").innerHTML=s.length?s.map(v=>{
+    const k=v.kca, n=v.nt;
+    const hallTbl=n?`<div class="halls"><table><thead><tr><th>홀</th><th>분위기</th><th>형태</th><th>시간</th><th>대관료</th><th>식대</th><th>최소·좌석·최대</th><th>버진로드</th></tr></thead><tbody>
+      ${n.h.map(h=>`<tr><td>${esc(h[0])} · ${h[1]}${h[2]!=="단독홀"?` <small class="muted">${h[2]}</small>`:""}</td><td>${h[4].map(m=>`<span class="mood">${m}</span>`).join("")}</td><td>${h[3]}</td><td class="num">${h[5]}분</td><td class="num">${man(h[6])}</td><td class="num">${man(h[12])}</td><td class="num">${h[8]}·${h[9]}·${h[10]}</td><td class="num">${h[7]??"-"}${h[7]!=null?"m":""}</td></tr>`).join("")}
+      </tbody></table></div>`:"";
+    return `<article class="card">
+     <div class="card-top"><div><h3>${v.no}. ${esc(v.n)}</h3><p class="small muted">${esc(v.a)}</p></div><span class="chip ${v.d}">${v.d}</span></div>
+     <div class="meta">${k?KCA:""}${n?NT:""}${v.tel?`<span class="small muted">${esc(v.tel)}</span>`:""}<a class="small" href="${kakao(v)}" target="_blank" rel="noopener">카카오맵 ↗</a></div>
+     <dl class="both">
+      <dt>대관료</dt><dd>${pair(k&&esc(k.rentTxt),n&&esc(rentN(v)))}</dd>
+      <dt>1인 식대</dt><dd>${pair(k&&esc(mealK(v)),n&&esc(mealN(v)))}</dd>
+      <dt>인원</dt><dd>${pair(k&&esc("보증 "+k.guest),n&&esc(guestN(v)))}</dd>
+      ${n?`<dt>음주류</dt><dd><span>${esc([...new Set(n.h.map(h=>h[13]))].join(", "))} ${NT}</span></dd>`:""}
+      ${k?`<dt>패키지</dt><dd><span>${esc(k.pkg)} ${KCA}</span></dd><dt>선택품목</dt><dd><span>${esc(k.opts)} ${KCA}</span></dd>`:""}
+     </dl>
+     ${hallTbl}
+     ${n&&n.note?`<div class="review"><span>${NT} 한줄평</span>${esc(n.note)}</div>`:""}
+     <p class="dates">${k?`참가격 게시 ${k.post} · 업체 수정 ${k.mod}`:v.board?`참가격 게시판에도 게시(${v.board})됐지만 받은 엑셀은 없음`:"참소비자원 자료 없음"}</p>
+    </article>`}).join(""):empty;
+}
+function drawDates(){
+  document.getElementById("dateRows").innerHTML=V.filter(v=>v.kca).sort((p,q)=>q.kca.post.localeCompare(p.kca.post)||q.kca.mod.localeCompare(p.kca.mod)).map(v=>`
+   <tr><td>${esc(v.n)}</td><td class="num">${v.kca.mod}</td><td class="num">${v.kca.post}${v.kca.post!=="2026-09-29"?' <span class="flag">추가 게시</span>':''}</td><td class="num">${v.kca.created}</td><td>${esc(v.kca.by)}</td></tr>`).join("");
+}
+function refresh(){
+  if(sel&&!shown().includes(sel)) sel=null;
+  document.getElementById("fCount").textContent=`${shown().length}곳 표시 중`;
+  drawMap();drawInfo();drawRent();drawMeal();drawCards();
+  if(LM&&zoom==="all") fitLeaflet();
+}
+initLeaflet();drawDates();refresh();
 </script>
 </body>
 </html>
