@@ -17,16 +17,17 @@
   --accent:#2f4a7a;
   --yu:#2c6fb3; --seo:#b2456e; --jung:#b07a12;
   --yu-soft:#e3eefa; --seo-soft:#f8e6ee; --jung-soft:#f8efd9;
+  --tile-filter:none;
   --font-display:"Nanum Myeongjo",serif;
   --font-body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#12161d; --surface:#1a202a; --ink:#e6e9ef; --muted:#9aa3b2; --line:#2c3441; --land:#202734; --land-line:#3a4352;
-  --accent:#9db6e6; --yu:#6aa9ea; --seo:#e381a8; --jung:#e0ac45;
+  --tile-filter:invert(1) hue-rotate(180deg) brightness(.85) contrast(.9); --accent:#9db6e6; --yu:#6aa9ea; --seo:#e381a8; --jung:#e0ac45;
   --yu-soft:#1c2c40; --seo-soft:#3a1f2b; --jung-soft:#382b12; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#12161d; --surface:#1a202a; --ink:#e6e9ef; --muted:#9aa3b2; --line:#2c3441; --land:#202734; --land-line:#3a4352;
-  --accent:#9db6e6; --yu:#6aa9ea; --seo:#e381a8; --jung:#e0ac45;
+  --tile-filter:invert(1) hue-rotate(180deg) brightness(.85) contrast(.9); --accent:#9db6e6; --yu:#6aa9ea; --seo:#e381a8; --jung:#e0ac45;
   --yu-soft:#1c2c40; --seo-soft:#3a1f2b; --jung-soft:#382b12; color-scheme:dark}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
@@ -115,6 +116,15 @@ tr:last-child td{border-bottom:0}
 .note{font-size:13px;color:var(--muted);display:flex;flex-direction:column;gap:6px;padding-left:1.1em;margin:0}
 details summary{cursor:pointer;font-weight:600;color:var(--accent);padding:6px 0}
 @media (prefers-reduced-motion:no-preference){.row,.seg button{transition:background .15s}}
+/* Leaflet 1.9.4 */
+.leaflet-image-layer,.leaflet-layer,.leaflet-marker-icon,.leaflet-marker-shadow,.leaflet-pane,.leaflet-pane>canvas,.leaflet-pane>svg,.leaflet-tile,.leaflet-tile-container,.leaflet-zoom-box{position:absolute;left:0;top:0}.leaflet-container{overflow:hidden}.leaflet-marker-icon,.leaflet-marker-shadow,.leaflet-tile{-webkit-user-select:none;-moz-user-select:none;user-select:none;-webkit-user-drag:none}.leaflet-tile::selection{background:0 0}.leaflet-safari .leaflet-tile{image-rendering:-webkit-optimize-contrast}.leaflet-safari .leaflet-tile-container{width:1600px;height:1600px;-webkit-transform-origin:0 0}.leaflet-marker-icon,.leaflet-marker-shadow{display:block}.leaflet-container .leaflet-overlay-pane svg{max-width:none!important;max-height:none!important}.leaflet-container .leaflet-marker-pane img,.leaflet-container .leaflet-shadow-pane img,.leaflet-container .leaflet-tile,.leaflet-container .leaflet-tile-pane img,.leaflet-container img.leaflet-image-layer{max-width:none!important;max-height:none!important;width:auto;padding:0}.leaflet-container img.leaflet-tile{mix-blend-mode:plus-lighter}.leaflet-container.leaflet-touch-zoom{-ms-touch-action:pan-x pan-y;touch-action:pan-x pan-y}.leaflet-container.leaflet-touch-drag{-ms-touch-action:pinch-zoom;touch-action:none;touch-action:pinch-zoom}.leaflet-container.leaflet-touch-drag.leaflet-touch-zoom{-ms-touch-action:none;touch-action:none}.leaflet-container{-webkit-tap-highlight-color:transparent}.leaflet-container a{-webkit-tap-highlight-color:rgba(51,181,229,.4)}.leaflet-tile{filter:inherit;visibility:hidden}.leaflet-tile-loaded{visibility:inherit}.leaflet-zoom-box{width:0;height:0;-moz-box-sizing:border-box;box-sizing:border-box;z-index:800}.leaflet-overlay-pane svg{-moz-user-select:none}.leaflet-pane{z-index:400}.leaflet-tile-pane{z-index:200}.leaflet-overlay-pane{z-index:400}.leaflet-shadow-pane{z-index:500}.leaflet-marker-pane{z-index:600}.leaflet-tooltip-pane{z-index:650}.leaflet-popup-pane{z-index:700}.leaflet-map-pane canvas{z-index:100}.leaflet-map-pane svg{z-index:200}.leaflet-vml-shape{width:1px;height:1px}.lvml{behavior:url(#default#VML);display:inline-block;position:absolute}.leaflet-control{position:relative;z-index:800;pointer-events:visiblePainted;pointer-events:auto}.leaflet-bottom,.leaflet-top{position:absolute;z-index:1000;pointer-events:none}.leaflet-top{top:0}.leaflet-right{right:0}.leaflet-bottom{bottom:0}.leaflet-left{left:0}.leaflet-control{float:left;clear:both}.leaflet-right .leaflet-control{float:right}.leaflet-top .leaflet-control{margin-top:10px}.leaflet-bottom .leaflet-control{margin-bottom:10px}.leaflet-left .leaflet-control{margin-left:10px}.leaflet-right .leaflet-control{margin-right:10px}.leaflet-fade-anim .leaflet-popup{opacity:0;-webkit-transition:opacity .2s linear;-moz-transition:opacity .2s linear;transition:opacity .2s linear}.leaflet-fade-anim .leaflet-map-pane .leaflet-popup{opacity:1}.leaflet-zoom-animated{-webkit-transform-origin:0 0;-ms-transform-origin:0 0;transform-origin:0 0}svg.leaflet-zoom-animated{will-change:transform}.leaflet-zoom-anim .leaflet-zoom-animated{-webkit-transition:-webkit-transform .25s cubic-bezier(0,0,.25,1);-moz-transition:-moz-transform .25s cubic-bezier(0,0,.25,1);transition:transform .25s cubic-bezier(0,0,.25,1)}.leaflet-pan-anim .leaflet-tile,.leaflet-zoom-anim .leaflet-tile{-webkit-transition:none;-moz-transition:none;transition:none}.leaflet-zoom-anim .leaflet-zoom-hide{visibility:hidden}.leaflet-interactive{cursor:pointer}.leaflet-grab{cursor:-webkit-grab;cursor:-moz-grab;cursor:grab}.leaflet-crosshair,.leaflet-crosshair .leaflet-interactive{cursor:crosshair}.leaflet-control,.leaflet-popup-pane{cursor:auto}.leaflet-dragging .leaflet-grab,.leaflet-dragging .leaflet-grab .leaflet-interactive,.leaflet-dragging .leaflet-marker-draggable{cursor:move;cursor:-webkit-grabbing;cursor:-moz-grabbing;cursor:grabbing}.leaflet-image-layer,.leaflet-marker-icon,.leaflet-marker-shadow,.leaflet-pane>svg path,.leaflet-tile-container{pointer-events:none}.leaflet-image-layer.leaflet-interactive,.leaflet-marker-icon.leaflet-interactive,.leaflet-pane>svg path.leaflet-interactive,svg.leaflet-image-layer.leaflet-interactive path{pointer-events:visiblePainted;pointer-events:auto}.leaflet-container{background:#ddd;outline-offset:1px}.leaflet-container a{color:#0078a8}.leaflet-zoom-box{border:2px dotted #38f;background:rgba(255,255,255,.5)}.leaflet-container{font-family:"Helvetica Neue",Arial,Helvetica,sans-serif;font-size:12px;font-size:.75rem;line-height:1.5}.leaflet-bar{box-shadow:0 1px 5px rgba(0,0,0,.65);border-radius:4px}.leaflet-bar a{background-color:#fff;border-bottom:1px solid #ccc;width:26px;height:26px;line-height:26px;display:block;text-align:center;text-decoration:none;color:#000}.leaflet-bar a,.leaflet-control-layers-toggle{background-position:50% 50%;background-repeat:no-repeat;display:block}.leaflet-bar a:focus,.leaflet-bar a:hover{background-color:#f4f4f4}.leaflet-bar a:first-child{border-top-left-radius:4px;border-top-right-radius:4px}.leaflet-bar a:last-child{border-bottom-left-radius:4px;border-bottom-right-radius:4px;border-bottom:none}.leaflet-bar a.leaflet-disabled{cursor:default;background-color:#f4f4f4;color:#bbb}.leaflet-touch .leaflet-bar a{width:30px;height:30px;line-height:30px}.leaflet-touch .leaflet-bar a:first-child{border-top-left-radius:2px;border-top-right-radius:2px}.leaflet-touch .leaflet-bar a:last-child{border-bottom-left-radius:2px;border-bottom-right-radius:2px}.leaflet-control-zoom-in,.leaflet-control-zoom-out{font:bold 18px 'Lucida Console',Monaco,monospace;text-indent:1px}.leaflet-touch .leaflet-control-zoom-in,.leaflet-touch .leaflet-control-zoom-out{font-size:22px}.leaflet-control-layers{box-shadow:0 1px 5px rgba(0,0,0,.4);background:#fff;border-radius:5px}.leaflet-control-layers-toggle{background-image:url(images/layers.png);width:36px;height:36px}.leaflet-retina .leaflet-control-layers-toggle{background-image:url(images/layers-2x.png);background-size:26px 26px}.leaflet-touch .leaflet-control-layers-toggle{width:44px;height:44px}.leaflet-control-layers .leaflet-control-layers-list,.leaflet-control-layers-expanded .leaflet-control-layers-toggle{display:none}.leaflet-control-layers-expanded .leaflet-control-layers-list{display:block;position:relative}.leaflet-control-layers-expanded{padding:6px 10px 6px 6px;color:#333;background:#fff}.leaflet-control-layers-scrollbar{overflow-y:scroll;overflow-x:hidden;padding-right:5px}.leaflet-control-layers-selector{margin-top:2px;position:relative;top:1px}.leaflet-control-layers label{display:block;font-size:13px;font-size:1.08333em}.leaflet-control-layers-separator{height:0;border-top:1px solid #ddd;margin:5px -10px 5px -6px}.leaflet-default-icon-path{background-image:url(images/marker-icon.png)}.leaflet-container .leaflet-control-attribution{background:#fff;background:rgba(255,255,255,.8);margin:0}.leaflet-control-attribution,.leaflet-control-scale-line{padding:0 5px;color:#333;line-height:1.4}.leaflet-control-attribution a{text-decoration:none}.leaflet-control-attribution a:focus,.leaflet-control-attribution a:hover{text-decoration:underline}.leaflet-attribution-flag{display:inline!important;vertical-align:baseline!important;width:1em;height:.6669em}.leaflet-left .leaflet-control-scale{margin-left:5px}.leaflet-bottom .leaflet-control-scale{margin-bottom:5px}.leaflet-control-scale-line{border:2px solid #777;border-top:none;line-height:1.1;padding:2px 5px 1px;white-space:nowrap;-moz-box-sizing:border-box;box-sizing:border-box;background:rgba(255,255,255,.8);text-shadow:1px 1px #fff}.leaflet-control-scale-line:not(:first-child){border-top:2px solid #777;border-bottom:none;margin-top:-2px}.leaflet-control-scale-line:not(:first-child):not(:last-child){border-bottom:2px solid #777}.leaflet-touch .leaflet-bar,.leaflet-touch .leaflet-control-attribution,.leaflet-touch .leaflet-control-layers{box-shadow:none}.leaflet-touch .leaflet-bar,.leaflet-touch .leaflet-control-layers{border:2px solid rgba(0,0,0,.2);background-clip:padding-box}.leaflet-popup{position:absolute;text-align:center;margin-bottom:20px}.leaflet-popup-content-wrapper{padding:1px;text-align:left;border-radius:12px}.leaflet-popup-content{margin:13px 24px 13px 20px;line-height:1.3;font-size:13px;font-size:1.08333em;min-height:1px}.leaflet-popup-content p{margin:17px 0;margin:1.3em 0}.leaflet-popup-tip-container{width:40px;height:20px;position:absolute;left:50%;margin-top:-1px;margin-left:-20px;overflow:hidden;pointer-events:none}.leaflet-popup-tip{width:17px;height:17px;padding:1px;margin:-10px auto 0;pointer-events:auto;-webkit-transform:rotate(45deg);-moz-transform:rotate(45deg);-ms-transform:rotate(45deg);transform:rotate(45deg)}.leaflet-popup-content-wrapper,.leaflet-popup-tip{background:#fff;color:#333;box-shadow:0 3px 14px rgba(0,0,0,.4)}.leaflet-container a.leaflet-popup-close-button{position:absolute;top:0;right:0;border:none;text-align:center;width:24px;height:24px;font:16px/24px Tahoma,Verdana,sans-serif;color:#757575;text-decoration:none;background:0 0}.leaflet-container a.leaflet-popup-close-button:focus,.leaflet-container a.leaflet-popup-close-button:hover{color:#585858}.leaflet-popup-scrolled{overflow:auto}.leaflet-oldie .leaflet-popup-content-wrapper{-ms-zoom:1}.leaflet-oldie .leaflet-popup-tip{width:24px;margin:0 auto}.leaflet-oldie .leaflet-control-layers,.leaflet-oldie .leaflet-control-zoom,.leaflet-oldie .leaflet-popup-content-wrapper,.leaflet-oldie .leaflet-popup-tip{border:1px solid #999}.leaflet-div-icon{background:#fff;border:1px solid #666}.leaflet-tooltip{position:absolute;padding:6px;background-color:#fff;border:1px solid #fff;border-radius:3px;color:#222;white-space:nowrap;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;pointer-events:none;box-shadow:0 1px 3px rgba(0,0,0,.4)}.leaflet-tooltip.leaflet-interactive{cursor:pointer;pointer-events:auto}.leaflet-tooltip-bottom:before,.leaflet-tooltip-left:before,.leaflet-tooltip-right:before,.leaflet-tooltip-top:before{position:absolute;pointer-events:none;border:6px solid transparent;background:0 0;content:""}.leaflet-tooltip-bottom{margin-top:6px}.leaflet-tooltip-top{margin-top:-6px}.leaflet-tooltip-bottom:before,.leaflet-tooltip-top:before{left:50%;margin-left:-6px}.leaflet-tooltip-top:before{bottom:0;margin-bottom:-12px;border-top-color:#fff}.leaflet-tooltip-bottom:before{top:0;margin-top:-12px;margin-left:-6px;border-bottom-color:#fff}.leaflet-tooltip-left{margin-left:-6px}.leaflet-tooltip-right{margin-left:6px}.leaflet-tooltip-left:before,.leaflet-tooltip-right:before{top:50%;margin-top:-6px}.leaflet-tooltip-left:before{right:0;margin-right:-12px;border-left-color:#fff}.leaflet-tooltip-right:before{left:0;margin-left:-12px;border-right-color:#fff}@media print{.leaflet-control{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+.map-box{isolation:isolate}
+#lmap{height:min(62vh,520px);border-radius:8px;background:var(--land);font-family:var(--font-body)}
+#lmap .leaflet-tile-pane{filter:var(--tile-filter)}
+.lpin{background:none;border:0}
+.lpin-dot{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;color:#fff;font:700 13px/1 var(--font-body);border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.35)}
+.lpin-dot.sel{width:34px;height:34px;margin:-3px;font-size:15px;border-color:var(--ink)}
+.leaflet-container a.leaflet-control-zoom-in,.leaflet-container a.leaflet-control-zoom-out{color:#1b2230}
 </style>
 </head>
 <body>
@@ -137,10 +147,10 @@ details summary{cursor:pointer;font-weight:600;color:var(--accent);padding:6px 0
         <button type="button" data-z="dunsan" aria-pressed="false">둔산·유성 확대</button>
       </div>
     </div>
-    <div class="map-box"><svg id="map" viewBox="0 0 600 772" role="img" aria-label="대전 구별 웨딩홀 위치"></svg></div>
+    <div class="map-box"><div id="lmap" hidden></div><svg id="map" viewBox="0 0 600 772" role="img" aria-label="대전 구별 웨딩홀 위치"></svg></div>
     <div class="info" id="info"></div>
   </div>
-  <p class="muted small">위치는 주소를 지도 좌표로 바꾼 값이라 수백 m 정도 어긋날 수 있고, 구 경계는 단순화했습니다. 정확한 위치는 카카오맵 링크로 확인하세요.</p>
+  <p class="muted small" id="mapNote">위치는 카카오맵 좌표 기준입니다. 지도 © OpenStreetMap 기여자.</p>
 </section>
 
 <section>
@@ -180,39 +190,40 @@ details summary{cursor:pointer;font-weight:600;color:var(--accent);padding:6px 0
 </section>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
 const M=1e4;
 // rent/deco 단위: 원. bundled=대관료에 장식 포함
 const V=[
- {n:"라비에벨웨딩홀",d:"서구",a:"대전 서구 계백로 1108",q:"라비에벨웨딩홀",lat:36.30666,lon:127.36355,hall:"단독홀",guest:"200~300명",meal:[54000,54000],
+ {n:"라비에벨웨딩홀",d:"서구",a:"대전 서구 계백로 1108",q:"라비에벨웨딩홀",lat:36.30251,lon:127.34704,tel:"042-485-1515",hall:"단독홀",guest:"200~300명",meal:[54000,54000],
   rent:[330*M,330*M],deco:null,bundled:true,rentTxt:"대관+생화장식 330만원",pkg:"패키지+생화장식 530만원 (드레스·턱시도·헤메·부케·원판)",opts:"스튜디오 90만 · 본식스냅 ~44만 · 혼주메이크업 여 17만 / 남 5.5만",created:"2026-05-30",mod:"2026-07-07",by:"smartkca",post:"2026-10-01"},
- {n:"더BMK컨벤션",d:"중구",a:"대전 중구 서문로 133",q:"더BMK컨벤션",lat:36.31503,lon:127.40845,hall:"4층 아스틴 / 5층 하모니볼룸",guest:"150~250명 / 200~250명",meal:[40000,60000],
+ {n:"더BMK컨벤션",d:"중구",a:"대전 중구 서문로 133",q:"더BMK컨벤션",lat:36.31983,lon:127.40508,tel:"042-334-1000",hall:"4층 아스틴 / 5층 하모니볼룸",guest:"150~250명 / 200~250명",meal:[40000,60000],
   rent:[0,200*M],deco:[130*M,130*M],rentTxt:"아스틴 0~150만 · 하모니볼룸 50~200만 + 생화 130만",pkg:"패키지 350만원",opts:"사진 55~88만 · 영상 40~90만 · 스튜디오 98만 · 사회 18~35만",created:"2025-11-11",mod:"2026-03-16",by:"smartkca",post:"2026-09-29"},
- {n:"계룡스파텔",d:"유성구",a:"대전 유성구 온천로 81",q:"계룡스파텔",lat:36.35497,lon:127.34475,hall:"무궁화홀(실내) / 테마공원(야외)",guest:"50명 미만 한정식, 50명 이상 뷔페",meal:[44000,59000],mealNote:"뷔페 4.4만/4.8만/5.9만 · 50명 미만 한정식 4.6~7.5만",
+ {n:"계룡스파텔",d:"유성구",a:"대전 유성구 온천로 81",q:"계룡스파텔",lat:36.35569,lon:127.34832,tel:"042-602-1155",hall:"무궁화홀(실내) / 테마공원(야외)",guest:"50명 미만 한정식, 50명 이상 뷔페",meal:[44000,59000],mealNote:"뷔페 4.4만/4.8만/5.9만 · 50명 미만 한정식 4.6~7.5만",
   rent:[22*M,64*M],deco:[70*M,70*M],rentTxt:"실내 22만 · 야외 64만 (토탈업체 필수상품 미이용 시) · 꽃장식 70만",pkg:"드레스 40~80만 · 원판 50~80만 · 본식화장 30만",opts:"군 회원 할인: 현역·군무원 뷔페 3.6~4.9만, 대관 20만",created:"2025-11-11",mod:"2026-05-14",by:"user",post:"2026-09-29"},
- {n:"더시그너스웨딩뷔페",d:"서구",a:"대전 서구 둔산중로 8 지하1층",q:"더시그너스웨딩뷔페 대전",lat:36.35235,lon:127.38674,hall:"컨벤션홀",guest:"기본 200명~",meal:[49000,49000],
+ {n:"더시그너스웨딩뷔페",d:"서구",a:"대전 서구 둔산중로 8 지하1층",q:"더시그너스웨딩뷔페 대전",lat:36.34707,lon:127.38742,tel:"042-488-1111",hall:"컨벤션홀",guest:"기본 200명~",meal:[49000,49000],
   rent:[180*M,180*M],deco:null,rentTxt:"대관 180만 (장식비 별도 표기 없음)",pkg:"패키지(드+메+대관+원판) A 270만 · B 250만",opts:"스튜디오 122만 · 영상 50만~ · 사회 15~35만",created:"2026-09-14",mod:"2026-09-15",by:"smartkca",post:"2026-09-29"},
- {n:"라도무스아트센터",d:"유성구",a:"대전 유성구 동서대로 639 3층",q:"라도무스아트센터",lat:36.35813,lon:127.30355,hall:"아시시·라도무스·아트리움 / 아모리움·루미니스",guest:"200~300명",meal:[62000,66000],
+ {n:"라도무스아트센터",d:"유성구",a:"대전 유성구 동서대로 639 3층",q:"라도무스아트센터",lat:36.33306,lon:127.33364,tel:"042-823-5220",hall:"아시시·라도무스·아트리움 / 아모리움·루미니스",guest:"200~300명",meal:[62000,66000],
   rent:[530*M,790*M],deco:null,bundled:true,rentTxt:"대관+생화 530만 / 790만",pkg:"패키지+생화 750만 / 1,010만",opts:"스튜디오 80만 · 본식스냅 69만 · 영상 50만~ · 폐백 24만~",created:"2026-05-30",mod:"2026-05-31",by:"연희 남",post:"2026-09-29"},
- {n:"라미컨벤션웨딩",d:"유성구",a:"대전 유성구 봉명로 27-27",q:"라미컨벤션웨딩",lat:36.34217,lon:127.34334,hall:"라미컨벤션홀 (소규모)",guest:"최소보증 30명",meal:[49000,76000],mealNote:"30명 보증 177~228만(1인 5.9만/7.6만) · 50명 이상 1인 4.9~7.6만",
+ {n:"라미컨벤션웨딩",d:"유성구",a:"대전 유성구 봉명로 27-27",q:"라미컨벤션웨딩",lat:36.34302,lon:127.34387,tel:"042-368-8912",hall:"라미컨벤션홀 (소규모)",guest:"최소보증 30명",meal:[49000,76000],mealNote:"30명 보증 177~228만(1인 5.9만/7.6만) · 50명 이상 1인 4.9~7.6만",
   rent:[190*M,190*M],deco:null,rentTxt:"대관 190만 (장식비 금액 미기재)",pkg:"대관+장식+드메 330만",opts:"사진 80~100만 · 영상 45만 · 스튜디오 115만 · 장식 추가 50~200만",created:"2025-11-11",mod:"2026-02-20",by:"smartkca",post:"2026-09-29"},
- {n:"롯데시티호텔 대전",d:"유성구",a:"대전 유성구 엑스포로123번길 33",q:"롯데시티호텔 대전",lat:36.37617,lon:127.39303,hall:"크리스탈볼룸",guest:"100~270명",meal:[75000,120000],mealNote:"정상가 7.5만/9.2만/12만 · 프로모션 5~10% 할인",
+ {n:"롯데시티호텔 대전",d:"유성구",a:"대전 유성구 엑스포로123번길 33",q:"롯데시티호텔 대전",lat:36.37619,lon:127.39303,tel:"042-333-1000",hall:"크리스탈볼룸",guest:"100~270명",meal:[75000,120000],mealNote:"정상가 7.5만/9.2만/12만 · 프로모션 5~10% 할인",
   rent:[0,330*M],deco:[550*M,770*M],rentTxt:"150명 이상 무료 · 100~149명 330만 · 생화 550~770만",pkg:"패키지 없음",opts:"프리미엄단상 440만 · 포토테이블 55만 · 피아노3중주 66만",created:"2025-11-11",mod:"2026-05-11",by:"smartkca",post:"2026-09-29"},
- {n:"루이비스컨벤션 대전",d:"유성구",a:"대전 유성구 테크노중앙로 161 스카이파크호텔 1층",q:"루이비스컨벤션 대전점",lat:36.42478,lon:127.39806,hall:"아모리스홀 / 그레이스홀",guest:"200~300명",meal:[73000,73000],
+ {n:"루이비스컨벤션 대전",d:"유성구",a:"대전 유성구 테크노중앙로 161 스카이파크호텔 1층",q:"루이비스컨벤션 대전점",lat:36.42474,lon:127.39808,tel:"042-933-2500",hall:"아모리스홀 / 그레이스홀",guest:"200~300명",meal:[73000,73000],
   rent:[500*M,500*M],deco:[150*M,150*M],rentTxt:"대관 500만 + 플라워데코 150만",pkg:"패키지(드+메+대관+원판) 700만 + 플라워데코 150만",opts:"스튜디오 88만 · 사진 66~198만 · 영상 49~148.5만",created:"2025-11-11",mod:"2026-09-22",by:"현욱 위",post:"2026-09-29"},
- {n:"메리비아포레 웨딩홀",d:"서구",a:"대전 서구 둔산중로134번길 13 KW컨벤션 2층",q:"메리비아포레웨딩홀",lat:36.35895,lon:127.38758,dx:-3,dy:-3,hall:"단독홀",guest:"150~300명",meal:[50000,60000],
+ {n:"메리비아포레 웨딩홀",d:"서구",a:"대전 서구 둔산중로134번길 13 KW컨벤션 2층",q:"메리비아포레웨딩홀",lat:36.35903,lon:127.38764,tel:"042-486-2388",dx:-3,dy:-3,hall:"단독홀",guest:"150~300명",meal:[50000,60000],
   rent:[330*M,390*M],deco:null,bundled:true,rentTxt:"대관+생화 330~390만",pkg:"패키지+생화 450~510만",opts:"스튜디오 95만~ · 본식스냅 66만~ · 포토부스 45만 · 사회 30만",created:"2026-05-30",mod:"2026-10-06",by:"smartkca",post:"2026-10-06"},
- {n:"베스타뷔페",d:"서구",a:"대전 서구 만년로 70 2층",q:"베스타 대전 만년로",lat:36.36697,lon:127.38059,hall:"베가룸 (소규모)",guest:"기본 70~130명",meal:[79000,79000],
+ {n:"베스타뷔페",d:"서구",a:"대전 서구 만년로 70 2층",q:"베스타 대전 만년로",lat:36.36717,lon:127.38053,tel:"042-487-3366",hall:"베가룸 (소규모)",guest:"기본 70~130명",meal:[79000,79000],
   rent:[80*M,80*M],deco:null,bundled:true,rentTxt:"대관·장식 80만",pkg:"의상·헤메·부케 100만",opts:"원판 5판 50만 · 스냅 20만 · 사회자 추가 20만",created:"2025-11-11",mod:"2026-10-08",by:"프런트B",post:"2026-10-08"},
- {n:"빌라 드 알티오라",d:"서구",a:"대전 서구 한밭대로 809 사학연금회관 3층",q:"빌라드알티오라",lat:36.35859,lon:127.39038,dx:3,dy:3,hall:"2층 단독홀",guest:"최소 150명",meal:[55000,55000],
+ {n:"빌라 드 알티오라",d:"서구",a:"대전 서구 한밭대로 809 사학연금회관 3층",q:"빌라드알티오라",lat:36.35826,lon:127.38886,tel:"042-478-6600",dx:3,dy:3,hall:"2층 단독홀",guest:"최소 150명",meal:[55000,55000],
   rent:[350*M,350*M],deco:null,bundled:true,rentTxt:"대관+생화 350만",pkg:"본식 패키지+대관 700만",opts:"혼주 헤메 여 18.7만 / 남 5.5만 · 폐백 24만~ · 사회 33만",created:"2025-11-11",mod:"2026-06-08",by:"smartkca",post:"2026-09-29"},
- {n:"씨엘드레브",d:"서구",a:"대전 서구 계룡로314번길 8",q:"씨엘드레브",lat:36.35294,lon:127.36325,hall:"르자뎅홀",guest:"기본 250명",meal:[82000,82000],mealNote:"정상가 8.2만 · 프로모션 최대 20% 할인",
+ {n:"씨엘드레브",d:"서구",a:"대전 서구 계룡로314번길 8",q:"씨엘드레브",lat:36.35335,lon:127.36297,tel:"",hall:"르자뎅홀",guest:"기본 250명",meal:[82000,82000],mealNote:"정상가 8.2만 · 프로모션 최대 20% 할인",
   rent:[700*M,700*M],deco:[300*M,300*M],rentTxt:"대관 700만 + 장식 300만",pkg:"토탈 패키지(홀+스드메) 990만",opts:"사회 38.5만 · 예식도우미 33만 · 혼주메이크업 30만",created:"2025-11-11",mod:"2026-05-13",by:"smartkca",post:"2026-09-29"},
- {n:"에스가든웨딩 대전",d:"서구",a:"대전 서구 월드컵대로484번안길 10",q:"에스가든웨딩 대전",lat:36.34578,lon:127.35552,hall:"르씨엘홀",guest:"기본 150~250명",meal:[59000,65000],
+ {n:"에스가든웨딩 대전",d:"서구",a:"대전 서구 월드컵대로484번안길 10",q:"에스가든웨딩 대전",lat:36.3457,lon:127.3545,tel:"042-538-9946",hall:"르씨엘홀",guest:"기본 150~250명",meal:[59000,65000],
   rent:[275*M,330*M],deco:[220*M,275*M],rentTxt:"대관 275~330만 + 장식 220~275만",pkg:"패키지 없음",opts:"사진·영상 각 77~195만 · 폐백 33~126.5만",created:"2025-11-11",mod:"2026-05-31",by:"연희 남",post:"2026-09-29"},
- {n:"팔레드오페라",d:"서구",a:"대전 서구 둔산남로 50",q:"팔레드오페라",lat:36.34811,lon:127.38347,hall:"3층 트리아농 / 4층 가르니에",guest:"200~300명",meal:[72000,72000],
+ {n:"팔레드오페라",d:"서구",a:"대전 서구 둔산남로 50",q:"팔레드오페라",lat:36.34804,lon:127.38355,tel:"042-300-5000",hall:"3층 트리아농 / 4층 가르니에",guest:"200~300명",meal:[72000,72000],
   rent:[550*M,650*M],deco:[200*M,200*M],rentTxt:"트리아농 550만 · 가르니에 650만 + 생화 200만",pkg:"패키지 850만",opts:"스냅 65만~ · DVD 80만~ · 스튜디오 90만 · 포토부스 48만~",created:"2025-11-11",mod:"2026-05-26",by:"smartkca",post:"2026-09-29"},
- {n:"호텔 오노마",d:"유성구",a:"대전 유성구 엑스포로 1",q:"호텔오노마 대전",lat:36.37500,lon:127.38330,hall:"그랜드볼룸",guest:"100~350명",meal:[140000,175000],mealNote:"양식 14만/15.5만/17만 · 퓨전한식 15.5만/17.5만",
+ {n:"호텔 오노마",d:"유성구",a:"대전 유성구 엑스포로 1",q:"호텔오노마 대전",lat:36.37497,lon:127.38339,tel:"042-259-8007",hall:"그랜드볼룸",guest:"100~350명",meal:[140000,175000],mealNote:"양식 14만/15.5만/17만 · 퓨전한식 15.5만/17.5만",
   rent:[0,0],deco:[960*M,3000*M],rentTxt:"100명 이상 대관 무료 · 꽃장식 960만~3,000만 · 무대연출 500만",pkg:"패키지 없음",opts:"폐백실 88만 · 샹들리에 240만 · 포토테이블 80만 · 사회자 50만",created:"2025-11-11",mod:"2026-09-09",by:"smartkca",post:"2026-09-29"}
 ];
 const ORDER=["유성구","서구","중구"];
@@ -233,7 +244,25 @@ document.getElementById("legend").innerHTML=ORDER.map(d=>`<span><i class="dot d-
 
 // 지도
 const svg=document.getElementById("map");
+let LM=null; const LMK={};
+const lpinHTML=v=>`<span class="lpin-dot${v===sel?" sel":""}" style="background:${cvar(v.d)}">${v.no}</span>`;
+const BOUNDS={all:()=>V.map(v=>[v.lat,v.lon]),dunsan:()=>[[36.338,127.338],[36.380,127.398]]};
+function fitLeaflet(){LM.fitBounds(BOUNDS[zoom](),{padding:[24,24]})}
+function initLeaflet(){
+  if(!window.L) return;
+  const el=document.getElementById("lmap"); el.hidden=false; svg.hidden=true;
+  LM=L.map(el,{scrollWheelZoom:false}); LM.attributionControl.setPrefix(false);
+  let ok=false, errs=0;
+  const fallback=()=>{ if(ok||!LM) return; LM.remove(); LM=null; el.hidden=true; svg.hidden=false;
+    document.getElementById("mapNote").textContent="이 화면에서는 지도 이미지를 불러올 수 없어 간단한 지도로 표시합니다. 위치는 카카오맵 좌표 기준이고 구 경계는 단순화했습니다."; drawMap(); };
+  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'})
+   .on("tileload",()=>{ok=true}).on("tileerror",()=>{if(++errs>=3) fallback()}).addTo(LM);
+  V.forEach(v=>{LMK[v.no]=L.marker([v.lat,v.lon],{icon:L.divIcon({className:"lpin",html:lpinHTML(v),iconSize:[28,28],iconAnchor:[14,14]}),title:v.n,alt:v.n}).addTo(LM).on("click",()=>select(v.no,false))});
+  fitLeaflet();
+  setTimeout(fallback,8000);
+}
 function drawMap(){
+  if(LM){V.forEach(v=>{LMK[v.no].setIcon(L.divIcon({className:"lpin",html:lpinHTML(v),iconSize:[28,28],iconAnchor:[14,14]})).setZIndexOffset(v===sel?1000:0)});return}
   const vb=VIEW[zoom], u=vb[2]/600*(zoom==="all"?1:1.6);
   svg.setAttribute("viewBox",vb.join(" "));
   let s="";
@@ -254,15 +283,16 @@ function drawInfo(){
    <p class="small muted">${esc(v.a)}</p>
    <p class="small"><b>대관료</b> ${esc(v.rentTxt)}</p>
    <p class="small"><b>1인 식대</b> ${esc(v.mealNote||manR(v.meal)+"원")} · ${esc(v.guest)}</p>
-   <a href="${kakao(v)}" target="_blank" rel="noopener">카카오맵에서 보기 ↗</a>`;
+   <p class="small">${v.tel?`전화 ${esc(v.tel)} · `:""}<a href="${kakao(v)}" target="_blank" rel="noopener">카카오맵에서 보기 ↗</a></p>`;
 }
 function select(no,fromList){
   sel=V.find(v=>v.no===no)||null;
-  if(sel&&zoom==="all"&&sel.x>VIEW.dunsan[0]&&sel.x<VIEW.dunsan[0]+VIEW.dunsan[2]&&sel.y>VIEW.dunsan[1]&&sel.y<VIEW.dunsan[1]+VIEW.dunsan[3]&&V.some(o=>o!==sel&&Math.hypot(o.x-sel.x,o.y-sel.y)<18)) setZoom("dunsan");
+  if(LM&&sel) LM.setView([sel.lat,sel.lon],Math.max(LM.getZoom(),15));
+  if(!LM&&sel&&zoom==="all"&&sel.x>VIEW.dunsan[0]&&sel.x<VIEW.dunsan[0]+VIEW.dunsan[2]&&sel.y>VIEW.dunsan[1]&&sel.y<VIEW.dunsan[1]+VIEW.dunsan[3]&&V.some(o=>o!==sel&&Math.hypot(o.x-sel.x,o.y-sel.y)<18)) setZoom("dunsan");
   drawMap();drawInfo();drawRent();
   if(fromList) document.querySelector(".map-box").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"center"});
 }
-function setZoom(z){zoom=z;document.querySelectorAll("#zoomSeg button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.z===z));drawMap()}
+function setZoom(z){zoom=z;document.querySelectorAll("#zoomSeg button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.z===z));if(LM)fitLeaflet();else drawMap()}
 document.getElementById("zoomSeg").addEventListener("click",e=>{const b=e.target.closest("button"); if(b) setZoom(b.dataset.z)});
 
 // 막대 행 공통
@@ -336,7 +366,7 @@ document.getElementById("cards").innerHTML=V.map(v=>`
 document.getElementById("dateRows").innerHTML=[...V].sort((p,q)=>q.post.localeCompare(p.post)||q.mod.localeCompare(p.mod)).map(v=>`
  <tr><td>${esc(v.n)}</td><td class="num">${v.mod}</td><td class="num">${v.post}${v.post!=="2026-09-29"?' <span class="flag">추가 게시</span>':''}</td><td class="num">${v.created}</td><td>${esc(v.by)}</td></tr>`).join("");
 
-drawMap();drawInfo();drawRent();drawMeal();
+initLeaflet();drawMap();drawInfo();drawRent();drawMeal();
 </script>
 </body>
 </html>
