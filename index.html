@@ -252,14 +252,24 @@ function initLeaflet(){
   if(!window.L) return;
   const el=document.getElementById("lmap"); el.hidden=false; svg.hidden=true;
   LM=L.map(el,{scrollWheelZoom:false}); LM.attributionControl.setPrefix(false);
-  let ok=false, errs=0;
-  const fallback=()=>{ if(ok||!LM) return; LM.remove(); LM=null; el.hidden=true; svg.hidden=false;
+  const OSM='&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>';
+  const SRC=[
+    ["https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",OSM+' &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>',"abcd"],
+    ["https://tile.openstreetmap.org/{z}/{x}/{y}.png",OSM,""]
+  ];
+  let ok=false, errs=0, idx=-1, layer=null, timer=null;
+  const fallback=()=>{ if(ok||!LM) return; clearTimeout(timer); LM.remove(); LM=null; el.hidden=true; svg.hidden=false;
     document.getElementById("mapNote").textContent="이 화면에서는 지도 이미지를 불러올 수 없어 간단한 지도로 표시합니다. 위치는 카카오맵 좌표 기준이고 구 경계는 단순화했습니다."; drawMap(); };
-  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'})
-   .on("tileload",()=>{ok=true}).on("tileerror",()=>{if(++errs>=3) fallback()}).addTo(LM);
+  const next=()=>{ if(ok||!LM) return; clearTimeout(timer); if(layer) LM.removeLayer(layer);
+    if(++idx>=SRC.length) return fallback();
+    errs=0; const [url,attr,sub]=SRC[idx];
+    layer=L.tileLayer(url,{maxZoom:19,attribution:attr,subdomains:sub||"abc"})
+     .on("tileload",()=>{ok=true;clearTimeout(timer)}).on("tileerror",()=>{if(++errs>=3) next()}).addTo(LM);
+    timer=setTimeout(next,6000); };
+  next();
+  addEventListener("load",()=>LM&&LM.invalidateSize());
   V.forEach(v=>{LMK[v.no]=L.marker([v.lat,v.lon],{icon:L.divIcon({className:"lpin",html:lpinHTML(v),iconSize:[28,28],iconAnchor:[14,14]}),title:v.n,alt:v.n}).addTo(LM).on("click",()=>select(v.no,false))});
   fitLeaflet();
-  setTimeout(fallback,8000);
 }
 function drawMap(){
   if(LM){V.forEach(v=>{LMK[v.no].setIcon(L.divIcon({className:"lpin",html:lpinHTML(v),iconSize:[28,28],iconAnchor:[14,14]})).setZIndexOffset(v===sel?1000:0)});return}
