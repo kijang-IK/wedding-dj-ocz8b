@@ -150,7 +150,7 @@ details summary{cursor:pointer;font-weight:600;color:var(--accent);padding:6px 0
     <div class="map-box"><div id="lmap" hidden></div><svg id="map" viewBox="0 0 600 772" role="img" aria-label="대전 구별 웨딩홀 위치"></svg></div>
     <div class="info" id="info"></div>
   </div>
-  <p class="muted small" id="mapNote">위치는 카카오맵 좌표 기준입니다. 지도 © OpenStreetMap 기여자.</p>
+  <p class="muted small" id="mapNote">위치는 카카오맵 좌표 기준입니다.</p>
 </section>
 
 <section>
@@ -254,7 +254,8 @@ function initLeaflet(){
   LM=L.map(el,{scrollWheelZoom:false}); LM.attributionControl.setPrefix(false);
   const OSM='&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>';
   const SRC=[
-    ["https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",OSM+' &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>',"abcd"],
+    ["https://xdworld.vworld.kr/2d/Base/service/{z}/{x}/{y}.png",'&copy; <a href="https://www.vworld.kr" target="_blank" rel="noopener">국토교통부 브이월드</a>',""],
+    ["https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",'Tiles &copy; Esri',""],
     ["https://tile.openstreetmap.org/{z}/{x}/{y}.png",OSM,""]
   ];
   let ok=false, errs=0, idx=-1, layer=null, timer=null;
