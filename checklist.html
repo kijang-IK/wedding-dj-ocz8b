@@ -1,0 +1,569 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="결혼 준비 체크리스트">
+<meta property="og:description" content="홀투어 질문 75개·견적 계산·점수 비교, 준비 타임라인, 계약·상담, 예산표">
+<meta name="description" content="홀투어 질문 75개·견적 계산·점수 비교, 준비 타임라인, 계약·상담, 예산표">
+<title>결혼 준비 체크리스트</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Nanum+Myeongjo:wght@700;800&display=swap">
+<style>
+/* Layout: 모바일 우선 한 열. 상단 바로가기 → ① 홀투어(준비·질문·견적·점수) → ② 준비 타임라인(D-day) → ③ 계약·플래너 상담 → ④ 예산·지출 → 기록 백업. 가격비교 페이지와 같은 색·글꼴 */
+:root{
+  --bg:#f6f7f9; --surface:#ffffff; --ink:#1b2230; --muted:#5d6676; --line:#dde1e8; --land:#eef0f4;
+  --accent:#2f4a7a; --accent-soft:#e6ebf5;
+  --good:#2f8458; --good-soft:#e1f2e7; --mid:#b07a12; --mid-soft:#f8efd9; --bad:#b2456e; --bad-soft:#f8e6ee;
+  --font-display:"Nanum Myeongjo",serif;
+  --font-body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12161d; --surface:#1a202a; --ink:#e6e9ef; --muted:#9aa3b2; --line:#2c3441; --land:#202734;
+  --accent:#9db6e6; --accent-soft:#1e2738; --good:#6cc48f; --good-soft:#18301f; --mid:#e0ac45; --mid-soft:#382b12; --bad:#e381a8; --bad-soft:#3a1f2b; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12161d; --surface:#1a202a; --ink:#e6e9ef; --muted:#9aa3b2; --line:#2c3441; --land:#202734;
+  --accent:#9db6e6; --accent-soft:#1e2738; --good:#6cc48f; --good-soft:#18301f; --mid:#e0ac45; --mid-soft:#382b12; --bad:#e381a8; --bad-soft:#3a1f2b; color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:15px;line-height:1.6;padding:20px 16px 72px}
+.wrap{max-width:1000px;margin:0 auto;display:flex;flex-direction:column;gap:40px}
+h1,h2{font-family:var(--font-display);text-wrap:balance;margin:0;letter-spacing:-.01em}
+h1{font-size:clamp(26px,6vw,38px);font-weight:800;line-height:1.25}
+h2{font-size:22px;font-weight:800}
+h3{margin:0;font-size:16px}
+p{margin:0}
+a{color:var(--accent)}
+.muted{color:var(--muted)} .small{font-size:13px}
+.num{font-variant-numeric:tabular-nums}
+header{display:flex;flex-direction:column;gap:8px}
+.eyebrow{font-size:12px;letter-spacing:.08em;color:var(--accent);font-weight:600}
+section{display:flex;flex-direction:column;gap:14px;min-width:0;scroll-margin-top:64px}
+.sec-head{display:flex;flex-direction:column;gap:4px}
+.sec-head .no{font-size:12px;font-weight:700;color:var(--accent);letter-spacing:.06em}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;min-width:0}
+.frow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.lbl{font-size:12px;color:var(--muted);font-weight:600}
+button{font:inherit}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--surface);gap:2px;flex-wrap:wrap}
+.seg button{font-size:13px;border:0;background:transparent;color:var(--ink);padding:7px 14px;border-radius:999px;cursor:pointer;min-height:36px}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{font-size:13px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:5px 12px;border-radius:999px;cursor:pointer;min-height:34px}
+.chips button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn{font-size:13px;padding:6px 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);cursor:pointer;min-height:34px}
+.btn.primary{background:var(--accent);color:var(--bg);border-color:var(--accent);font-weight:600}
+input[type=text],input[type=number],input[type=date],select,textarea{font:inherit;font-size:14px;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);min-height:36px;min-width:0}
+textarea{width:100%;resize:vertical;min-height:70px}
+.tag{font-size:11px;font-weight:700;padding:1px 7px;border-radius:999px;white-space:nowrap;display:inline-block;line-height:1.6}
+.tag.must{background:var(--bad-soft);color:var(--bad)}
+.tag.look{background:var(--accent-soft);color:var(--accent)}
+.bar{height:8px;background:var(--land);border-radius:4px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:4px}
+
+/* 바로가기 */
+.qnav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;display:flex;gap:4px;overflow-x:auto;background:var(--bg);padding:8px 0;margin:-22px 0;border-bottom:1px solid var(--line);scrollbar-width:none}
+.qnav::-webkit-scrollbar{display:none}
+.qnav a{flex:none;font-size:13px;font-weight:600;color:var(--ink);text-decoration:none;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface)}
+.qnav a.hot{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+
+/* 분류 카드 */
+.cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,210px),1fr));gap:10px}
+.cat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;text-decoration:none;color:var(--ink);display:flex;flex-direction:column;gap:4px}
+.cat b{font-size:15px}
+.cat span{font-size:12px;color:var(--muted)}
+.cat.hot{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+
+/* 홀투어 */
+.halls{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:10px}
+.hallcard{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px}
+.hallcard .hn{font-weight:700;display:flex;align-items:center;gap:8px}
+.hallcard .hn i{font-style:normal;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:12px;color:var(--bg);background:var(--accent)}
+.hallcard label{display:flex;flex-direction:column;gap:2px;font-size:12px;color:var(--muted)}
+.hallcard input{width:100%}
+.hallsbox summary{cursor:pointer;list-style-position:inside}
+.prep{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:12px}
+.list{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none}
+.ck{display:grid;grid-template-columns:20px minmax(0,1fr);gap:8px;font-size:14px;cursor:pointer;align-items:start}
+.ck input{margin-top:3px;width:16px;height:16px;accent-color:var(--accent)}
+.ck small{display:block;color:var(--muted);font-size:12px}
+.ck:has(input:checked) > span{color:var(--muted);text-decoration:line-through}
+.tabs{position:sticky;top:calc(env(safe-area-inset-top,0px) + 50px);z-index:40;background:var(--bg);padding:6px 0}
+.qtools{display:flex;flex-direction:column;gap:8px}
+.qcat{display:flex;flex-direction:column;gap:0}
+.qcat h3{display:flex;justify-content:space-between;gap:8px;align-items:baseline;padding:10px 2px 6px;border-bottom:2px solid var(--ink)}
+.qcat h3 small{font-weight:400;color:var(--muted);font-size:12px}
+.q{display:grid;grid-template-columns:minmax(0,1fr);gap:6px;padding:12px 2px;border-bottom:1px solid var(--line)}
+.q .qt{font-size:14.5px;font-weight:600;display:flex;gap:6px;flex-wrap:wrap;align-items:baseline}
+.q .tip{font-size:12.5px;color:var(--muted)}
+.q .act{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.st{display:inline-flex;gap:4px}
+.st button{border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:13px;padding:4px 10px;border-radius:999px;cursor:pointer;min-height:32px}
+.st button[aria-pressed="true"][data-s="good"]{background:var(--good-soft);color:var(--good);border-color:var(--good);font-weight:700}
+.st button[aria-pressed="true"][data-s="mid"]{background:var(--mid-soft);color:var(--mid);border-color:var(--mid);font-weight:700}
+.st button[aria-pressed="true"][data-s="bad"]{background:var(--bad-soft);color:var(--bad);border-color:var(--bad);font-weight:700}
+.q .memo{flex:1;min-width:160px}
+.prog{display:flex;flex-direction:column;gap:4px;font-size:13px}
+.tbl{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:12px;-webkit-overflow-scrolling:touch}
+.tbl table{border-collapse:collapse;width:100%;font-size:13.5px}
+.tbl th,.tbl td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.tbl tr:last-child td,.tbl tr:last-child th{border-bottom:0}
+.tbl th{font-size:12px;color:var(--muted);font-weight:600;white-space:nowrap}
+.tbl td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tbl input[type=number],.tbl input[type=text]{width:100%;min-width:110px;text-align:right;font-variant-numeric:tabular-nums}
+.tbl input[type=text].l{text-align:left}
+.tbl tr.sum td,.tbl tr.sum th{font-weight:700;background:var(--land)}
+.tbl tr.grp th{background:var(--land);color:var(--ink);font-size:13px}
+.tbl .hint{font-size:11px;color:var(--muted);font-weight:400;display:block}
+.sticky1 th:first-child,.sticky1 td:first-child{position:sticky;left:0;background:var(--surface);z-index:1}
+.sticky1 tr.sum th:first-child,.sticky1 tr.grp th:first-child{background:var(--land)}
+.mark{font-weight:700} .mark.good{color:var(--good)} .mark.mid{color:var(--mid)} .mark.bad{color:var(--bad)}
+.best{color:var(--good);font-weight:700}
+.scores{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,280px),1fr));gap:12px}
+.scorecard{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px}
+.srow{display:grid;grid-template-columns:84px minmax(0,1fr) 34px;gap:8px;align-items:center;font-size:13px}
+.srow input{width:100%;accent-color:var(--accent)}
+.srow b{text-align:right;font-variant-numeric:tabular-nums}
+.total{font-size:20px;font-weight:800;font-variant-numeric:tabular-nums}
+
+/* 타임라인 */
+.ddbox{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.dd{font-size:28px;font-weight:800;font-family:var(--font-display);font-variant-numeric:tabular-nums}
+.phases{display:flex;flex-direction:column;gap:12px}
+.phase{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:10px}
+.phase.now{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.phase.past{opacity:.85}
+.ph{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:baseline}
+.ph b{font-size:16px}
+.ph .when{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.ph .now-tag{font-size:11px;font-weight:700;background:var(--accent);color:var(--bg);padding:1px 8px;border-radius:999px}
+.area{font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:0 6px;margin-left:4px;white-space:nowrap}
+.cols2{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,420px),1fr));gap:12px}
+.note{font-size:13px;color:var(--muted);display:flex;flex-direction:column;gap:4px;padding-left:1.1em;margin:0}
+.backup textarea{font-family:ui-monospace,Consolas,monospace;font-size:12px}
+.toast{font-size:13px;color:var(--good);font-weight:600}
+@media (prefers-reduced-motion:no-preference){.st button,.seg button,.chips button{transition:background .15s}}
+@media print{.qnav,.tabs,.backup,.btn{display:none!important} body{padding:0} .phase,.panel,.hallcard{break-inside:avoid}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">준비체크리스트 폴더 13개 파일 종합</div>
+  <h1>결혼 준비 체크리스트</h1>
+  <p class="muted small">흩어져 있던 체크리스트를 다섯 갈래로 나눠 하나로 합쳤습니다. 겹치는 질문은 하나로 묶었습니다. 체크와 메모는 이 브라우저에만 저장되고, 아래 <a href="#backup">기록 백업</a>으로 다른 기기에 옮길 수 있습니다.</p>
+  <p class="small"><a href="https://kijang-ik.github.io/wedding-dj-ocz8b/" target="_blank" rel="noopener">대전 웨딩홀 가격비교 보기 ↗</a></p>
+</header>
+
+<nav class="qnav" aria-label="바로가기">
+  <a class="hot" href="#tour">① 홀투어</a><a href="#timeline">② 준비 타임라인</a><a href="#contract">③ 계약·상담</a><a href="#budget">④ 예산·지출</a><a href="#backup">기록 백업</a>
+</nav>
+
+<section aria-label="분류">
+  <div class="cats">
+    <a class="cat hot" href="#tour"><b>① 홀투어 체크리스트</b><span id="catTour"></span></a>
+    <a class="cat" href="#timeline"><b>② 준비 타임라인</b><span id="catTime"></span></a>
+    <a class="cat" href="#contract"><b>③ 계약·플래너 상담</b><span id="catCon"></span></a>
+    <a class="cat" href="#budget"><b>④ 예산·지출</b><span>항목별 예산, 계약금·잔금, 부담 주체</span></a>
+  </div>
+</section>
+
+<!-- ① 홀투어 -->
+<section id="tour">
+  <div class="sec-head"><span class="no">① 지금 가장 중요</span><h2>홀투어 체크리스트</h2>
+  <p class="muted small">후보 홀 3곳까지 이름을 적고, 상담하면서 홀마다 질문에 답을 표시하세요. 견적은 같은 기준으로 계산하고, 마지막에 둘이 점수를 매겨 비교합니다.</p></div>
+
+  <details class="panel hallsbox" id="hallsBox" open><summary><b>후보 홀 정보</b> <span class="small muted" id="hallsSum"></span></summary><div class="halls" id="halls" style="margin-top:12px"></div></details>
+
+  <div class="tabs"><div class="seg" id="tourTab" role="group" aria-label="홀투어 단계">
+    <button type="button" data-t="prep" aria-pressed="false">가기 전 준비</button>
+    <button type="button" data-t="ask" aria-pressed="true">현장 질문</button>
+    <button type="button" data-t="est" aria-pressed="false">견적 계산</button>
+    <button type="button" data-t="score" aria-pressed="false">점수·비교</button>
+  </div></div>
+
+  <div id="tPrep" hidden>
+    <div class="prep">
+      <div class="panel"><h3>방문 전</h3><ul class="list" id="prepBefore"></ul></div>
+      <div class="panel"><h3>챙겨갈 것</h3><ul class="list" id="prepBring"></ul></div>
+      <div class="panel"><h3>다녀온 뒤</h3><ul class="list" id="prepAfter"></ul></div>
+    </div>
+  </div>
+
+  <div id="tAsk">
+    <div class="panel qtools">
+      <div class="frow"><span class="lbl">지금 상담 중인 홀</span><div class="seg" id="curHall" role="group" aria-label="홀 선택"></div></div>
+      <div class="frow"><span class="lbl">보기</span><div class="chips" id="qFilter"></div></div>
+      <div class="prog" id="qProg"></div>
+      <p class="small muted"><span class="tag must">필수</span> 계약 금액·조건을 바꾸는 질문, <span class="tag look">눈으로</span> 묻지 말고 직접 보고 확인할 것. 답은 ○ 좋음 · △ 애매 · ✕ 아쉬움으로 표시하고 메모를 남기세요.</p>
+    </div>
+    <div id="qList"></div>
+  </div>
+
+  <div id="tEst" hidden>
+    <p class="small muted">상담에서 받은 금액을 홀별로 넣으면 예상 총액과 남은 잔금이 계산됩니다. 금액 칸은 원 단위입니다. VAT·봉사료는 식대·대관료에 포함되지 않은 금액만 따로 넣으세요.</p>
+    <div class="tbl sticky1"><table id="estTbl"></table></div>
+  </div>
+
+  <div id="tScore" hidden>
+    <p class="small muted">항목마다 10점 만점으로 매겨 보세요. 둘이 각자 매긴 뒤 평균을 내면 좋습니다.</p>
+    <div class="scores" id="scores"></div>
+    <h3>필수 질문 답 비교</h3>
+    <div class="tbl sticky1"><table id="cmpTbl"></table></div>
+  </div>
+</section>
+
+<!-- ② 타임라인 -->
+<section id="timeline">
+  <div class="sec-head"><span class="no">②</span><h2>준비 타임라인</h2>
+  <p class="muted small">로드맵·순서표 다섯 개를 시기별로 합쳤습니다. 예식일을 넣으면 시기마다 날짜가 계산되고 지금 할 차례가 표시됩니다.</p></div>
+  <div class="panel ddbox">
+    <label class="lbl" for="wDate">예식일</label><input type="date" id="wDate">
+    <span class="dd" id="ddOut">D-?</span><span class="small muted" id="tlProg"></span>
+  </div>
+  <div class="frow"><span class="lbl">분야</span><div class="chips" id="areaF"></div></div>
+  <div class="phases" id="phases"></div>
+</section>
+
+<!-- ③ 계약·상담 -->
+<section id="contract">
+  <div class="sec-head"><span class="no">③</span><h2>계약·플래너 상담</h2>
+  <p class="muted small">웨딩홀이든 스드메든 도장 찍기 전에 확인할 것들입니다.</p></div>
+  <div class="cols2">
+    <div class="panel"><h3>계약 직전 최종 확인</h3><ul class="list" id="conFinal"></ul></div>
+    <div class="panel"><h3>플래너 상담 전 준비</h3><ul class="list" id="conPlan"></ul></div>
+    <div class="panel"><h3>플래너·업체에 물어볼 것</h3><ul class="list" id="conAsk"></ul></div>
+  </div>
+</section>
+
+<!-- ④ 예산 -->
+<section id="budget">
+  <div class="sec-head"><span class="no">④</span><h2>예산·지출</h2>
+  <p class="muted small">예산표·지출표 네 개의 항목을 합쳤습니다. 예산과 계약금·잔금·실지출을 넣으면 분류별 합계와 남은 금액이 계산됩니다. 금액은 만원 단위입니다.</p></div>
+  <div class="frow"><span class="lbl">총예산</span><input type="number" id="bTotal" min="0" step="10" inputmode="numeric" style="width:140px"><span class="small muted">만원</span><span class="small" id="bSum"></span></div>
+  <div class="tbl sticky1"><table id="bTbl"></table></div>
+  <ul class="note"><li>사례비 참고: 폐백 수모비 3~10만원, 드레스 헬퍼비 10~20만원은 보통 당일 현금으로 준비합니다.</li><li>헬퍼비·피팅비·원본비·헤어 변형비처럼 스드메 패키지 밖에서 따로 나가는 돈을 빠뜨리기 쉽습니다.</li></ul>
+</section>
+
+<section id="backup" class="backup">
+  <div class="sec-head"><h2>기록 백업</h2><p class="muted small">체크·메모·금액은 이 브라우저에만 저장됩니다. 폰과 PC를 오갈 때는 복사한 글을 다른 기기에서 붙여넣고 복원하세요.</p></div>
+  <div class="frow"><button type="button" class="btn primary" id="bkCopy">내 기록 복사</button><button type="button" class="btn" id="bkLoad">붙여넣은 기록 복원</button><button type="button" class="btn" id="bkClear">모두 지우기</button><span class="toast" id="bkMsg" aria-live="polite"></span></div>
+  <textarea id="bkText" rows="4" placeholder="여기에 복사한 기록이 나타나거나, 다른 기기에서 복사한 기록을 붙여넣습니다."></textarea>
+</section>
+</div>
+
+<script>
+// ───── 저장 ─────
+const KEY="wedding-checklist-v1";
+const load=()=>{try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return {}}};
+let S=load();
+S.halls=S.halls||[{},{},{}]; S.ans=S.ans||{}; S.est=S.est||{}; S.score=S.score||{}; S.pc=S.pc||{}; S.ck=S.ck||{}; S.bud=S.bud||{};
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const $=id=>document.getElementById(id);
+const hallName=i=>(S.halls[i]&&S.halls[i].name)||`홀 ${i+1}`;
+const won=n=>Math.round(n).toLocaleString("ko-KR")+"원";
+
+// ───── ① 홀투어 질문 (파일 5개의 질문을 합쳐 다시 씀) ─────
+// [id, 질문, 왜·무엇을 볼지, 필수, 눈으로]
+const Q=[
+ ["예약·일정",[
+  ["a1","원하는 날짜·시간대에 남은 타임이 있나","골든타임(토 12~14시 등)과 첫·막타임은 가격과 보증인원이 다릅니다.",1],
+  ["a2","날짜·시간을 바꿀 수 있나, 바꾸면 비용이 달라지나","변경 횟수 제한과 변경 시 적용되는 가격(바뀐 날 기준인지)을 확인합니다.",1],
+  ["a3","예식 간격과 실제 홀 사용 시간은 몇 분인가","60·70·90·120분. 짧으면 입장·사진이 급하고 앞뒤 팀 하객과 섞입니다.",1],
+  ["a4","단독홀·단독층인가, 로비를 다른 팀과 같이 쓰나","로비·포토존·축의대가 겹치면 하객 동선이 꼬입니다."],
+  ["a5","동시예식인가 분리예식인가","동시예식은 홀에서 바로 식사, 분리예식은 연회장으로 이동합니다."],
+  ["a6","리허설이 가능한가 (언제, 추가 비용)",""],
+  ["a7","예식이 밀리면 추가 요금이 붙나","대관 시간 초과 요금이 있는 곳이 있습니다."]]],
+ ["보증인원·식대",[
+  ["b1","최소 보증인원은 몇 명인가","시간대별 차이, 혼주·직계 포함 여부까지 확인합니다.",1],
+  ["b2","각보증인가 합보증인가","각보증이면 신랑·신부 쪽 인원을 따로 채워야 합니다.",1],
+  ["b3","보증인원 확정 마감일과 줄일 수 있는 폭","마감 뒤에는 줄어든 하객 몫도 그대로 냅니다. 계약서 기준인지 확인합니다.",1],
+  ["b4","보증 초과 하객은 몇 %까지 준비되나, 단가는 같은가","보통 +10~20%. 초과분에 정상가를 붙이는 곳이 있습니다.",1],
+  ["b5","1인 식대에 VAT·봉사료가 포함됐나","상담가와 결제가가 갈리는 대표 항목입니다.",1],
+  ["b6","음료·주류는 포함인가, 무제한인가 당일 소모량 정산인가","별도 정산이면 당일 금액이 크게 늘어납니다.",1],
+  ["b7","소인 식대는 몇 살부터, 얼마인가","나이 기준 없이 성인가로 계산하는 곳도 있습니다."],
+  ["b8","실제 식사 인원은 어떻게 세나 (식권·자유 입장)","식권을 홀에서 주는지, 직접 만들어 가는지도 확인합니다."],
+  ["b9","남은 식권을 답례품으로 바꿀 수 있나, 외부 답례품 반입","교환 비율과 반입 가능 여부를 확인합니다."],
+  ["b10","오기로 한 하객이 못 오면(노쇼) 어떻게 정산하나",""]]],
+ ["견적·결제·계약",[
+  ["c1","대관료에 포함된 항목 전체 목록","꽃장식, 음향·미디어, 연출, 사회자, 혼구용품(방명록·봉투·펜) 포함 여부를 하나씩 받습니다.",1],
+  ["c2","대관 + 꽃장식 + 연출까지 더한 최종 금액","VAT·봉사료를 포함한 금액으로 받아야 홀끼리 비교됩니다.",1],
+  ["c3","견적 밖에서 따로 나가는 돈","플라워샤워, 포토테이블, 폐백실, 헬퍼비 등.",0],
+  ["c4","계약금은 얼마이고 며칠까지 100% 환불되나","",1],
+  ["c5","취소·날짜 변경·인원 변경 위약금 구간","예식 며칠 전부터 몇 %인지, 계약금이 위약금에서 빠지는지.",1],
+  ["c6","중도금·잔금은 언제, 무엇으로 내나",""],
+  ["c7","카드가와 현금가가 같은가, 현금영수증은 전액 발행되나","카드 결제 시 부가세를 더 받는 이중가격에 주의합니다.",1],
+  ["c8","당일 계약 혜택은 무엇이고 언제까지 유지되나","혜택 내용과 금액을 견적서에 적어 달라고 하세요. 사정을 말하면 기한을 늘려 주는 곳도 있습니다.",1],
+  ["c9","얼리버드·프로모션 조건","내년 예식이면 지금 견적이 그대로 적용되는지 확인합니다."],
+  ["c10","환불 규정이 계약서에 적혀 있나","업체 사정으로 바뀔 때 보상, 천재지변 조항도 봅니다."],
+  ["c11","견적서·계약서 초안을 받아 갈 수 있나","같은 기준으로 비교하려면 서면이 필요합니다."]]],
+ ["필수 옵션·외부 업체",[
+  ["d1","원판·스냅·DVD·본식 드메를 홀 지정 업체로만 써야 하나","선택이라 생각한 항목이 필수인 경우가 많습니다.",1],
+  ["d2","외부 스냅·영상 업체를 쓸 수 있나, 반입비는 얼마인가","반입비가 업체 가격 차이를 뒤집기도 합니다."],
+  ["d3","안 쓰는 옵션을 빼면 할인되나",""],
+  ["d4","혼주 메이크업은 제휴 필수인가, 비용(여·남)",""],
+  ["d5","사회자·축가·연주가 기본 포함인가, 따로면 얼마인가",""],
+  ["d6","폐백실 사용료·수모비·폐백 의상",""],
+  ["d7","드레스 헬퍼비를 홀에서 따로 받나",""]]],
+ ["홀·연출",[
+  ["e1","천고가 높고 답답하지 않은가","입구 꽃장식, 조명 밝기도 같이 봅니다.",0,1],
+  ["e2","버진로드 길이·폭·단차","단이 높으면 드레스 입고 걷기 어렵습니다.",0,1],
+  ["e3","착석 좌석 수와 서서 볼 공간, 최대 수용 인원","",0],
+  ["e4","좌석 배치(일렬·원형)와 혼주석 시야","하객석 기둥·테이블이 시야를 가리지 않는지 앉아 봅니다.",0,1],
+  ["e5","조명 연출(암전·입장 조명)과 낮 채광","",0,1],
+  ["e6","꽃장식 생화·조화 비율, 생화 들여오는 시점, 식 후 가져갈 수 있나","상담 사진의 꽃이 추가 옵션인 경우가 많습니다."],
+  ["e7","버진로드 꽃이 기본에 포함되나",""],
+  ["e8","스크린 위치, 식전영상·실시간 상영 여부","",0,1],
+  ["e9","입장곡·식전영상 파일 형식, 외부 음원·라이브 연주 가능",""],
+  ["e10","플라워샤워 방식 (기계·도우미·지인)",""]]],
+ ["신부대기실·동선",[
+  ["f1","신부대기실이 홀과 같은 층인가, 크기·채광","",0,1],
+  ["f2","대기실 안에 전용 화장실이 있나, 음료가 나오나","",0,1],
+  ["f3","대기실에서 홀로 바로 입장하는 동선인가","",0,1],
+  ["f4","서브 대기실·혼주 대기실·탈의실이 따로 있나",""],
+  ["f5","신부대기실은 몇 시부터 쓸 수 있나, 단독 사용인가","다른 팀과 겹치면 사진·대기가 모두 불편합니다."],
+  ["f6","대기실–홀–연회장–폐백실 동선과 층 이동","층이 나뉘면 하객 이동이 번거롭습니다.",0,1],
+  ["f7","엘리베이터 수와 붐비는 정도","",0,1]]],
+ ["연회장·음식",[
+  ["g1","홀과 연회장이 분리됐나, 홀에 음식 냄새가 나나","",0,1],
+  ["g2","식사 형태(뷔페·한상·코스)와 메뉴 가짓수","",0],
+  ["g3","연회장 좌석 수와 이용 시간, 붐빌 때 대응","보통 2시간 30분, 식 30분 전부터 엽니다."],
+  ["g4","시식은 몇 명, 언제, 무료인가, 본식과 같은 메뉴인가","보통 4~6명. 부모님과 같이 갈 수 있는지 확인합니다."],
+  ["g5","혼주·신랑신부 식사 공간과 무료 제공",""],
+  ["g6","메뉴 업그레이드 1인 추가금, 알레르기·채식 대체","몇천 원 차이가 인원수만큼 곱해집니다."],
+  ["g7","음식 보충이 빠른가","음식이 비면 바로 하객 불만으로 이어집니다."],
+  ["g8","테이블 간격","",0,1]]],
+ ["주차·교통",[
+  ["h1","건물 주차 대수, 만차 시 외부 주차장과 걷는 거리","같은 시간 예식이 겹치면 주차가 밀립니다.",1],
+  ["h2","하객 무료 주차 시간과 초과 요금","하객이 가장 먼저 체감하는 부분입니다.",1],
+  ["h3","혼주·신랑신부 차량 무료 대수와 지정 구역",""],
+  ["h4","주차장 진입로 폭, 주차장에서 홀까지 바로 연결되나","초보 운전 하객도 들어갈 수 있는지 봅니다.",0,1],
+  ["h5","역에서 걸어서 몇 분, 경사가 있나, 셔틀 간격","지방 하객이 있으면 꼭 확인합니다.",0,1],
+  ["h6","대절버스 주차, 발렛 여부와 비용",""],
+  ["h7","무료 숙박·숙박 할인 (호텔)",""]]],
+ ["하객 편의",[
+  ["i1","화장실 위치와 개수","",0,1],
+  ["i2","예식 전 하객이 기다릴 로비·카페 공간","",0,1],
+  ["i3","ATM·편의점","",0,1],
+  ["i4","수유실·락커·물품 보관",""],
+  ["i5","축의대 위치와 사용 시간, 정산실 보안",""],
+  ["i6","화환 놓는 자리",""],
+  ["i7","포토테이블 액자를 빌려주나, 놓는 위치",""],
+  ["i8","휠체어·유모차 하객 이동이 편한가","",0,1]]]
+];
+const ALLQ=Q.flatMap(([c,items])=>items.map(x=>({cat:c,id:x[0],q:x[1],tip:x[2],must:!!x[3],look:!!x[4]})));
+const MARK={good:"○",mid:"△",bad:"✕"}, MARKT={good:"좋음",mid:"애매",bad:"아쉬움"};
+
+const PREP={
+ prepBefore:[["pb1","후보를 3~5곳으로 추리기","위치·대략 견적·홀 분위기로 거릅니다."],["pb2","하루 3곳 일정 잡기 (가까우면 4곳)","당일 계약 혜택을 비교하려면 같은 날 도는 편이 유리합니다."],["pb3","상담 예약은 최소 2시간 간격으로","상담 40~50분에 홀 구경·이동·대기 시간이 더해집니다."],["pb4","원하는 홀의 예약 오픈 시점 확인","보통 1년 전에 열립니다."],["pb5","우리 우선순위 3가지 정하기","예: 식사, 위치, 예산. 중요한 질문부터 물어봅니다."],["pb6","예산·예상 하객 수·희망 날짜 범위 정리","상담 견적의 기준이 됩니다."]],
+ prepBring:[["pr1","이 체크리스트 (폰·태블릿·인쇄)",""],["pr2","필수 질문에 미리 표시","시간이 모자라면 필수만 묻습니다."],["pr3","가격비교 페이지의 공개 가격","공개가와 상담가를 바로 비교합니다."],["pr4","다른 예식이 진행 중인 시간대에 방문","실제 동선·혼잡·음식 냄새를 볼 수 있습니다."],["pr5","주차·대중교통을 하객처럼 직접 이용해 보기",""]],
+ prepAfter:[["pa1","견적서·계약서 초안 받기","말로 들은 조건은 근거가 남지 않습니다."],["pa2","당일에 견적 계산 칸 채우기","기억이 흐려지기 전에 적습니다."],["pa3","둘이 각자 점수 매기고 비교","장점·단점 3개씩 적어 둡니다."],["pa4","구두로 들은 혜택은 서면에 반영됐는지 확인",""]]
+};
+
+function ckHTML(id,t,d){return `<li><label class="ck" for="ck_${id}"><input type="checkbox" id="ck_${id}" data-ck="${id}" ${S.ck[id]?"checked":""}><span>${esc(t)}${d?`<small>${esc(d)}</small>`:""}</span></label></li>`}
+function drawPrep(){for(const k in PREP) $(k).innerHTML=PREP[k].map(x=>ckHTML(...x)).join("")}
+
+function hallsSum(){const n=[0,1,2].map(i=>S.halls[i]&&S.halls[i].name).filter(Boolean); $("hallsSum").textContent=n.length?n.join(" · "):"이름·투어 날짜·매니저 적기"}
+function drawHalls(){ hallsSum(); if([0,1,2].some(i=>S.halls[i]&&S.halls[i].name)) $("hallsBox").open=false;
+  $("halls").innerHTML=[0,1,2].map(i=>{const h=S.halls[i]||{};
+    return `<div class="hallcard"><div class="hn"><i>${i+1}</i>${esc(hallName(i))}</div>
+     <label>홀 이름<input type="text" data-h="${i}" data-f="name" value="${esc(h.name)}" placeholder="예: ○○웨딩홀"></label>
+     <div class="frow"><label style="flex:1">투어 날짜<input type="date" data-h="${i}" data-f="date" value="${esc(h.date)}"></label>
+     <label style="flex:1">상담 매니저<input type="text" data-h="${i}" data-f="mgr" value="${esc(h.mgr)}"></label></div>
+     <label>희망 날짜·시간대<input type="text" data-h="${i}" data-f="slot" value="${esc(h.slot)}" placeholder="예: 28년 3월 토 12시"></label></div>`}).join("");
+}
+$("halls").addEventListener("input",e=>{const t=e.target; if(t.dataset.h==null) return; const i=+t.dataset.h;
+  S.halls[i]=S.halls[i]||{}; S.halls[i][t.dataset.f]=t.value; save();
+  if(t.dataset.f==="name"){hallsSum();t.closest(".hallcard").querySelector(".hn").lastChild.textContent=hallName(i); drawCurHall(); drawProg(); if(!$("tEst").hidden) drawEst(); if(!$("tScore").hidden) drawScore()}});
+
+let cur=0, qf="전체";
+function drawCurHall(){ $("curHall").innerHTML=[0,1,2].map(i=>`<button type="button" data-i="${i}" aria-pressed="${i===cur}">${esc(hallName(i))}</button>`).join("") }
+$("curHall").addEventListener("click",e=>{const b=e.target.closest("button"); if(!b) return; cur=+b.dataset.i; drawCurHall(); drawQ(); drawProg()});
+const QF=["전체","필수만","눈으로 볼 것","아직 안 한 것"];
+function drawQF(){ $("qFilter").innerHTML=QF.map(f=>`<button type="button" data-f="${f}" aria-pressed="${f===qf}">${f}</button>`).join("") }
+$("qFilter").addEventListener("click",e=>{const b=e.target.closest("button"); if(!b) return; qf=b.dataset.f; drawQF(); drawQ()});
+const ans=(i,id)=>((S.ans[i]||{})[id])||{};
+function drawProg(){
+  const must=ALLQ.filter(q=>q.must);
+  $("qProg").innerHTML=[0,1,2].map(i=>{const a=S.ans[i]||{}, done=ALLQ.filter(q=>a[q.id]&&a[q.id].s).length, md=must.filter(q=>a[q.id]&&a[q.id].s).length;
+    return `<div><div class="frow" style="justify-content:space-between"><span>${i===cur?"<b>":""}${esc(hallName(i))}${i===cur?"</b>":""}</span><span class="muted num">${done}/${ALLQ.length} · 필수 ${md}/${must.length}</span></div><div class="bar"><i style="width:${done/ALLQ.length*100}%"></i></div></div>`}).join("");
+  $("catTour").textContent=`질문 ${ALLQ.length}개(필수 ${must.length}) · 견적 계산 · 점수 비교`;
+}
+function drawQ(){
+  const a=S.ans[cur]||{};
+  $("qList").innerHTML=Q.map(([cat])=>{
+    const items=ALLQ.filter(q=>q.cat===cat&&(qf==="전체"||(qf==="필수만"&&q.must)||(qf==="눈으로 볼 것"&&q.look)||(qf==="아직 안 한 것"&&!(a[q.id]&&a[q.id].s))));
+    if(!items.length) return "";
+    const done=ALLQ.filter(q=>q.cat===cat&&a[q.id]&&a[q.id].s).length, all=ALLQ.filter(q=>q.cat===cat).length;
+    return `<div class="qcat"><h3>${cat}<small>${done}/${all}</small></h3>${items.map(q=>{const x=a[q.id]||{};
+      return `<div class="q" data-q="${q.id}"><div class="qt">${esc(q.q)}${q.must?'<span class="tag must">필수</span>':""}${q.look?'<span class="tag look">눈으로</span>':""}</div>
+       ${q.tip?`<div class="tip">${esc(q.tip)}</div>`:""}
+       <div class="act"><span class="st" role="group" aria-label="답">${["good","mid","bad"].map(s=>`<button type="button" data-s="${s}" aria-pressed="${x.s===s}" aria-label="${MARKT[s]}">${MARK[s]} ${MARKT[s]}</button>`).join("")}</span>
+       <input type="text" class="memo" data-memo="${q.id}" value="${esc(x.m)}" placeholder="답변·메모 (예: 70분, 무제한)" aria-label="메모"></div></div>`}).join("")}</div>`}).join("")||'<p class="muted panel">이 홀은 해당 질문을 모두 마쳤습니다.</p>';
+}
+$("qList").addEventListener("click",e=>{const b=e.target.closest(".st button"); if(!b) return; const id=b.closest(".q").dataset.q;
+  S.ans[cur]=S.ans[cur]||{}; const x=S.ans[cur][id]=S.ans[cur][id]||{}; x.s=x.s===b.dataset.s?null:b.dataset.s; save();
+  b.parentElement.querySelectorAll("button").forEach(o=>o.setAttribute("aria-pressed",o.dataset.s===x.s)); drawProg();
+  const h=b.closest(".qcat").querySelector("h3 small"), cat=ALLQ.find(q=>q.id===id).cat, a=S.ans[cur];
+  h.textContent=`${ALLQ.filter(q=>q.cat===cat&&a[q.id]&&a[q.id].s).length}/${ALLQ.filter(q=>q.cat===cat).length}`});
+$("qList").addEventListener("input",e=>{const t=e.target.closest("[data-memo]"); if(!t) return; S.ans[cur]=S.ans[cur]||{}; (S.ans[cur][t.dataset.memo]=S.ans[cur][t.dataset.memo]||{}).m=t.value; save()});
+
+// 견적 계산
+const EST=[
+ ["info","기본"],["slot","예식 날짜·시간","t","첫타임/골든타임 등"],["style","홀 스타일","t","밝음/어두움/하우스"],
+ ["g","보증인원","n","명"],["adult","성인 1인 식대","n","VAT 포함인지 확인"],["kids","별도 소인 인원","n","보증에 안 들어갈 때만"],["kid","소인 1인 식대","n",""],
+ ["info2","비용"],["rent","대관료","n","당일 계약가"],["must","필수 옵션","n","원판·스냅 등 강제 항목"],["flower","꽃·연출 추가","n","기본 외 업그레이드만"],["snap","스냅·영상·반입비","n",""],["etc","기타 추가","n","헬퍼비·폐백 등"],["vat","VAT·봉사료 추가분","n","포함 안 된 금액만"],["dc","할인·혜택 차감","n","확정된 현금성 할인"],["dep","낸 계약금","n",""],
+ ["info3","계산 결과"],["_meal","성인 식대 합계"],["_kid","소인 식대 합계"],["_total","예상 최종 금액"],["_left","남은 잔금"],
+ ["info4","조건 메모"],["svc","당일 계약 서비스","t","무료 항목·혜택 유지 기간"],["refund","계약금 환불 조건","t",""],["gdue","보증인원 확정 마감","t",""],["opinion","비교 의견","t","금액 말고 장단점"]
+];
+const ev=(i,k)=>+((S.est[i]||{})[k])||0;
+const calc=i=>{const meal=ev(i,"g")*ev(i,"adult"), kid=ev(i,"kids")*ev(i,"kid");
+  const total=meal+kid+ev(i,"rent")+ev(i,"must")+ev(i,"flower")+ev(i,"snap")+ev(i,"etc")+ev(i,"vat")-ev(i,"dc");
+  return {_meal:meal,_kid:kid,_total:total,_left:total-ev(i,"dep")}};
+function drawEst(){
+  const C=[0,1,2].map(calc), tots=C.map(c=>c._total).filter(x=>x>0), best=tots.length>1?Math.min(...tots):null;
+  $("estTbl").innerHTML=`<thead><tr><th>항목</th>${[0,1,2].map(i=>`<th>${esc(hallName(i))}</th>`).join("")}</tr></thead><tbody>`+EST.map(r=>{
+    const [k,t,type,h]=r;
+    if(k.startsWith("info")) return `<tr class="grp"><th colspan="4">${t}</th></tr>`;
+    if(k.startsWith("_")) return `<tr class="${k==="_total"?"sum":""}"><th>${t}</th>${C.map(c=>`<td class="n ${k==="_total"&&c._total===best?"best":""}" data-out="${k}">${c[k]?won(c[k]):"–"}</td>`).join("")}</tr>`;
+    return `<tr><th>${t}${h?`<span class="hint">${h}</span>`:""}</th>${[0,1,2].map(i=>`<td><input type="${type==="n"?"number":"text"}" class="${type==="t"?"l":""}" data-e="${i}" data-k="${k}" value="${esc((S.est[i]||{})[k])}" ${type==="n"?'min="0" inputmode="numeric"':""} aria-label="${esc(hallName(i))} ${t}"></td>`).join("")}</tr>`;
+  }).join("")+"</tbody>";
+}
+$("estTbl").addEventListener("input",e=>{const t=e.target.closest("[data-e]"); if(!t) return; const i=+t.dataset.e; S.est[i]=S.est[i]||{}; S.est[i][t.dataset.k]=t.value; save();
+  const C=[0,1,2].map(calc), tots=C.map(c=>c._total).filter(x=>x>0), best=tots.length>1?Math.min(...tots):null;
+  $("estTbl").querySelectorAll("[data-out]").forEach(td=>{const k=td.dataset.out, col=[...td.parentElement.children].indexOf(td)-1; td.textContent=C[col][k]?won(C[col][k]):"–"; td.classList.toggle("best",k==="_total"&&C[col]._total===best)})});
+
+// 점수
+const SC=["예산","위치","음식","주차","분위기","규모","부모님"];
+function drawScore(){
+  $("scores").innerHTML=[0,1,2].map(i=>{const s=S.score[i]||{}, tot=SC.reduce((a,k)=>a+(+s[k]||0),0), pc=S.pc[i]||{};
+    return `<div class="scorecard"><div class="frow" style="justify-content:space-between"><h3>${esc(hallName(i))}</h3><span class="total" data-tot="${i}">${tot}<small class="muted" style="font-size:13px"> / ${SC.length*10}</small></span></div>
+     ${SC.map(k=>`<div class="srow"><span>${k}</span><input type="range" min="0" max="10" step="1" value="${+s[k]||0}" data-sc="${i}" data-k="${k}" aria-label="${esc(hallName(i))} ${k} 점수"><b>${+s[k]||0}</b></div>`).join("")}
+     <label class="lbl" for="pro${i}">장점</label><textarea id="pro${i}" data-pc="${i}" data-k="pro" placeholder="1. 2. 3.">${esc(pc.pro)}</textarea>
+     <label class="lbl" for="con${i}">단점</label><textarea id="con${i}" data-pc="${i}" data-k="con" placeholder="1. 2. 3.">${esc(pc.con)}</textarea></div>`}).join("");
+  const must=ALLQ.filter(q=>q.must);
+  $("cmpTbl").innerHTML=`<thead><tr><th>필수 질문</th>${[0,1,2].map(i=>`<th>${esc(hallName(i))}</th>`).join("")}</tr></thead><tbody>${must.map(q=>`<tr><th style="white-space:normal;min-width:170px;font-weight:500;color:var(--ink)">${esc(q.q)}</th>${[0,1,2].map(i=>{const x=ans(i,q.id); return `<td style="min-width:120px">${x.s?`<span class="mark ${x.s}">${MARK[x.s]}</span> `:'<span class="muted">–</span> '}${esc(x.m||"")}</td>`}).join("")}</tr>`).join("")}</tbody>`;
+}
+$("scores").addEventListener("input",e=>{const t=e.target;
+  if(t.dataset.sc!=null){const i=+t.dataset.sc; S.score[i]=S.score[i]||{}; S.score[i][t.dataset.k]=+t.value; save(); t.nextElementSibling.textContent=t.value;
+    const tot=SC.reduce((a,k)=>a+(+S.score[i][k]||0),0); document.querySelector(`[data-tot="${i}"]`).firstChild.textContent=tot}
+  if(t.dataset.pc!=null){const i=+t.dataset.pc; S.pc[i]=S.pc[i]||{}; S.pc[i][t.dataset.k]=t.value; save()}});
+
+// 탭
+$("tourTab").addEventListener("click",e=>{const b=e.target.closest("button"); if(!b) return; const t=b.dataset.t;
+  $("tourTab").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));
+  $("tPrep").hidden=t!=="prep"; $("tAsk").hidden=t!=="ask"; $("tEst").hidden=t!=="est"; $("tScore").hidden=t!=="score";
+  if(t==="est") drawEst(); if(t==="score") drawScore();
+  $("tour").scrollIntoView({block:"start"})});
+
+// ───── ② 타임라인 ─────
+// [시작(예식 전 개월), 끝(개월), 이름, 항목[[id, 할 일, 메모, 분야]]]
+const TL=[
+ [18,12,"준비 시작 (12개월 이전)",[["t01","양가 부모님께 인사","","가족"],["t02","원하는 예식 형태와 우선순위 정하기","날짜·지역·식사·예산·규모","예식"],["t03","총예산과 분담 정하기, 예비비 따로 두기","결혼식·신혼집·신혼여행 비중","예산"],["t04","예식 날짜 정하기 (택일)","양가와 상의","예식"],["t05","플래너 여부 정하기","워크인 / 비동행 / 동행","스드메"],["t06","웨딩홀 정보 모으고 투어할 3~4곳 고르기","위 ① 홀투어 체크리스트 사용","웨딩홀"],["t07","웨딩홀 상담 예약","예약 오픈 날짜 확인, 2시간 간격","웨딩홀"]]],
+ [12,10,"D-12~10개월",[["t11","웨딩홀 투어와 계약","계약금·잔금 일정 확인","웨딩홀"],["t12","본식 스냅·DVD 예약","인기 업체는 1년 전 마감. 홀 서비스·할인 먼저 확인","본식"],["t13","스튜디오·드레스·메이크업 계약","박람회 상담, 토탈/비토탈 결정","스드메"],["t14","스튜디오·본식 헤어 변형 예약","필요할 때만","스드메"],["t15","상견례 장소 예약과 선물","인기 식당은 한 달 전에도 찹니다","가족"],["t16","상견례","","가족"],["t17","신혼여행지·기간 정하기","","신혼여행"]]],
+ [10,8,"D-10~8개월",[["t21","드레스 투어","피팅비 현금 준비, 당일 계약 혜택 확인","스드메"],["t22","신혼여행 항공·숙소 예약, 여권·비자 확인","","신혼여행"],["t23","웨딩밴드 상담·계약","","예물"],["t24","신랑 예복 업체 비교·계약","맞춤은 1~2개월 걸립니다","예복"],["t25","혼주·신랑신부 한복 예약","받고 돌려주는 방식과 샵 위치 확인","예복"],["t26","혼주 헤어·메이크업 샵 예약","당일 양가 부모님 동선 고려","예복"],["t27","사회자 정하기 (전문·지인)","","본식"]]],
+ [8,6,"D-8~6개월",[["t31","촬영 드레스 셀렉·가봉","추가금·서비스 항목 확인","스드메"],["t32","촬영 준비","레퍼런스, 피부·네일, 다이어트","스드메"],["t33","촬영 부케·소품 예약","","스드메"],["t34","웨딩밴드 받기","스튜디오 촬영 전에","예물"],["t35","스튜디오 촬영","간식, 원본비·추가 드레스 비용 체크","스드메"],["t36","신혼집 자금·대출 계획","","신혼집"],["t37","본식 부케·부토니에·코사지 예약","","본식"]]],
+ [6,4,"D-6~4개월",[["t41","촬영본 셀렉·보정","","스드메"],["t42","신혼집 계약과 입주 계획","","신혼집"],["t43","이사·입주 청소 업체 고르기","","신혼집"],["t44","가전·가구 목록과 견적 비교","","신혼집"],["t45","양가 하객 명단 초안","","하객"],["t46","사회·축가·주례 여부 결정","","본식"],["t47","피부 관리 시작","원장님 일정 맞춰 여유 있게","스드메"]]],
+ [4,3,"D-4~3개월",[["t51","종이 청첩장 디자인·문구·주문","하객 수 + 여유분. 5개월 전 시작하면 청모가 여유롭습니다","하객"],["t52","식권 제작","대인·소인 구분, 도장으로 본인 표시","하객"],["t53","모바일 청첩장 제작","사진 15~17장","하객"],["t54","신랑 예복 가봉","","예복"],["t55","식순·입장곡·축가 확정","","본식"],["t56","식전 영상 만들기","청첩장 사이트에서 무료로 되는 곳이 많습니다","본식"],["t57","축가·축사·부케·축의대·가방순이 부탁","축의대는 양가 각 2명","본식"],["t58","청첩장 모임 시작","","하객"]]],
+ [3,2,"D-3~2개월",[["t61","웨딩홀 시식","2주 전 예약, 보통 4명","웨딩홀"],["t62","혼주 한복·예복 피팅","","예복"],["t63","본식 드레스 셀렉·가봉, 2부 드레스","","스드메"],["t64","예물·예단 준비","양가와 상의","예물"],["t65","친인척 인사, 교통편·숙소 확인","","하객"],["t66","답례품 준비","웨딩홀 반입 가능한지 확인","하객"],["t67","가전·가구 구입","","신혼집"],["t68","포토테이블·식순지 준비","필요할 때만","본식"]]],
+ [2,1,"D-2~1개월",[["t71","청첩장 발송·전달","최소 한 달 전","하객"],["t72","신혼집 입주, 가전·가구 배치, 전입신고","이사 5~10일 전 입주 청소","신혼집"],["t73","웨딩홀 최종 점검과 파일 전달","식순·식전영상·입장곡·혼인서약서, 락커 위치","웨딩홀"],["t74","신혼여행 일정 점검, 환전·여행자보험","","신혼여행"],["t75","폐백·이바지 음식 예약","하지 않으면 생략","가족"],["t76","웨딩카 준비","","본식"]]],
+ [1,0.25,"D-1개월~1주",[["t81","보증인원 최종 확정, 잔금·추가금 확인","","웨딩홀"],["t82","웨딩홀·스드메·스냅 일정 재확인","","본식"],["t83","하객 차량·숙소 점검 (버스 대절 등)","","하객"],["t84","신랑신부 헤어 점검","커트·클리닉","스드메"],["t85","피부 관리 마무리","직전엔 새 시술 하지 않기","스드메"]]],
+ [0.25,0.03,"D-1주~전날",[["t91","도와주시는 분들께 연락, 역할·시간 공유","사회·축가·축의대·가방순이","하객"],["t92","사례비 현금 준비","헬퍼·사회자·축가·가방순이·수모","본식"],["t93","본식 준비물 챙기기","반지, 혼인서약서, 웨딩슈즈, 식권, 포토테이블","본식"],["t94","네일·눈썹·염색","보통 3~4일 전","스드메"],["t95","부케 예약 재확인","","본식"],["t96","신혼여행 짐 싸기","여권, 국제운전면허증","신혼여행"],["t97","푹 자기","",""]]],
+ [0.03,-0.02,"예식 당일",[["ta1","헤어·메이크업 (양가 부모님도 함께)","","본식"],["ta2","하객 맞이·예식 진행","","본식"],["ta3","피로연 인사","","하객"],["ta4","최종 비용 정산 (양가와 함께)","","예산"]]],
+ [-0.02,-3,"결혼 후",[["tb1","혼인신고, 주소·보험·카드 주소 변경","","행정"],["tb2","하객 감사 인사, 회사 답례품","","하객"],["tb3","본식 앨범·영상 받기","","본식"],["tb4","양가 인사, 이바지 음식","","가족"],["tb5","웨딩홀·업체 최종 정산 확인","","예산"]]]
+];
+const AREAS=["전체",...new Set(TL.flatMap(p=>p[3].map(x=>x[3]).filter(Boolean)))];
+let af="전체";
+const fmtD=d=>`${d.getFullYear()%100}.${String(d.getMonth()+1).padStart(2,"0")}.${String(d.getDate()).padStart(2,"0")}`;
+const addM=(d,m)=>{const x=new Date(d); x.setDate(x.getDate()-Math.round(m*30.44)); return x};
+function drawTL(){
+  const w=S.wdate?new Date(S.wdate+"T00:00:00"):null, today=new Date(); today.setHours(0,0,0,0);
+  const dd=w?Math.round((w-today)/864e5):null;
+  $("ddOut").textContent=dd==null?"D-?":dd>0?`D-${dd}`:dd===0?"D-DAY":`D+${-dd}`;
+  const all=TL.flatMap(p=>p[3]), done=all.filter(x=>S.ck[x[0]]).length;
+  $("tlProg").textContent=`${all.length}개 중 ${done}개 완료`;
+  $("catTime").textContent=`${TL.length}개 시기 · 할 일 ${all.length}개 · D-day 계산`;
+  const monthsLeft=dd==null?null:dd/30.44;
+  $("areaF").innerHTML=AREAS.map(a=>`<button type="button" data-a="${a}" aria-pressed="${a===af}">${a}</button>`).join("");
+  $("phases").innerHTML=TL.map(([s,e,name,items])=>{
+    const its=items.filter(x=>af==="전체"||x[3]===af); if(!its.length) return "";
+    const now=monthsLeft!=null&&monthsLeft<=s&&monthsLeft>e, past=monthsLeft!=null&&monthsLeft<=e;
+    const range=w?(e<0?`${fmtD(w)} 이후`:s>=18?`~ ${fmtD(addM(w,e))}`:`${fmtD(addM(w,s))} ~ ${fmtD(addM(w,e))}`):"";
+    const pd=items.filter(x=>S.ck[x[0]]).length;
+    return `<div class="phase${now?" now":""}${past?" past":""}"><div class="ph"><b>${name} ${now?'<span class="now-tag">지금</span>':""}</b><span class="when">${range}${range?" · ":""}${pd}/${items.length}</span></div>
+     <ul class="list">${its.map(([id,t,m,a])=>`<li><label class="ck" for="ck_${id}"><input type="checkbox" id="ck_${id}" data-ck="${id}" ${S.ck[id]?"checked":""}><span>${esc(t)}${a?`<span class="area">${a}</span>`:""}${m?`<small>${esc(m)}</small>`:""}</span></label></li>`).join("")}</ul></div>`}).join("");
+}
+$("areaF").addEventListener("click",e=>{const b=e.target.closest("button"); if(!b) return; af=b.dataset.a; drawTL()});
+$("wDate").addEventListener("change",e=>{S.wdate=e.target.value; save(); drawTL()});
+
+// ───── ③ 계약·상담 ─────
+const CON={
+ conFinal:[["cf1","계약하는 회사와 실제 서비스 업체의 상호·연락처 확인",""],["cf2","서비스 범위·일정·수량·횟수와 추가금 기준이 계약서에 있다",""],["cf3","취소·환불·날짜 변경·양도 조건을 읽고 이해했다",""],["cf4","구두 약속과 프로모션 조건이 서면에 들어갔다","당일 계약 혜택 포함"],["cf5","계약서·견적서 사본과 결제 내역을 저장했다","계약금·중도금·잔금 날짜를 캘린더에 기록"]],
+ conPlan:[["cp1","날짜·지역·예산·예상 하객 수 정리",""],["cp2","직접 할 항목과 도움 받을 항목 나누기",""],["cp3","원하는 분위기와 피하고 싶은 스타일 각자 2~3개",""],["cp4","당일 계약을 서두르지 말고 견적서·약관 받아 비교하기",""]],
+ conAsk:[["ca1","낸 비용에 포함되는 항목과 따로 결제할 항목은?",""],["ca2","제휴 업체를 안 쓰면 비용이나 선택 제한이 생기나?",""],["ca3","동행 횟수와 범위, 연락 가능 시간, 담당자가 바뀌면?",""],["ca4","일정 변경·담당자 변경·해지 때 환불액은 어떻게 계산하나?",""],["ca5","안내받은 혜택과 추가금 조건을 계약서에 적어줄 수 있나?",""]]
+};
+function drawCon(){for(const k in CON) $(k).innerHTML=CON[k].map(x=>ckHTML(...x)).join("");
+  $("catCon").textContent=`계약 직전 확인 ${CON.conFinal.length} · 플래너 상담 ${CON.conPlan.length+CON.conAsk.length}`}
+
+// 체크박스 공통
+document.addEventListener("change",e=>{const t=e.target.closest("[data-ck]"); if(!t) return; S.ck[t.dataset.ck]=t.checked; save();
+  if(t.closest("#phases")) drawTL()});
+
+// ───── ④ 예산 ─────
+const BUD=[
+ ["예식장",["대관료","식대 (신랑 측)","식대 (신부 측)","꽃장식·연출 추가","음료·주류·기타"]],
+ ["본식 진행",["본식 스냅","본식 DVD","사회자 사례비","축가 사례비","가방순이·축의대 사례비","헬퍼비","식전 영상","부케·부토니에·코사지","폐백·이바지"]],
+ ["스드메",["스드메 패키지","스튜디오 원본·추가","드레스 추가금·피팅비","메이크업·헤어 변형","촬영 간식·헬퍼","혼주 메이크업"]],
+ ["예복·한복",["신랑 예복·구두","신부 구두","신랑신부 한복","혼주 한복·예복"]],
+ ["예물·예단",["웨딩밴드","예물","예단"]],
+ ["하객",["상견례","청첩장·식권","청첩장 모임","답례품"]],
+ ["신혼여행",["항공","숙소","현지 교통·투어","환전·여행 준비"]],
+ ["신혼집",["가전","가구","생활용품","입주 청소·이사"]],
+ ["기타·예비",["피부·에스테틱","친인척 인사","예비비"]]
+];
+const BC=[["b","예산"],["d","계약금"],["r","잔금"],["a","실지출"]];
+const who=["","신랑","신부","신랑 부모","신부 부모","공동"];
+function bget(k,c){return +(((S.bud[k])||{})[c])||0}
+function drawBud(){
+  $("bTotal").value=S.btotal||"";
+  let G={b:0,d:0,r:0,a:0};
+  const rows=BUD.map(([g,items])=>{const sum={b:0,d:0,r:0,a:0};
+    const body=items.map(it=>{const k=g+"|"+it; BC.forEach(([c])=>sum[c]+=bget(k,c));
+      return `<tr><td style="min-width:150px">${esc(it)}</td>${BC.map(([c,t])=>`<td><input type="number" min="0" step="1" inputmode="numeric" data-b="${esc(k)}" data-c="${c}" value="${(S.bud[k]||{})[c]??""}" aria-label="${esc(it)} ${t}"></td>`).join("")}
+       <td><select data-b="${esc(k)}" data-c="w" aria-label="${esc(it)} 부담">${who.map(w=>`<option ${((S.bud[k]||{}).w||"")===w?"selected":""}>${w}</option>`).join("")}</select></td></tr>`}).join("");
+    BC.forEach(([c])=>G[c]+=sum[c]);
+    return `<tr class="grp"><th>${g}</th>${BC.map(([c])=>`<td class="n" data-gs="${g}|${c}">${sum[c]?sum[c].toLocaleString("ko-KR"):""}</td>`).join("")}<td></td></tr>${body}`}).join("");
+  $("bTbl").innerHTML=`<thead><tr><th>항목 (만원)</th>${BC.map(([,t])=>`<th>${t}</th>`).join("")}<th>부담</th></tr></thead><tbody>${rows}
+   <tr class="sum"><th>합계</th>${BC.map(([c])=>`<td class="n" data-tot="${c}">${G[c].toLocaleString("ko-KR")}</td>`).join("")}<td></td></tr></tbody>`;
+  drawBudSum(G);
+}
+function budTotals(){const G={b:0,d:0,r:0,a:0}; BUD.forEach(([g,items])=>items.forEach(it=>BC.forEach(([c])=>G[c]+=bget(g+"|"+it,c)))); return G}
+function drawBudSum(G){const t=+S.btotal||0;
+  $("bSum").innerHTML=t?`항목 예산 ${G.b.toLocaleString("ko-KR")}만 · 실지출 ${G.a.toLocaleString("ko-KR")}만 · 총예산 대비 남은 돈 <b>${(t-G.a).toLocaleString("ko-KR")}만원</b>`:`항목 예산 합계 ${G.b.toLocaleString("ko-KR")}만 · 실지출 ${G.a.toLocaleString("ko-KR")}만`}
+$("bTbl").addEventListener("input",e=>{const t=e.target.closest("[data-b]"); if(!t) return; const k=t.dataset.b;
+  S.bud[k]=S.bud[k]||{}; S.bud[k][t.dataset.c]=t.value; save();
+  if(t.dataset.c==="w") return;
+  const G=budTotals(); BC.forEach(([c])=>{$("bTbl").querySelector(`[data-tot="${c}"]`).textContent=G[c].toLocaleString("ko-KR")});
+  BUD.forEach(([g,items])=>BC.forEach(([c])=>{const s=items.reduce((a,it)=>a+bget(g+"|"+it,c),0); $("bTbl").querySelector(`[data-gs="${g}|${c}"]`).textContent=s?s.toLocaleString("ko-KR"):""}));
+  drawBudSum(G)});
+$("bTotal").addEventListener("input",e=>{S.btotal=e.target.value; save(); drawBudSum(budTotals())});
+
+// ───── 백업 ─────
+const msg=t=>{$("bkMsg").textContent=t; setTimeout(()=>$("bkMsg").textContent="",3000)};
+$("bkCopy").addEventListener("click",()=>{const txt=JSON.stringify(S); $("bkText").value=txt;
+  if(navigator.clipboard) navigator.clipboard.writeText(txt).then(()=>msg("복사했습니다. 다른 기기에서 붙여넣고 복원하세요.")).catch(()=>{$("bkText").select();msg("아래 글을 길게 눌러 복사하세요.")});
+  else {$("bkText").select(); msg("아래 글을 복사하세요.")}});
+$("bkLoad").addEventListener("click",()=>{try{const x=JSON.parse($("bkText").value); if(!x||typeof x!=="object") throw 0; S=Object.assign({halls:[{},{},{}],ans:{},est:{},score:{},pc:{},ck:{},bud:{}},x); save(); init(); msg("복원했습니다.")}catch(e){msg("복원할 수 없는 글입니다. 복사한 기록 전체를 붙여넣으세요.")}});
+let clearArmed=false;
+$("bkClear").addEventListener("click",e=>{if(!clearArmed){clearArmed=true; e.target.textContent="한 번 더 누르면 전부 지워집니다"; setTimeout(()=>{clearArmed=false;e.target.textContent="모두 지우기"},4000); return}
+  S={halls:[{},{},{}],ans:{},est:{},score:{},pc:{},ck:{},bud:{}}; save(); init(); clearArmed=false; e.target.textContent="모두 지우기"; msg("모두 지웠습니다.")});
+
+function init(){ $("wDate").value=S.wdate||""; drawHalls(); drawPrep(); drawCurHall(); drawQF(); drawQ(); drawProg(); drawTL(); drawCon(); drawBud(); if(!$("tEst").hidden) drawEst(); if(!$("tScore").hidden) drawScore() }
+init();
+</script>
+</body>
+</html>
