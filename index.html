@@ -195,6 +195,35 @@ details summary{cursor:pointer;font-weight:600;color:var(--accent);padding:6px 0
 .same .it{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:13px;display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center}
 .same .it b{font-size:14px}
 .same .diff{color:var(--seo);font-weight:600}
+.qnav{position:sticky;top:env(safe-area-inset-top,0px);z-index:1100;display:flex;gap:4px;overflow-x:auto;background:var(--bg);padding:8px 0;margin:-18px 0 -18px;border-bottom:1px solid var(--line);scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.qnav::-webkit-scrollbar{display:none}
+.qnav a{flex:none;font-size:13px;font-weight:600;color:var(--ink);text-decoration:none;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface)}
+.qnav a b{display:inline-grid;place-items:center;min-width:18px;height:18px;border-radius:9px;background:var(--accent);color:var(--bg);font-size:11px;margin-left:2px;padding:0 4px}
+section[id]{scroll-margin-top:64px}
+.search input{flex:1;min-width:0;font:inherit;font-size:14px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);min-height:38px}
+.chips button .c{font-size:11px;opacity:.7;margin-left:3px}
+.calc{display:flex;flex-direction:column;gap:10px}
+.calc input[type=range]{flex:1;min-width:120px;accent-color:var(--accent)}
+.calc input[type=number]{width:84px;font:inherit;font-size:14px;padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font-variant-numeric:tabular-nums}
+.cmpbtn{font:inherit;font-size:12px;font-weight:600;border:1px solid var(--accent);color:var(--accent);background:transparent;padding:4px 10px;border-radius:999px;cursor:pointer;min-height:30px}
+.cmpbtn[aria-pressed="true"]{background:var(--accent);color:var(--bg)}
+.cmpbtn:disabled{opacity:.4;cursor:not-allowed}
+.cmpwrap{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:12px}
+.cmpwrap table{min-width:560px;font-size:13px}
+.cmpwrap th{width:96px;color:var(--muted);font-weight:600;vertical-align:top}
+.cmpwrap td{white-space:normal;vertical-align:top;min-width:150px}
+.cmpwrap thead th,.cmpwrap thead td{font-size:14px;color:var(--ink)}
+.cmpwrap td .src{margin-left:4px}
+.cmpwrap .best{color:var(--dong);font-weight:700}
+.cmpempty{background:var(--surface);border:1px dashed var(--line);border-radius:12px;padding:18px;color:var(--muted);font-size:14px}
+.cmpfab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:1200;background:var(--ink);color:var(--bg);text-decoration:none;font-weight:700;font-size:14px;padding:10px 16px;border-radius:999px;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+.checks{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:12px}
+.checks fieldset{margin:0;border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:12px 14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.checks legend{font-weight:700;padding:0 4px}
+.checks label{display:grid;grid-template-columns:20px minmax(0,1fr);gap:8px;font-size:14px;cursor:pointer;align-items:start}
+.checks label small{display:block;color:var(--muted);font-size:12px}
+.checks input{margin-top:3px;width:16px;height:16px;accent-color:var(--accent)}
+.checks label:has(input:checked) span{color:var(--muted);text-decoration:line-through}
 .lpin-dot{width:24px;height:24px;font-size:12px}
 .lpin-dot.sel{width:32px;height:32px;margin:-4px;font-size:14px}
 </style>
@@ -208,14 +237,19 @@ details summary{cursor:pointer;font-weight:600;color:var(--accent);padding:6px 0
   <div class="legend"><span><span class="src kca">참소비자원</span>업체가 소비자원에 낸 가격표(VAT 포함)</span><span><span class="src nt">노션(ver)</span>직접 정리한 홀별 분석</span></div>
 </header>
 
+<nav class="qnav" aria-label="바로가기">
+  <a href="#map-sec">지도</a><a href="#cost">비용 계산</a><a href="#table">정리표</a><a href="#compare">비교함 <b id="navCmp">0</b></a><a href="#sdm">스드메</a><a href="#check">상담 체크리스트</a><a href="#dates">공개일</a>
+</nav>
+
 <section class="filters" aria-label="필터">
+  <div class="frow search"><label class="lbl" for="q">검색</label><input id="q" type="search" placeholder="웨딩홀 이름, 동네, 홀 이름 (예: 둔산, 그랜드볼룸)" autocomplete="off"></div>
   <div class="frow"><span class="lbl">지역</span><div class="chips" id="fDist"></div></div>
   <div class="frow"><span class="lbl">분위기</span><div class="chips" id="fMood"></div></div>
   <div class="frow"><span class="lbl">자료</span><div class="chips" id="fSrc"></div><span class="count" id="fCount"></span></div>
 </section>
 
 <div class="top">
-<section>
+<section id="map-sec">
   <div class="sec-head"><h2>지도</h2><p class="muted small">번호를 누르면 업체 정보가 나옵니다. 둔산 일대는 확대해서 보세요.</p></div>
   <div class="panel">
     <div class="map-tools">
@@ -237,6 +271,25 @@ details summary{cursor:pointer;font-weight:600;color:var(--accent);padding:6px 0
   <p class="muted small" id="rentNote"></p>
 </section>
 </div>
+
+<section id="cost">
+  <div class="sec-head"><h2>예상 비용 계산</h2><p class="muted small">하객 수를 넣으면 웨딩홀마다 식대 × 인원 + 대관료(필수 장식 포함)를 계산해 낮은 순으로 보여줍니다. 하객이 최소 보증인원보다 적으면 보증인원으로 계산합니다. 드레스·촬영 등 스드메와 선택품목은 빠져 있습니다.</p></div>
+  <div class="panel calc">
+    <div class="frow"><label class="lbl" for="guests">하객 수</label>
+      <input id="guests" type="range" min="30" max="400" step="10" value="200" aria-describedby="guestsOut">
+      <input id="guestsNum" type="number" min="1" max="2000" step="1" value="200" inputmode="numeric" aria-label="하객 수 직접 입력"><span class="muted small">명</span></div>
+    <div class="frow"><span class="lbl">식대</span><div class="seg" id="calcMeal" role="group" aria-label="식대 기준">
+      <button type="button" data-m="min" aria-pressed="true">최저 식대</button><button type="button" data-m="max" aria-pressed="false">최고 식대</button></div></div>
+    <p class="small" id="guestsOut"></p>
+  </div>
+  <div class="panel"><div class="rows" id="costRows"></div><div class="scale" id="costScale"></div></div>
+  <p class="muted small">참소비자원 값은 공개된 최저 대관료 + 필수 장식, 노션(ver) 값은 노션의 홀 대관료로 계산했습니다. 노션의 선샤인 파라다이스·씨엘드 포레는 식대에 부가세 10%를 더했습니다. 실제 견적은 날짜·시간대·프로모션에 따라 달라집니다.</p>
+</section>
+
+<section id="compare">
+  <div class="sec-head"><h2>비교함</h2><p class="muted small">지도 정보창이나 업체 카드에서 <b>비교함에 담기</b>를 누르면 최대 3곳을 나란히 볼 수 있습니다. 담은 목록은 이 브라우저에만 저장됩니다.</p></div>
+  <div id="cmpBox"></div>
+</section>
 
 <section id="table">
   <div class="sec-head"><h2>홀별 정리표</h2><p class="muted small">열 이름을 누르면 정렬되고, 한 번 더 누르면 반대로 바뀝니다. 노션(ver)은 홀마다 한 줄, 참소비자원은 가격표 기준으로 업체마다 한 줄입니다. 위 필터가 그대로 적용되고, 줄을 누르면 지도에서 위치를 보여줍니다.</p></div>
@@ -268,6 +321,12 @@ details summary{cursor:pointer;font-weight:600;color:var(--accent);padding:6px 0
 <section>
   <div class="sec-head"><h2>업체별 상세</h2><p class="muted small">위쪽은 두 자료를 합친 요약, 아래는 노션의 홀별 정보와 참소비자원 가격표 원문입니다.</p></div>
   <div class="cards" id="cards"></div>
+</section>
+
+<section id="check">
+  <div class="sec-head"><h2>상담 체크리스트</h2><p class="muted small">웨딩홀 상담·투어 때 물어볼 것들입니다. 가격표에 잘 안 나오지만 최종 금액과 당일 만족도를 좌우하는 항목 위주로 모았습니다. 체크한 내용은 이 브라우저에만 저장됩니다.</p></div>
+  <div class="frow"><span class="count" id="chkCount"></span><button type="button" class="sortdir" id="chkReset">체크 모두 지우기</button></div>
+  <div class="checks" id="checks"></div>
 </section>
 
 <section id="dates">
@@ -366,8 +425,9 @@ V.forEach(v=>{
   else v.moods=[];
 });
 V.sort((p,q)=>ORDER.indexOf(p.d)-ORDER.indexOf(q.d)||p.n.localeCompare(q.n,"ko")).forEach((v,i)=>{v.no=i+1;v.x=(v.lon-P.lo0)*P.k*P.s+(v.dx||0);v.y=(P.la1-v.lat)*P.s+(v.dy||0)});
-let sel=null, zoom="all", mode="sum", fD="전체", fM="전체", fS="전체";
-const shown=()=>V.filter(v=>(fD==="전체"||v.d===fD)&&(fM==="전체"||v.moods.includes(fM))&&(fS==="전체"||(fS==="둘 다"?v.kca&&v.nt:fS==="참소비자원"?v.kca:v.nt)));
+let sel=null, zoom="all", mode="sum", fD="전체", fM="전체", fS="전체", fQ="";
+const hay=v=>[v.n,v.a,v.d,v.kca&&v.kca.hall,...(v.nt?v.nt.h.map(h=>h[0]):[])].filter(Boolean).join(" ").replace(/\s/g,"").toLowerCase();
+const shown=()=>V.filter(v=>(!fQ||hay(v).includes(fQ))&&(fD==="전체"||v.d===fD)&&(fM==="전체"||v.moods.includes(fM))&&(fS==="전체"||(fS==="둘 다"?v.kca&&v.nt:fS==="참소비자원"?v.kca:v.nt)));
 
 const nK=V.filter(v=>v.kca).length, nN=V.filter(v=>v.nt).length, nB=V.filter(v=>v.kca&&v.nt).length, nH=V.reduce((s,v)=>s+(v.nt?v.nt.h.length:0),0);
 document.getElementById("summary").textContent=`모두 ${V.length}곳입니다. 참소비자원 가격표 ${nK}곳, 노션(ver) ${nN}곳(홀 ${nH}개)이고 두 자료에 다 있는 곳이 ${nB}곳입니다. 스드메 업체 6곳도 아래에서 비교합니다. 금액은 프로모션·날짜·시간대에 따라 달라집니다.`;
@@ -376,7 +436,7 @@ document.getElementById("legend").innerHTML=ORDER.map(d=>`<span><i class="dot d-
 // 필터
 function chips(id,opts,get,set){
   const el=document.getElementById(id);
-  const draw=()=>{el.innerHTML=opts.map(o=>`<button type="button" aria-pressed="${o===get()}" data-v="${o}">${o}</button>`).join("")};
+  const draw=()=>{el.innerHTML=opts.map(o=>`<button type="button" aria-pressed="${o===get()}" data-v="${o}">${o}${id==="fMood"&&o!=="전체"?`<span class="c">${V.filter(v=>v.moods.includes(o)).length}</span>`:""}</button>`).join("")};
   el.addEventListener("click",e=>{const b=e.target.closest("button"); if(!b) return; set(b.dataset.v); draw(); refresh()});
   draw();
 }
@@ -449,7 +509,8 @@ function drawInfo(){
    <p class="small muted">${esc(v.a)}</p>
    <dl class="both small"><dt>대관료</dt><dd>${pair(v.kca&&esc(v.kca.rentTxt),v.nt&&esc(rentN(v)))}</dd>
    <dt>1인 식대</dt><dd>${pair(v.kca&&esc(mealK(v)),v.nt&&esc(mealN(v)))}</dd></dl>
-   <p class="small">${v.tel?`전화 ${esc(v.tel)} · `:""}<a href="${kakao(v)}" target="_blank" rel="noopener">카카오맵에서 보기 ↗</a></p>`;
+   <p class="small">${v.tel?`전화 ${esc(v.tel)} · `:""}<a href="${kakao(v)}" target="_blank" rel="noopener">카카오맵에서 보기 ↗</a></p>
+   <div>${cmpBtn(v)}</div>`;
 }
 function select(no,fromList){
   sel=V.find(v=>v.no===no)||null;
@@ -527,7 +588,7 @@ function drawCards(){
       </tbody></table></div>`:"";
     return `<article class="card">
      <div class="card-top"><div><h3>${v.no}. ${esc(v.n)}</h3><p class="small muted">${esc(v.a)}</p></div><span class="chip ${v.d}">${v.d}</span></div>
-     <div class="meta">${k?KCA:""}${n?NT:""}${v.tel?`<span class="small muted">${esc(v.tel)}</span>`:""}<a class="small" href="${kakao(v)}" target="_blank" rel="noopener">카카오맵 ↗</a></div>
+     <div class="meta">${k?KCA:""}${n?NT:""}${v.tel?`<span class="small muted">${esc(v.tel)}</span>`:""}<a class="small" href="${kakao(v)}" target="_blank" rel="noopener">카카오맵 ↗</a>${cmpBtn(v)}</div>
      <dl class="both">
       <dt>대관료</dt><dd>${pair(k&&esc(k.rentTxt),n&&esc(rentN(v)))}</dd>
       <dt>1인 식대</dt><dd>${pair(k&&esc(mealK(v)),n&&esc(mealN(v)))}</dd>
@@ -678,13 +739,106 @@ function drawVendors(){
      <span class="k">${v.src==="참소비자원"?KCA:'<span class="via">업체 자료(이미지)</span>'} ${v.mod?`수정 ${v.mod}`:"작성일 정보 없음"}</span>
      <span class="k">${esc(v.cancel)}</span></div>`}).join("");
 }
+// 저장(이 브라우저에만)
+const store={get(k,d){try{const x=localStorage.getItem(k);return x?JSON.parse(x):d}catch(e){return d}},set(k,x){try{localStorage.setItem(k,JSON.stringify(x))}catch(e){}}};
+
+// 예상 비용
+let G=200, calcM="min";
+function estimate(v,src){
+  const g=G;
+  if(src==="kca"){const k=v.kca, gm=(KG[v.n]||[null,null])[0]||0, gx=(KG[v.n]||[null,null])[1];
+    const per=calcM==="min"?k.meal[0]:k.meal[1], gg=Math.max(g,gm);
+    const lo=gg*per+k.rent[0]+(k.deco?k.deco[0]:0), hi=gg*per+k.rent[1]+(k.deco?k.deco[1]:0);
+    return {lo,hi,gg,gm,over:gx&&g>gx?gx:null}}
+  const n=v.nt, gm=n.guest[0], gx=Math.max(...n.h.map(h=>h[10])), vat=n.vatEx?1.1:1;
+  const per=(calcM==="min"?n.meal[0]:n.meal[1])*vat, gg=Math.max(g,gm);
+  return {lo:Math.round(gg*per+n.rent[0]),hi:Math.round(gg*per+n.rent[1]),gg,gm,over:g>gx?gx:null};
+}
+function drawCost(){
+  const rows=shown().map(v=>{const e={}; if(v.kca) e.kca=estimate(v,"kca"); if(v.nt) e.nt=estimate(v,"nt"); return {v,e,lo:Math.min(e.kca?e.kca.lo:Infinity,e.nt?e.nt.lo:Infinity)}}).sort((a,b)=>a.lo-b.lo);
+  const top=rows.length?Math.max(...rows.map(r=>Math.max(r.e.kca?r.e.kca.lo:0,r.e.nt?r.e.nt.lo:0))):1;
+  const MAX=Math.max(1000*M,Math.ceil(top*1.05/(500*M))*500*M), pct=x=>Math.min(100,x/MAX*100);
+  document.getElementById("guestsOut").textContent=`하객 ${G}명, ${calcM==="min"?"최저":"최고"} 식대 기준입니다. 가장 낮은 곳은 ${rows[0]?rows[0].v.n+" 약 "+man(rows[0].lo):"없음"}입니다.`;
+  const el=document.getElementById("costRows");
+  el.innerHTML=rows.length?rows.map(({v,e})=>{const c=cvar(v.d), ls=[], notes=[];
+    for(const [src,lab] of [["kca",KCA],["nt",NT]]){const x=e[src]; if(!x) continue;
+      const segs=[[0,pct(x.lo),"base"]]; if(x.hi>x.lo) segs.push([pct(x.lo),pct(x.hi),"range"]);
+      ls.push(lnHTML(lab,segs,manR([x.lo,x.hi]),c,x.gg>G?`보증 ${x.gm}명`:""));
+      if(x.over) notes.push(`${src==="kca"?"참소비자원":"노션"} 기준 최대 ${x.over}명이라 ${G}명은 넘칩니다`);}
+    return rowHTML(v,ls,notes.join(" · "));
+  }).join(""):empty;
+  document.getElementById("costScale").innerHTML=scaleHTML(MAX,MAX/4,t=>man(t));
+  bindRows(el);
+}
+const gR=document.getElementById("guests"), gN=document.getElementById("guestsNum");
+gR.addEventListener("input",()=>{G=+gR.value; gN.value=G; store.set("guests",G); drawCost(); drawCompare()});
+gN.addEventListener("change",()=>{G=Math.max(1,Math.min(2000,Math.round(+gN.value||200))); gN.value=G; gR.value=Math.min(400,Math.max(30,G)); store.set("guests",G); drawCost(); drawCompare()});
+document.getElementById("calcMeal").addEventListener("click",e=>{const b=e.target.closest("button"); if(!b) return; calcM=b.dataset.m;
+  document.querySelectorAll("#calcMeal button").forEach(x=>x.setAttribute("aria-pressed",x===b)); drawCost(); drawCompare()});
+
+// 비교함
+let CMP=store.get("cmp",[]).filter(n=>V.some(v=>v.n===n)).slice(0,3);
+function cmpBtn(v){const on=CMP.includes(v.n), full=!on&&CMP.length>=3;
+  return `<button type="button" class="cmpbtn" data-cmp="${esc(v.n)}" aria-pressed="${on}" ${full?"disabled title=\"비교함은 3곳까지 담을 수 있습니다\"":""}>${on?"비교함에서 빼기":full?"비교함 가득 참(3곳)":"비교함에 담기"}</button>`}
+function drawCompare(){
+  document.getElementById("navCmp").textContent=CMP.length;
+  let fab=document.getElementById("cmpFab");
+  if(CMP.length){ if(!fab){fab=document.createElement("a");fab.id="cmpFab";fab.className="cmpfab";fab.href="#compare";document.body.appendChild(fab)} fab.textContent=`비교함 ${CMP.length}/3 보기`; }
+  else if(fab) fab.remove();
+  const box=document.getElementById("cmpBox"), vs=CMP.map(n=>V.find(v=>v.n===n));
+  if(!vs.length){box.innerHTML='<div class="cmpempty">아직 담은 곳이 없습니다. 지도에서 번호를 누르거나 업체 카드에서 <b>비교함에 담기</b>를 눌러 보세요.</div>';return}
+  const costs=vs.map(v=>Math.min(v.kca?estimate(v,"kca").lo:Infinity,v.nt?estimate(v,"nt").lo:Infinity)), best=Math.min(...costs);
+  const both=(v,k,n)=>[v.kca&&k?`<div>${k}${KCA}</div>`:"",v.nt&&n?`<div>${n}${NT}</div>`:""].join("")||'<span class="muted">–</span>';
+  const R=[
+   ["위치",v=>`<span class="chip ${v.d}">${v.d}</span><div class="muted">${esc(v.a)}</div>`],
+   [`예상 비용 (${G}명)`,(v,i)=>`<span class="${costs[i]===best&&vs.length>1?"best":""}">약 ${man(costs[i])}</span>${[v.kca&&estimate(v,"kca"),v.nt&&estimate(v,"nt")].some(x=>x&&x.gg>G)?' <span class="muted">(최소 보증 적용)</span>':""}`],
+   ["대관료",v=>both(v,v.kca&&esc(v.kca.rentTxt),v.nt&&esc(rentN(v)))],
+   ["1인 식대",v=>both(v,v.kca&&esc(mealK(v)),v.nt&&esc(mealN(v)))],
+   ["인원",v=>both(v,v.kca&&esc("보증 "+v.kca.guest),v.nt&&esc(guestN(v)))],
+   ["분위기",v=>v.moods.length?v.moods.map(m=>`<span class="mood">${m}</span>`).join(""):'<span class="muted">–</span>'],
+   ["예식 시간",v=>v.nt?[...new Set(v.nt.h.map(h=>h[5]+"분"))].join(" / "):'<span class="muted">–</span>'],
+   ["버진로드",v=>v.nt?[...new Set(v.nt.h.map(h=>h[7]!=null?h[7]+"m":"–"))].join(" / "):'<span class="muted">–</span>'],
+   ["음주류",v=>v.nt?esc([...new Set(v.nt.h.map(h=>h[13]))].join(", ")):'<span class="muted">–</span>'],
+   ["패키지",v=>v.kca?esc(v.kca.pkg):'<span class="muted">–</span>'],
+   ["한줄평",v=>v.nt&&v.nt.note?esc(v.nt.note):'<span class="muted">–</span>'],
+   ["연락",v=>`${v.tel?esc(v.tel)+"<br>":""}<a href="${kakao(v)}" target="_blank" rel="noopener">카카오맵 ↗</a>`]
+  ];
+  box.innerHTML=`<div class="cmpwrap"><table><thead><tr><th></th>${vs.map(v=>`<td><b>${v.no}. ${esc(v.n)}</b><div style="margin-top:6px">${cmpBtn(v)}</div></td>`).join("")}</tr></thead>
+   <tbody>${R.map(([t,fn])=>`<tr><th>${t}</th>${vs.map((v,i)=>`<td>${fn(v,i)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+}
+document.addEventListener("click",e=>{const b=e.target.closest("[data-cmp]"); if(!b||b.disabled) return; e.stopPropagation();
+  const n=b.dataset.cmp; CMP=CMP.includes(n)?CMP.filter(x=>x!==n):CMP.length<3?[...CMP,n]:CMP; store.set("cmp",CMP);
+  drawInfo(); drawCards(); drawCompare()},true);
+
+// 상담 체크리스트
+const CHECK=[
+ ["계약·위약금",[["계약금 금액과 환불 가능 기간","계약 직후 며칠까지 전액 환불되는지"],["취소·날짜 변경 위약금 구간","예식 며칠 전부터 몇 %인지, 계약금이 위약금에서 빠지는지"],["견적 유효기간과 가격 인상","내년 예식이면 올해 견적이 그대로 적용되는지"],["프로모션 조건","할인 적용 조건(시간대·계약 시점)과 중복 할인 여부"]]],
+ ["인원·식사",[["최소 보증인원과 확정 시점","보증인원을 언제까지 확정하고, 이후 줄일 수 있는지"],["보증 미달·초과 정산","미달 시 차액 처리, 초과 인원 추가 비용과 준비 여유분"],["식대에 포함된 것","음료·주류·답례품 포함 여부, 음주류는 무제한인지 당일 소모량 정산인지"],["식권·답례품 처리","남은 식권을 답례품으로 바꿀 수 있는지(비율)"],["시식 가능 여부","시식 횟수·인원, 유료인지"]]],
+ ["홀·진행",[["예식 간격과 단독 사용 시간","앞뒤 예식과 몇 분 간격인지, 동시 예식인지"],["대관료에 포함된 장식","생화인지 조화인지, 꽃 색상 변경과 추가 장식 비용"],["필수 항목과 외부 반입","드레스·촬영·헬퍼를 홀 제휴로만 써야 하는지, 외부 업체 반입비"],["헬퍼비·연출비 등 추가금","헬퍼비 필수 여부, 사회자·축가·플라워샤워 등 기본 포함 항목"],["신부대기실과 동선","대기실에서 홀 입장 동선, 대기실 크기·조명"]]],
+ ["하객·주차",[["주차 대수와 무료 시간","하객 무료 주차 시간, 만차 시 대체 주차장"],["대중교통·셔틀","역·터미널에서 거리, 셔틀 운행 여부"],["연회장 위치와 혼잡도","예식홀과 같은 층인지, 피크 시간 자리 부족 여부"],["하객 대기 공간","예식 전 하객이 기다릴 로비·카페가 있는지"]]]
+];
+let CHK=store.get("chk",{});
+function drawChecks(){
+  let id=0, total=0;
+  document.getElementById("checks").innerHTML=CHECK.map(([g,items])=>`<fieldset><legend>${g}</legend>${items.map(([t,d])=>{const k="c"+(id++); total++;
+    return `<label for="${k}"><input type="checkbox" id="${k}" data-k="${k}" ${CHK[k]?"checked":""}><span>${t}<small>${d}</small></span></label>`}).join("")}</fieldset>`).join("");
+  const done=Object.values(CHK).filter(Boolean).length;
+  document.getElementById("chkCount").textContent=`${total}개 중 ${done}개 확인`;
+}
+document.getElementById("checks").addEventListener("change",e=>{const i=e.target.closest("input[data-k]"); if(!i) return; CHK[i.dataset.k]=i.checked; store.set("chk",CHK); drawChecks()});
+document.getElementById("chkReset").addEventListener("click",()=>{CHK={}; store.set("chk",CHK); drawChecks()});
+
+// 검색
+document.getElementById("q").addEventListener("input",e=>{fQ=e.target.value.replace(/\s/g,"").toLowerCase(); refresh()});
+
 function refresh(){
   if(sel&&!shown().includes(sel)) sel=null;
   document.getElementById("fCount").textContent=`${shown().length}곳 표시 중`;
-  drawMap();drawInfo();drawRent();drawMeal();drawTable();drawCards();
+  drawMap();drawInfo();drawRent();drawCost();drawMeal();drawTable();drawCards();drawCompare();
   if(LM&&zoom==="all") fitLeaflet();
 }
-initLeaflet();drawDates();drawVendors();drawSdm();refresh();
+G=store.get("guests",200); gN.value=G; gR.value=Math.min(400,Math.max(30,G));
+initLeaflet();drawDates();drawVendors();drawSdm();drawChecks();refresh();
 </script>
 </body>
 </html>
