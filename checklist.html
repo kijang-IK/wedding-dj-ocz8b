@@ -93,8 +93,11 @@ textarea{width:100%;resize:vertical;min-height:70px}
  .gh.wide .big{font-size:17px}
  .gh.wide .small{display:none}
  .gh.wide .lbl{font-size:11px}
- .tlstrip{display:flex;overflow-x:auto;scroll-snap-type:x proximity;padding-bottom:4px;-webkit-overflow-scrolling:touch}
- .tlstrip button{flex:0 0 100px;scroll-snap-align:start}
+ #tlStrip{display:flex;overflow-x:auto;scroll-snap-type:x proximity;padding-bottom:4px;-webkit-overflow-scrolling:touch}
+ #tlStrip button{flex:0 0 100px;scroll-snap-align:start}
+ #glanceHalls .gh .frow:last-child{display:none}
+ #glanceHalls .gh{cursor:pointer}
+ #glanceHalls .gh .counts{font-size:12px;gap:8px}
  .hrow{gap:6px}
 }
 /* 분류 카드 */
@@ -471,7 +474,7 @@ function drawGlance(){
   $("glanceHalls").innerHTML=[0,1,2].map(i=>{const a=S.ans[i]||{}, st=k=>ALLQ.filter(q=>a[q.id]&&a[q.id].s===k).length;
     const done=ALLQ.filter(q=>a[q.id]&&a[q.id].s).length, md=must.filter(q=>a[q.id]&&a[q.id].s).length;
     const sc=S.score[i]||{}, score=SC.reduce((x,k)=>x+(+sc[k]||0),0), h=S.halls[i]||{};
-    return `<div class="gh"><div class="top"><span class="frow" style="gap:8px;min-width:0;flex-wrap:nowrap"><span class="no1">${i+1}</span><b>${esc(hallName(i))}</b></span><span class="small muted num">${h.date?esc(h.date.slice(2).replace(/-/g,".")):""}</span></div>
+    return `<div class="gh" data-go="${i}" data-tab="ask" role="button" tabindex="0" aria-label="${esc(hallName(i))} 질문 이어서 하기"><div class="top"><span class="frow" style="gap:8px;min-width:0;flex-wrap:nowrap"><span class="no1">${i+1}</span><b>${esc(hallName(i))}</b></span><span class="small muted num">${h.date?esc(h.date.slice(2).replace(/-/g,".")):""}</span></div>
      <div class="bar"><i style="width:${done/ALLQ.length*100}%"></i></div>
      <div class="counts"><span class="muted">질문 ${done}/${ALLQ.length}</span><span class="mark good">○ ${st("good")}</span><span class="mark mid">△ ${st("mid")}</span><span class="mark bad">✕ ${st("bad")}</span></div>
      <dl class="kv"><dt>필수 질문</dt><dd>${md}/${must.length}</dd><dt>예상 총액</dt><dd class="${tot[i]&&tot[i]===best?"best":""}">${tot[i]?won(tot[i]):"–"}</dd><dt>점수</dt><dd>${score?score+" / "+SC.length*10:"–"}</dd></dl>
