@@ -82,6 +82,21 @@ textarea{width:100%;resize:vertical;min-height:70px}
 .gh .go{align-self:flex-start}
 .glance2{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr));gap:10px}
 .gh.wide .big{font-family:var(--font-display);font-size:26px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.1}
+@media (max-width:640px){
+ .glance{gap:8px}
+ .gh{padding:10px 12px;gap:6px}
+ .gh .kv{display:flex;flex-wrap:wrap;gap:0 6px}
+ .gh .kv dd{text-align:left;margin-right:10px}
+ .gh .btn{min-height:30px;padding:3px 10px;font-size:12px}
+ .glance2{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+ .gh.wide{padding:8px 10px;gap:4px}
+ .gh.wide .big{font-size:17px}
+ .gh.wide .small{display:none}
+ .gh.wide .lbl{font-size:11px}
+ .tlstrip{display:flex;overflow-x:auto;scroll-snap-type:x proximity;padding-bottom:4px;-webkit-overflow-scrolling:touch}
+ .tlstrip button{flex:0 0 100px;scroll-snap-align:start}
+ .hrow{gap:6px}
+}
 /* 분류 카드 */
 .cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,210px),1fr));gap:10px}
 .cat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;text-decoration:none;color:var(--ink);display:flex;flex-direction:column;gap:4px}
