@@ -69,6 +69,19 @@ textarea{width:100%;resize:vertical;min-height:70px}
 .qnav a{flex:none;font-size:13px;font-weight:600;color:var(--ink);text-decoration:none;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface)}
 .qnav a.hot{background:var(--accent);color:var(--bg);border-color:var(--accent)}
 
+/* 한눈에 보기 */
+.glance{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr));gap:10px}
+.gh{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.gh .top{display:flex;align-items:center;gap:8px;justify-content:space-between}
+.gh .top b{font-size:16px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.gh .no1{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;color:var(--bg);background:var(--accent);flex:none}
+.gh .counts{display:flex;gap:10px;font-size:13px;font-variant-numeric:tabular-nums;flex-wrap:wrap}
+.gh .kv{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;font-size:13px}
+.gh .kv dt{color:var(--muted)} .gh .kv dd{margin:0;text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
+.gh .kv dd.best{color:var(--good)}
+.gh .go{align-self:flex-start}
+.glance2{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr));gap:10px}
+.gh.wide .big{font-family:var(--font-display);font-size:26px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.1}
 /* 분류 카드 */
 .cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,210px),1fr));gap:10px}
 .cat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;text-decoration:none;color:var(--ink);display:flex;flex-direction:column;gap:4px}
@@ -77,7 +90,12 @@ textarea{width:100%;resize:vertical;min-height:70px}
 .cat.hot{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
 
 /* 홀투어 */
-.halls{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:10px}
+.halls{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.hrow,.hhead{display:grid;grid-template-columns:24px minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1.3fr);gap:8px;align-items:center}
+.hhead{font-size:12px;color:var(--muted);font-weight:600;margin-top:10px}
+.hrow i{font-style:normal;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;color:var(--bg);background:var(--accent)}
+.hrow input{width:100%}
+@media (max-width:640px){.hhead{display:none}.hrow{grid-template-columns:24px minmax(0,1fr) minmax(0,1fr);padding-bottom:8px;border-bottom:1px solid var(--line)}.hrow .nm{grid-column:2/4}.hrow .sl{grid-column:2/4}}
 .hallcard{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px}
 .hallcard .hn{font-weight:700;display:flex;align-items:center;gap:8px}
 .hallcard .hn i{font-style:normal;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:12px;color:var(--bg);background:var(--accent)}
@@ -92,6 +110,45 @@ textarea{width:100%;resize:vertical;min-height:70px}
 .ck:has(input:checked) > span{color:var(--muted);text-decoration:line-through}
 .tabs{position:sticky;top:calc(env(safe-area-inset-top,0px) + 50px);z-index:40;background:var(--bg);padding:6px 0}
 .qtools{display:flex;flex-direction:column;gap:8px}
+#qList{display:grid;grid-template-columns:1fr;gap:10px;align-items:start}
+@media (min-width:960px){#qList{grid-template-columns:1fr 1fr}}
+details.qc{background:var(--surface);border:1px solid var(--line);border-radius:12px;min-width:0}
+details.qc>summary{list-style:none;cursor:pointer;padding:10px 14px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 10px;align-items:center}
+details.qc>summary::-webkit-details-marker{display:none}
+details.qc>summary .cn{font-weight:700;font-size:15px;display:flex;gap:6px;align-items:center}
+details.qc>summary .cn::before{content:"▸";color:var(--muted);font-size:12px;transition:transform .15s}
+details.qc[open]>summary .cn::before{transform:rotate(90deg)}
+details.qc>summary .cc{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;text-align:right}
+details.qc>summary .dots{grid-column:1/3;display:flex;gap:3px;flex-wrap:wrap}
+.dots i{width:9px;height:9px;border-radius:50%;background:var(--land);border:1px solid var(--line)}
+.dots i.good{background:var(--good);border-color:var(--good)} .dots i.mid{background:var(--mid);border-color:var(--mid)} .dots i.bad{background:var(--bad);border-color:var(--bad)}
+.dots i.m{box-shadow:0 0 0 1.5px var(--bad-soft)}
+.qr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 8px;padding:8px 14px;border-top:1px solid var(--line);align-items:center}
+.qr .qtx{font-size:14px;line-height:1.45;min-width:0}
+.qr .qtx .tag{margin-left:4px;vertical-align:1px}
+.qr .tip,.qr .mm{grid-column:1/3;font-size:12px;color:var(--muted)}
+.qr .mm{color:var(--ink)} .qr .mm::before{content:"✎ ";color:var(--muted)}
+.qr .tip{display:none} .showtip .qr .tip{display:block}
+.qr .memo{grid-column:1/3;width:100%}
+.qb{display:flex;gap:3px}
+.qb button{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--muted);font-size:15px;font-weight:700;cursor:pointer;display:grid;place-items:center;padding:0}
+.qb button[aria-pressed="true"][data-s="good"]{background:var(--good);color:var(--bg);border-color:var(--good)}
+.qb button[aria-pressed="true"][data-s="mid"]{background:var(--mid);color:var(--bg);border-color:var(--mid)}
+.qb button[aria-pressed="true"][data-s="bad"]{background:var(--bad);color:var(--bg);border-color:var(--bad)}
+.qb button.ed{font-size:13px;font-weight:400}
+.qb button.ed.has{color:var(--accent);border-color:var(--accent)}
+.legendq .mark{margin-left:4px}
+.tlstrip{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:6px}
+.tlstrip button{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:6px 8px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:3px;font-size:12px;min-width:0}
+.tlstrip button b{font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tlstrip button span{color:var(--muted);font-variant-numeric:tabular-nums}
+.tlstrip button.now{border-color:var(--accent);background:var(--accent-soft)}
+.tlstrip button.done{opacity:.6}
+.tlstrip .bar{height:4px}
+details.phase>summary{list-style:none;cursor:pointer}
+details.phase>summary::-webkit-details-marker{display:none}
+details.phase>summary .ph b::before{content:"▸ ";color:var(--muted);font-size:12px}
+details.phase[open]>summary .ph b::before{content:"▾ "}
 .qcat{display:flex;flex-direction:column;gap:0}
 .qcat h3{display:flex;justify-content:space-between;gap:8px;align-items:baseline;padding:10px 2px 6px;border-bottom:2px solid var(--ink)}
 .qcat h3 small{font-weight:400;color:var(--muted);font-size:12px}
@@ -159,16 +216,13 @@ textarea{width:100%;resize:vertical;min-height:70px}
 </header>
 
 <nav class="qnav" aria-label="바로가기">
-  <a class="hot" href="#tour">① 홀투어</a><a href="#timeline">② 준비 타임라인</a><a href="#contract">③ 계약·상담</a><a href="#budget">④ 예산·지출</a><a href="#backup">기록 백업</a>
+  <a href="#glance">한눈에</a><a class="hot" href="#tour">① 홀투어</a><a href="#timeline">② 준비 타임라인</a><a href="#contract">③ 계약·상담</a><a href="#budget">④ 예산·지출</a><a href="#backup">기록 백업</a>
 </nav>
 
-<section aria-label="분류">
-  <div class="cats">
-    <a class="cat hot" href="#tour"><b>① 홀투어 체크리스트</b><span id="catTour"></span></a>
-    <a class="cat" href="#timeline"><b>② 준비 타임라인</b><span id="catTime"></span></a>
-    <a class="cat" href="#contract"><b>③ 계약·플래너 상담</b><span id="catCon"></span></a>
-    <a class="cat" href="#budget"><b>④ 예산·지출</b><span>항목별 예산, 계약금·잔금, 부담 주체</span></a>
-  </div>
+<section id="glance" aria-label="한눈에 보기">
+  <div class="sec-head"><h2>한눈에 보기</h2></div>
+  <div class="glance" id="glanceHalls"></div>
+  <div class="glance2" id="glanceOther"></div>
 </section>
 
 <!-- ① 홀투어 -->
@@ -176,7 +230,9 @@ textarea{width:100%;resize:vertical;min-height:70px}
   <div class="sec-head"><span class="no">① 지금 가장 중요</span><h2>홀투어 체크리스트</h2>
   <p class="muted small">후보 홀 3곳까지 이름을 적고, 상담하면서 홀마다 질문에 답을 표시하세요. 견적은 같은 기준으로 계산하고, 마지막에 둘이 점수를 매겨 비교합니다.</p></div>
 
-  <details class="panel hallsbox" id="hallsBox" open><summary><b>후보 홀 정보</b> <span class="small muted" id="hallsSum"></span></summary><div class="halls" id="halls" style="margin-top:12px"></div></details>
+  <details class="panel hallsbox" id="hallsBox" open><summary><b>후보 홀 정보</b> <span class="small muted" id="hallsSum"></span></summary>
+    <div class="hhead" aria-hidden="true"><span></span><span>홀 이름</span><span>투어 날짜</span><span>상담 매니저</span><span>희망 날짜·시간대</span></div>
+    <div class="halls" id="halls"></div></details>
 
   <div class="tabs"><div class="seg" id="tourTab" role="group" aria-label="홀투어 단계">
     <button type="button" data-t="prep" aria-pressed="false">가기 전 준비</button>
@@ -195,10 +251,11 @@ textarea{width:100%;resize:vertical;min-height:70px}
 
   <div id="tAsk">
     <div class="panel qtools">
-      <div class="frow"><span class="lbl">지금 상담 중인 홀</span><div class="seg" id="curHall" role="group" aria-label="홀 선택"></div></div>
-      <div class="frow"><span class="lbl">보기</span><div class="chips" id="qFilter"></div></div>
-      <div class="prog" id="qProg"></div>
-      <p class="small muted"><span class="tag must">필수</span> 계약 금액·조건을 바꾸는 질문, <span class="tag look">눈으로</span> 묻지 말고 직접 보고 확인할 것. 답은 ○ 좋음 · △ 애매 · ✕ 아쉬움으로 표시하고 메모를 남기세요.</p>
+      <div class="frow"><span class="lbl">상담 중인 홀</span><div class="seg" id="curHall" role="group" aria-label="홀 선택"></div></div>
+      <div class="frow"><span class="lbl">보기</span><div class="chips" id="qFilter"></div>
+        <button type="button" class="btn" id="tipT" aria-pressed="false">설명 보기</button>
+        <button type="button" class="btn" id="openAll">모두 펼치기</button></div>
+      <p class="small muted legendq"><span class="tag must">필수</span> 금액·조건이 바뀌는 질문 <span class="tag look">눈으로</span> 직접 보고 확인 · <b class="mark good">○</b> 좋음 <b class="mark mid">△</b> 애매 <b class="mark bad">✕</b> 아쉬움 · ✎ 메모</p>
     </div>
     <div id="qList"></div>
   </div>
@@ -224,7 +281,8 @@ textarea{width:100%;resize:vertical;min-height:70px}
     <label class="lbl" for="wDate">예식일</label><input type="date" id="wDate">
     <span class="dd" id="ddOut">D-?</span><span class="small muted" id="tlProg"></span>
   </div>
-  <div class="frow"><span class="lbl">분야</span><div class="chips" id="areaF"></div></div>
+  <div class="tlstrip" id="tlStrip" role="list"></div>
+  <div class="frow"><span class="lbl">분야</span><div class="chips" id="areaF"></div><button type="button" class="btn" id="phAll">모두 펼치기</button></div>
   <div class="phases" id="phases"></div>
 </section>
 
@@ -370,47 +428,76 @@ function drawPrep(){for(const k in PREP) $(k).innerHTML=PREP[k].map(x=>ckHTML(..
 function hallsSum(){const n=[0,1,2].map(i=>S.halls[i]&&S.halls[i].name).filter(Boolean); $("hallsSum").textContent=n.length?n.join(" · "):"이름·투어 날짜·매니저 적기"}
 function drawHalls(){ hallsSum(); if([0,1,2].some(i=>S.halls[i]&&S.halls[i].name)) $("hallsBox").open=false;
   $("halls").innerHTML=[0,1,2].map(i=>{const h=S.halls[i]||{};
-    return `<div class="hallcard"><div class="hn"><i>${i+1}</i>${esc(hallName(i))}</div>
-     <label>홀 이름<input type="text" data-h="${i}" data-f="name" value="${esc(h.name)}" placeholder="예: ○○웨딩홀"></label>
-     <div class="frow"><label style="flex:1">투어 날짜<input type="date" data-h="${i}" data-f="date" value="${esc(h.date)}"></label>
-     <label style="flex:1">상담 매니저<input type="text" data-h="${i}" data-f="mgr" value="${esc(h.mgr)}"></label></div>
-     <label>희망 날짜·시간대<input type="text" data-h="${i}" data-f="slot" value="${esc(h.slot)}" placeholder="예: 28년 3월 토 12시"></label></div>`}).join("");
+    return `<div class="hrow"><i>${i+1}</i>
+     <input class="nm" type="text" data-h="${i}" data-f="name" value="${esc(h.name)}" placeholder="홀 ${i+1} 이름" aria-label="홀 ${i+1} 이름">
+     <input type="date" data-h="${i}" data-f="date" value="${esc(h.date)}" aria-label="홀 ${i+1} 투어 날짜">
+     <input type="text" data-h="${i}" data-f="mgr" value="${esc(h.mgr)}" placeholder="상담 매니저" aria-label="홀 ${i+1} 상담 매니저">
+     <input class="sl" type="text" data-h="${i}" data-f="slot" value="${esc(h.slot)}" placeholder="희망 날짜·시간대 (예: 28년 3월 토 12시)" aria-label="홀 ${i+1} 희망 날짜·시간대"></div>`}).join("");
 }
 $("halls").addEventListener("input",e=>{const t=e.target; if(t.dataset.h==null) return; const i=+t.dataset.h;
   S.halls[i]=S.halls[i]||{}; S.halls[i][t.dataset.f]=t.value; save();
-  if(t.dataset.f==="name"){hallsSum();t.closest(".hallcard").querySelector(".hn").lastChild.textContent=hallName(i); drawCurHall(); drawProg(); if(!$("tEst").hidden) drawEst(); if(!$("tScore").hidden) drawScore()}});
+  if(t.dataset.f==="name"){hallsSum(); drawCurHall(); drawProg(); if(!$("tEst").hidden) drawEst(); if(!$("tScore").hidden) drawScore()}});
 
 let cur=0, qf="전체";
 function drawCurHall(){ $("curHall").innerHTML=[0,1,2].map(i=>`<button type="button" data-i="${i}" aria-pressed="${i===cur}">${esc(hallName(i))}</button>`).join("") }
-$("curHall").addEventListener("click",e=>{const b=e.target.closest("button"); if(!b) return; cur=+b.dataset.i; drawCurHall(); drawQ(); drawProg()});
+$("curHall").addEventListener("click",e=>{const b=e.target.closest("button"); if(!b) return; cur=+b.dataset.i; editing=null; drawCurHall(); drawQ(); drawProg()});
 const QF=["전체","필수만","눈으로 볼 것","아직 안 한 것"];
 function drawQF(){ $("qFilter").innerHTML=QF.map(f=>`<button type="button" data-f="${f}" aria-pressed="${f===qf}">${f}</button>`).join("") }
 $("qFilter").addEventListener("click",e=>{const b=e.target.closest("button"); if(!b) return; qf=b.dataset.f; drawQF(); drawQ()});
 const ans=(i,id)=>((S.ans[i]||{})[id])||{};
-function drawProg(){
-  const must=ALLQ.filter(q=>q.must);
-  $("qProg").innerHTML=[0,1,2].map(i=>{const a=S.ans[i]||{}, done=ALLQ.filter(q=>a[q.id]&&a[q.id].s).length, md=must.filter(q=>a[q.id]&&a[q.id].s).length;
-    return `<div><div class="frow" style="justify-content:space-between"><span>${i===cur?"<b>":""}${esc(hallName(i))}${i===cur?"</b>":""}</span><span class="muted num">${done}/${ALLQ.length} · 필수 ${md}/${must.length}</span></div><div class="bar"><i style="width:${done/ALLQ.length*100}%"></i></div></div>`}).join("");
-  $("catTour").textContent=`질문 ${ALLQ.length}개(필수 ${must.length}) · 견적 계산 · 점수 비교`;
+function drawProg(){ drawGlance() }
+function goHall(i,tab){cur=i; drawCurHall(); drawQ(); const b=$("tourTab").querySelector(`[data-t="${tab||"ask"}"]`); b.click()}
+function drawGlance(){
+  const must=ALLQ.filter(q=>q.must), tot=[0,1,2].map(i=>calc(i)._total), pos=tot.filter(x=>x>0), best=pos.length>1?Math.min(...pos):null;
+  $("glanceHalls").innerHTML=[0,1,2].map(i=>{const a=S.ans[i]||{}, st=k=>ALLQ.filter(q=>a[q.id]&&a[q.id].s===k).length;
+    const done=ALLQ.filter(q=>a[q.id]&&a[q.id].s).length, md=must.filter(q=>a[q.id]&&a[q.id].s).length;
+    const sc=S.score[i]||{}, score=SC.reduce((x,k)=>x+(+sc[k]||0),0), h=S.halls[i]||{};
+    return `<div class="gh"><div class="top"><span class="frow" style="gap:8px;min-width:0;flex-wrap:nowrap"><span class="no1">${i+1}</span><b>${esc(hallName(i))}</b></span><span class="small muted num">${h.date?esc(h.date.slice(2).replace(/-/g,".")):""}</span></div>
+     <div class="bar"><i style="width:${done/ALLQ.length*100}%"></i></div>
+     <div class="counts"><span class="muted">질문 ${done}/${ALLQ.length}</span><span class="mark good">○ ${st("good")}</span><span class="mark mid">△ ${st("mid")}</span><span class="mark bad">✕ ${st("bad")}</span></div>
+     <dl class="kv"><dt>필수 질문</dt><dd>${md}/${must.length}</dd><dt>예상 총액</dt><dd class="${tot[i]&&tot[i]===best?"best":""}">${tot[i]?won(tot[i]):"–"}</dd><dt>점수</dt><dd>${score?score+" / "+SC.length*10:"–"}</dd></dl>
+     <div class="frow"><button type="button" class="btn go" data-go="${i}" data-tab="ask">질문 이어서</button><button type="button" class="btn go" data-go="${i}" data-tab="est">견적</button></div></div>`}).join("");
+  const w=S.wdate?new Date(S.wdate+"T00:00:00"):null, today=new Date(); today.setHours(0,0,0,0), dd=w?Math.round((w-today)/864e5):null;
+  const all=TL.flatMap(p=>p[3]), done=all.filter(x=>S.ck[x[0]]).length, ml=dd==null?null:dd/30.44, nowP=ml==null?null:TL.find(p=>ml<=p[0]&&ml>p[1]);
+  const nowLeft=nowP?nowP[3].filter(x=>!S.ck[x[0]]).length:null;
+  const G=budTotals(), bt=+S.btotal||0;
+  const con=Object.values(CON).flat(), cd=con.filter(x=>S.ck[x[0]]).length;
+  $("glanceOther").innerHTML=`<a class="gh wide" href="#timeline" style="text-decoration:none;color:inherit"><span class="lbl">② 준비 타임라인</span><span class="big">${dd==null?"예식일 미정":dd>0?"D-"+dd:dd===0?"D-DAY":"D+"+(-dd)}</span>
+     <span class="small">${nowP?`지금: <b>${nowP[2]}</b> · 남은 일 ${nowLeft}개`:"예식일을 넣으면 지금 할 일을 알려줍니다"}</span><div class="bar"><i style="width:${done/all.length*100}%"></i></div><span class="small muted">전체 ${done}/${all.length} 완료</span></a>
+   <a class="gh wide" href="#contract" style="text-decoration:none;color:inherit"><span class="lbl">③ 계약·상담</span><span class="big">${cd}/${con.length}</span><span class="small muted">계약 직전 확인과 플래너 상담 질문</span></a>
+   <a class="gh wide" href="#budget" style="text-decoration:none;color:inherit"><span class="lbl">④ 예산·지출</span><span class="big">${G.a?G.a.toLocaleString("ko-KR")+"만":"–"}</span><span class="small muted">${bt?`총예산 ${bt.toLocaleString("ko-KR")}만 중 실지출 · 남은 돈 ${(bt-G.a).toLocaleString("ko-KR")}만`:`실지출 합계 · 항목 예산 ${G.b.toLocaleString("ko-KR")}만`}</span></a>`;
 }
+$("glanceHalls").addEventListener("click",e=>{const b=e.target.closest("[data-go]"); if(b) goHall(+b.dataset.go,b.dataset.tab)});
+const openC=new Set([Q[0][0]]); let editing=null;
+function catSum(cat){const a=S.ans[cur]||{}, its=ALLQ.filter(q=>q.cat===cat), done=its.filter(q=>a[q.id]&&a[q.id].s).length, mustLeft=its.filter(q=>q.must&&!(a[q.id]&&a[q.id].s)).length;
+  return `<span class="cn">${cat}</span><span class="cc">${done}/${its.length}${mustLeft?` · <span style="color:var(--bad)">필수 ${mustLeft} 남음</span>`:""}</span>
+   <span class="dots" aria-hidden="true">${its.map(q=>{const s2=(a[q.id]||{}).s; return `<i class="${s2||""}${q.must&&!s2?" m":""}"></i>`}).join("")}</span>`}
+function qRow(q){const x=(S.ans[cur]||{})[q.id]||{};
+  return `<div class="qr" data-q="${q.id}"><div class="qtx">${esc(q.q)}${q.must?'<span class="tag must">필수</span>':""}${q.look?'<span class="tag look">눈으로</span>':""}</div>
+   <div class="qb" role="group" aria-label="답">${["good","mid","bad"].map(s2=>`<button type="button" data-s="${s2}" aria-pressed="${x.s===s2}" aria-label="${MARKT[s2]}" title="${MARKT[s2]}">${MARK[s2]}</button>`).join("")}<button type="button" class="ed${x.m?" has":""}" data-ed="${q.id}" aria-label="메모" title="메모">✎</button></div>
+   ${q.tip?`<div class="tip">${esc(q.tip)}</div>`:""}
+   ${editing===q.id?`<input type="text" class="memo" data-memo="${q.id}" value="${esc(x.m)}" placeholder="답변·메모 (예: 70분, 무제한)" aria-label="메모">`:x.m?`<div class="mm">${esc(x.m)}</div>`:""}</div>`}
 function drawQ(){
   const a=S.ans[cur]||{};
   $("qList").innerHTML=Q.map(([cat])=>{
     const items=ALLQ.filter(q=>q.cat===cat&&(qf==="전체"||(qf==="필수만"&&q.must)||(qf==="눈으로 볼 것"&&q.look)||(qf==="아직 안 한 것"&&!(a[q.id]&&a[q.id].s))));
     if(!items.length) return "";
-    const done=ALLQ.filter(q=>q.cat===cat&&a[q.id]&&a[q.id].s).length, all=ALLQ.filter(q=>q.cat===cat).length;
-    return `<div class="qcat"><h3>${cat}<small>${done}/${all}</small></h3>${items.map(q=>{const x=a[q.id]||{};
-      return `<div class="q" data-q="${q.id}"><div class="qt">${esc(q.q)}${q.must?'<span class="tag must">필수</span>':""}${q.look?'<span class="tag look">눈으로</span>':""}</div>
-       ${q.tip?`<div class="tip">${esc(q.tip)}</div>`:""}
-       <div class="act"><span class="st" role="group" aria-label="답">${["good","mid","bad"].map(s=>`<button type="button" data-s="${s}" aria-pressed="${x.s===s}" aria-label="${MARKT[s]}">${MARK[s]} ${MARKT[s]}</button>`).join("")}</span>
-       <input type="text" class="memo" data-memo="${q.id}" value="${esc(x.m)}" placeholder="답변·메모 (예: 70분, 무제한)" aria-label="메모"></div></div>`}).join("")}</div>`}).join("")||'<p class="muted panel">이 홀은 해당 질문을 모두 마쳤습니다.</p>';
+    return `<details class="qc" data-cat="${cat}" ${openC.has(cat)||qf!=="전체"?"open":""}><summary>${catSum(cat)}</summary>${items.map(qRow).join("")}</details>`}).join("")||'<p class="muted panel">이 홀은 해당 질문을 모두 마쳤습니다.</p>';
+  $("openAll").textContent=openC.size>=Q.length?"모두 접기":"모두 펼치기";
 }
-$("qList").addEventListener("click",e=>{const b=e.target.closest(".st button"); if(!b) return; const id=b.closest(".q").dataset.q;
+$("qList").addEventListener("toggle",e=>{const d=e.target; if(!d.matches||!d.matches("details.qc")) return; d.open?openC.add(d.dataset.cat):openC.delete(d.dataset.cat); $("openAll").textContent=openC.size>=Q.length?"모두 접기":"모두 펼치기"},true);
+$("qList").addEventListener("click",e=>{
+  const ed=e.target.closest("[data-ed]");
+  if(ed){editing=editing===ed.dataset.ed?null:ed.dataset.ed; const row=ed.closest(".qr"), q=ALLQ.find(x=>x.id===row.dataset.q); row.outerHTML=qRow(q); const inp=document.querySelector(`[data-memo="${q.id}"]`); if(inp) inp.focus(); return}
+  const b=e.target.closest(".qb button[data-s]"); if(!b) return; const row=b.closest(".qr"), id=row.dataset.q;
   S.ans[cur]=S.ans[cur]||{}; const x=S.ans[cur][id]=S.ans[cur][id]||{}; x.s=x.s===b.dataset.s?null:b.dataset.s; save();
-  b.parentElement.querySelectorAll("button").forEach(o=>o.setAttribute("aria-pressed",o.dataset.s===x.s)); drawProg();
-  const h=b.closest(".qcat").querySelector("h3 small"), cat=ALLQ.find(q=>q.id===id).cat, a=S.ans[cur];
-  h.textContent=`${ALLQ.filter(q=>q.cat===cat&&a[q.id]&&a[q.id].s).length}/${ALLQ.filter(q=>q.cat===cat).length}`});
-$("qList").addEventListener("input",e=>{const t=e.target.closest("[data-memo]"); if(!t) return; S.ans[cur]=S.ans[cur]||{}; (S.ans[cur][t.dataset.memo]=S.ans[cur][t.dataset.memo]||{}).m=t.value; save()});
+  b.parentElement.querySelectorAll("button[data-s]").forEach(o=>o.setAttribute("aria-pressed",o.dataset.s===x.s));
+  const d=row.closest("details.qc"); d.querySelector("summary").innerHTML=catSum(d.dataset.cat); drawProg()});
+$("qList").addEventListener("input",e=>{const t=e.target.closest("[data-memo]"); if(!t) return; S.ans[cur]=S.ans[cur]||{}; (S.ans[cur][t.dataset.memo]=S.ans[cur][t.dataset.memo]||{}).m=t.value; save();
+  t.closest(".qr").querySelector(".ed").classList.toggle("has",!!t.value)});
+$("qList").addEventListener("keydown",e=>{const t=e.target.closest("[data-memo]"); if(t&&e.key==="Enter"){editing=null; const row=t.closest(".qr"); row.outerHTML=qRow(ALLQ.find(x=>x.id===row.dataset.q))}});
+$("tipT").addEventListener("click",e=>{const on=e.currentTarget.getAttribute("aria-pressed")!=="true"; e.currentTarget.setAttribute("aria-pressed",on); e.currentTarget.textContent=on?"설명 숨기기":"설명 보기"; $("qList").classList.toggle("showtip",on)});
+$("openAll").addEventListener("click",()=>{if(openC.size>=Q.length) openC.clear(); else Q.forEach(([c])=>openC.add(c)); drawQ()});
 
 // 견적 계산
 const EST=[
@@ -435,6 +522,7 @@ function drawEst(){
 }
 $("estTbl").addEventListener("input",e=>{const t=e.target.closest("[data-e]"); if(!t) return; const i=+t.dataset.e; S.est[i]=S.est[i]||{}; S.est[i][t.dataset.k]=t.value; save();
   const C=[0,1,2].map(calc), tots=C.map(c=>c._total).filter(x=>x>0), best=tots.length>1?Math.min(...tots):null;
+  drawGlance();
   $("estTbl").querySelectorAll("[data-out]").forEach(td=>{const k=td.dataset.out, col=[...td.parentElement.children].indexOf(td)-1; td.textContent=C[col][k]?won(C[col][k]):"–"; td.classList.toggle("best",k==="_total"&&C[col]._total===best)})});
 
 // 점수
@@ -450,7 +538,7 @@ function drawScore(){
 }
 $("scores").addEventListener("input",e=>{const t=e.target;
   if(t.dataset.sc!=null){const i=+t.dataset.sc; S.score[i]=S.score[i]||{}; S.score[i][t.dataset.k]=+t.value; save(); t.nextElementSibling.textContent=t.value;
-    const tot=SC.reduce((a,k)=>a+(+S.score[i][k]||0),0); document.querySelector(`[data-tot="${i}"]`).firstChild.textContent=tot}
+    const tot=SC.reduce((a,k)=>a+(+S.score[i][k]||0),0); document.querySelector(`[data-tot="${i}"]`).firstChild.textContent=tot; drawGlance()}
   if(t.dataset.pc!=null){const i=+t.dataset.pc; S.pc[i]=S.pc[i]||{}; S.pc[i][t.dataset.k]=t.value; save()}});
 
 // 탭
@@ -486,19 +574,27 @@ function drawTL(){
   $("ddOut").textContent=dd==null?"D-?":dd>0?`D-${dd}`:dd===0?"D-DAY":`D+${-dd}`;
   const all=TL.flatMap(p=>p[3]), done=all.filter(x=>S.ck[x[0]]).length;
   $("tlProg").textContent=`${all.length}개 중 ${done}개 완료`;
-  $("catTime").textContent=`${TL.length}개 시기 · 할 일 ${all.length}개 · D-day 계산`;
   const monthsLeft=dd==null?null:dd/30.44;
+  const nowIdx=monthsLeft==null?-1:TL.findIndex(p=>monthsLeft<=p[0]&&monthsLeft>p[1]);
+  if(!openPh) openPh=new Set([nowIdx>=0?nowIdx:0]);
+  $("tlStrip").innerHTML=TL.map(([s2,e2,name,items],i)=>{const pd=items.filter(x=>S.ck[x[0]]).length;
+    return `<button type="button" role="listitem" data-ph="${i}" class="${i===nowIdx?"now":""}${pd===items.length?" done":""}"><b>${name.replace(" (12개월 이전)","")}</b><span>${pd}/${items.length}${i===nowIdx?" · 지금":""}</span><span class="bar"><i style="width:${pd/items.length*100}%"></i></span></button>`}).join("");
   $("areaF").innerHTML=AREAS.map(a=>`<button type="button" data-a="${a}" aria-pressed="${a===af}">${a}</button>`).join("");
-  $("phases").innerHTML=TL.map(([s,e,name,items])=>{
+  $("phases").innerHTML=TL.map(([s,e,name,items],pi)=>{
     const its=items.filter(x=>af==="전체"||x[3]===af); if(!its.length) return "";
     const now=monthsLeft!=null&&monthsLeft<=s&&monthsLeft>e, past=monthsLeft!=null&&monthsLeft<=e;
     const range=w?(e<0?`${fmtD(w)} 이후`:s>=18?`~ ${fmtD(addM(w,e))}`:`${fmtD(addM(w,s))} ~ ${fmtD(addM(w,e))}`):"";
     const pd=items.filter(x=>S.ck[x[0]]).length;
-    return `<div class="phase${now?" now":""}${past?" past":""}"><div class="ph"><b>${name} ${now?'<span class="now-tag">지금</span>':""}</b><span class="when">${range}${range?" · ":""}${pd}/${items.length}</span></div>
-     <ul class="list">${its.map(([id,t,m,a])=>`<li><label class="ck" for="ck_${id}"><input type="checkbox" id="ck_${id}" data-ck="${id}" ${S.ck[id]?"checked":""}><span>${esc(t)}${a?`<span class="area">${a}</span>`:""}${m?`<small>${esc(m)}</small>`:""}</span></label></li>`).join("")}</ul></div>`}).join("");
+    return `<details class="phase${now?" now":""}${past?" past":""}" data-pi="${pi}" ${openPh.has(pi)||af!=="전체"?"open":""}><summary><div class="ph"><b>${name} ${now?'<span class="now-tag">지금</span>':""}</b><span class="when">${range}${range?" · ":""}${pd}/${items.length}</span></div></summary>
+     <ul class="list" style="margin-top:10px">${its.map(([id,t,m,a])=>`<li><label class="ck" for="ck_${id}"><input type="checkbox" id="ck_${id}" data-ck="${id}" ${S.ck[id]?"checked":""}><span>${esc(t)}${a?`<span class="area">${a}</span>`:""}${m?`<small>${esc(m)}</small>`:""}</span></label></li>`).join("")}</ul></details>`}).join("");
+  $("phAll").textContent=openPh.size>=TL.length?"모두 접기":"모두 펼치기";
 }
+let openPh=null;
+$("phases").addEventListener("toggle",e=>{const d=e.target; if(!d.matches||!d.matches("details.phase")||!openPh) return; d.open?openPh.add(+d.dataset.pi):openPh.delete(+d.dataset.pi); $("phAll").textContent=openPh.size>=TL.length?"모두 접기":"모두 펼치기"},true);
+$("tlStrip").addEventListener("click",e=>{const b=e.target.closest("[data-ph]"); if(!b) return; const i=+b.dataset.ph; openPh.add(i); af="전체"; drawTL(); const d=document.querySelector(`details.phase[data-pi="${i}"]`); if(d) d.scrollIntoView({block:"start",behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"})});
+$("phAll").addEventListener("click",()=>{if(openPh.size>=TL.length) openPh.clear(); else TL.forEach((_,i)=>openPh.add(i)); drawTL()});
 $("areaF").addEventListener("click",e=>{const b=e.target.closest("button"); if(!b) return; af=b.dataset.a; drawTL()});
-$("wDate").addEventListener("change",e=>{S.wdate=e.target.value; save(); drawTL()});
+$("wDate").addEventListener("change",e=>{S.wdate=e.target.value; save(); openPh=null; drawTL(); drawGlance()});
 
 // ───── ③ 계약·상담 ─────
 const CON={
@@ -507,11 +603,11 @@ const CON={
  conAsk:[["ca1","낸 비용에 포함되는 항목과 따로 결제할 항목은?",""],["ca2","제휴 업체를 안 쓰면 비용이나 선택 제한이 생기나?",""],["ca3","동행 횟수와 범위, 연락 가능 시간, 담당자가 바뀌면?",""],["ca4","일정 변경·담당자 변경·해지 때 환불액은 어떻게 계산하나?",""],["ca5","안내받은 혜택과 추가금 조건을 계약서에 적어줄 수 있나?",""]]
 };
 function drawCon(){for(const k in CON) $(k).innerHTML=CON[k].map(x=>ckHTML(...x)).join("");
-  $("catCon").textContent=`계약 직전 확인 ${CON.conFinal.length} · 플래너 상담 ${CON.conPlan.length+CON.conAsk.length}`}
+}
 
 // 체크박스 공통
 document.addEventListener("change",e=>{const t=e.target.closest("[data-ck]"); if(!t) return; S.ck[t.dataset.ck]=t.checked; save();
-  if(t.closest("#phases")) drawTL()});
+  if(t.closest("#phases")) drawTL(); drawGlance()});
 
 // ───── ④ 예산 ─────
 const BUD=[
@@ -549,8 +645,8 @@ $("bTbl").addEventListener("input",e=>{const t=e.target.closest("[data-b]"); if(
   if(t.dataset.c==="w") return;
   const G=budTotals(); BC.forEach(([c])=>{$("bTbl").querySelector(`[data-tot="${c}"]`).textContent=G[c].toLocaleString("ko-KR")});
   BUD.forEach(([g,items])=>BC.forEach(([c])=>{const s=items.reduce((a,it)=>a+bget(g+"|"+it,c),0); $("bTbl").querySelector(`[data-gs="${g}|${c}"]`).textContent=s?s.toLocaleString("ko-KR"):""}));
-  drawBudSum(G)});
-$("bTotal").addEventListener("input",e=>{S.btotal=e.target.value; save(); drawBudSum(budTotals())});
+  drawBudSum(G); drawGlance()});
+$("bTotal").addEventListener("input",e=>{S.btotal=e.target.value; save(); drawBudSum(budTotals()); drawGlance()});
 
 // ───── 백업 ─────
 const msg=t=>{$("bkMsg").textContent=t; setTimeout(()=>$("bkMsg").textContent="",3000)};
@@ -562,7 +658,7 @@ let clearArmed=false;
 $("bkClear").addEventListener("click",e=>{if(!clearArmed){clearArmed=true; e.target.textContent="한 번 더 누르면 전부 지워집니다"; setTimeout(()=>{clearArmed=false;e.target.textContent="모두 지우기"},4000); return}
   S={halls:[{},{},{}],ans:{},est:{},score:{},pc:{},ck:{},bud:{}}; save(); init(); clearArmed=false; e.target.textContent="모두 지우기"; msg("모두 지웠습니다.")});
 
-function init(){ $("wDate").value=S.wdate||""; drawHalls(); drawPrep(); drawCurHall(); drawQF(); drawQ(); drawProg(); drawTL(); drawCon(); drawBud(); if(!$("tEst").hidden) drawEst(); if(!$("tScore").hidden) drawScore() }
+function init(){ $("wDate").value=S.wdate||""; openPh=null; drawHalls(); drawPrep(); drawCurHall(); drawQF(); drawQ(); drawTL(); drawCon(); drawBud(); drawGlance(); if(!$("tEst").hidden) drawEst(); if(!$("tScore").hidden) drawScore() }
 init();
 </script>
 </body>
