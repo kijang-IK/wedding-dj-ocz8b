@@ -173,6 +173,10 @@ details.phase[open]>summary .ph b::before{content:"▾ "}
 .tbl input[type=text].l{text-align:left}
 .tbl tr.sum td,.tbl tr.sum th{font-weight:700;background:var(--land)}
 .tbl tr.grp th{background:var(--land);color:var(--ink);font-size:13px}
+.tbl tr.grp td{background:var(--land)}
+.tg{border:0;background:none;color:var(--ink);font-weight:700;font-size:14px;cursor:pointer;padding:2px 0;text-align:left;white-space:nowrap}
+#bTbl td,#bTbl th{padding:5px 8px;vertical-align:middle}
+#bTbl input,#bTbl select{min-height:32px;padding:4px 8px}
 .tbl .hint{font-size:11px;color:var(--muted);font-weight:400;display:block}
 .sticky1 th:first-child,.sticky1 td:first-child{position:sticky;left:0;background:var(--surface);z-index:1}
 .sticky1 tr.sum th:first-child,.sticky1 tr.grp th:first-child{background:var(--land)}
@@ -300,7 +304,7 @@ details.phase[open]>summary .ph b::before{content:"▾ "}
 <!-- ④ 예산 -->
 <section id="budget">
   <div class="sec-head"><span class="no">④</span><h2>예산·지출</h2>
-  <p class="muted small">예산표·지출표 네 개의 항목을 합쳤습니다. 예산과 계약금·잔금·실지출을 넣으면 분류별 합계와 남은 금액이 계산됩니다. 금액은 만원 단위입니다.</p></div>
+  <p class="muted small">예산표·지출표 네 개의 항목을 합쳤습니다. 분류 이름을 누르면 항목이 펼쳐집니다. 예산과 계약금·잔금·실지출을 넣으면 분류별 합계와 남은 금액이 계산됩니다. 금액은 만원 단위입니다.</p></div>
   <div class="frow"><span class="lbl">총예산</span><input type="number" id="bTotal" min="0" step="10" inputmode="numeric" style="width:140px"><span class="small muted">만원</span><span class="small" id="bSum"></span></div>
   <div class="tbl sticky1"><table id="bTbl"></table></div>
   <ul class="note"><li>사례비 참고: 폐백 수모비 3~10만원, 드레스 헬퍼비 10~20만원은 보통 당일 현금으로 준비합니다.</li><li>헬퍼비·피팅비·원본비·헤어 변형비처럼 스드메 패키지 밖에서 따로 나가는 돈을 빠뜨리기 쉽습니다.</li></ul>
@@ -624,15 +628,16 @@ const BUD=[
 const BC=[["b","예산"],["d","계약금"],["r","잔금"],["a","실지출"]];
 const who=["","신랑","신부","신랑 부모","신부 부모","공동"];
 function bget(k,c){return +(((S.bud[k])||{})[c])||0}
+const openB=new Set();
 function drawBud(){
   $("bTotal").value=S.btotal||"";
   let G={b:0,d:0,r:0,a:0};
   const rows=BUD.map(([g,items])=>{const sum={b:0,d:0,r:0,a:0};
     const body=items.map(it=>{const k=g+"|"+it; BC.forEach(([c])=>sum[c]+=bget(k,c));
-      return `<tr><td style="min-width:150px">${esc(it)}</td>${BC.map(([c,t])=>`<td><input type="number" min="0" step="1" inputmode="numeric" data-b="${esc(k)}" data-c="${c}" value="${(S.bud[k]||{})[c]??""}" aria-label="${esc(it)} ${t}"></td>`).join("")}
+      return `<tr class="bi" ${openB.has(g)?"":"hidden"}><td style="min-width:150px">${esc(it)}</td>${BC.map(([c,t])=>`<td><input type="number" min="0" step="1" inputmode="numeric" data-b="${esc(k)}" data-c="${c}" value="${(S.bud[k]||{})[c]??""}" aria-label="${esc(it)} ${t}"></td>`).join("")}
        <td><select data-b="${esc(k)}" data-c="w" aria-label="${esc(it)} 부담">${who.map(w=>`<option ${((S.bud[k]||{}).w||"")===w?"selected":""}>${w}</option>`).join("")}</select></td></tr>`}).join("");
     BC.forEach(([c])=>G[c]+=sum[c]);
-    return `<tr class="grp"><th>${g}</th>${BC.map(([c])=>`<td class="n" data-gs="${g}|${c}">${sum[c]?sum[c].toLocaleString("ko-KR"):""}</td>`).join("")}<td></td></tr>${body}`}).join("");
+    return `<tr class="grp"><th><button type="button" class="tg" data-tg="${esc(g)}" aria-expanded="${openB.has(g)}">${openB.has(g)?"▾":"▸"} ${g} <span class="muted small">${items.length}개</span></button></th>${BC.map(([c])=>`<td class="n" data-gs="${g}|${c}">${sum[c]?sum[c].toLocaleString("ko-KR"):""}</td>`).join("")}<td></td></tr>${body}`}).join("");
   $("bTbl").innerHTML=`<thead><tr><th>항목 (만원)</th>${BC.map(([,t])=>`<th>${t}</th>`).join("")}<th>부담</th></tr></thead><tbody>${rows}
    <tr class="sum"><th>합계</th>${BC.map(([c])=>`<td class="n" data-tot="${c}">${G[c].toLocaleString("ko-KR")}</td>`).join("")}<td></td></tr></tbody>`;
   drawBudSum(G);
@@ -646,6 +651,7 @@ $("bTbl").addEventListener("input",e=>{const t=e.target.closest("[data-b]"); if(
   const G=budTotals(); BC.forEach(([c])=>{$("bTbl").querySelector(`[data-tot="${c}"]`).textContent=G[c].toLocaleString("ko-KR")});
   BUD.forEach(([g,items])=>BC.forEach(([c])=>{const s=items.reduce((a,it)=>a+bget(g+"|"+it,c),0); $("bTbl").querySelector(`[data-gs="${g}|${c}"]`).textContent=s?s.toLocaleString("ko-KR"):""}));
   drawBudSum(G); drawGlance()});
+$("bTbl").addEventListener("click",e=>{const b=e.target.closest("[data-tg]"); if(!b) return; const g=b.dataset.tg; openB.has(g)?openB.delete(g):openB.add(g); drawBud()});
 $("bTotal").addEventListener("input",e=>{S.btotal=e.target.value; save(); drawBudSum(budTotals()); drawGlance()});
 
 // ───── 백업 ─────
