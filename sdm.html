@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="대전 스드메 비교">
+<meta property="og:description" content="스튜디오·드레스·메이크업 38곳 가격, 헬퍼비, 조합 계산, 같은 샵 경로별 차이">
+<meta name="description" content="스튜디오·드레스·메이크업 38곳 가격, 헬퍼비, 조합 계산, 같은 샵 경로별 차이">
+<title>대전 스드메 비교</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Nanum+Myeongjo:wght@700;800&display=swap">
+<style>
+/* Layout: 모바일 우선 한 열. 한눈에(분류별 가격대) → 조합 계산기 → 분류 탭(막대+정렬 표) → 같은 샵 경로 비교 → 업체 6곳 → 메모. 다른 두 페이지와 같은 색·글꼴 */
+:root{
+  --bg:#f6f7f9; --surface:#ffffff; --ink:#1b2230; --muted:#5d6676; --line:#dde1e8; --land:#eef0f4;
+  --accent:#2f4a7a; --accent-soft:#e6ebf5;
+  --direct:#b2456e; --direct-soft:#f8e6ee; --imai:#2c6fb3; --imai-soft:#e3eefa; --ham:#2f8458; --ham-soft:#e1f2e7;
+  --diff:#b2456e;
+  --font-display:"Nanum Myeongjo",serif;
+  --font-body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12161d; --surface:#1a202a; --ink:#e6e9ef; --muted:#9aa3b2; --line:#2c3441; --land:#202734;
+  --accent:#9db6e6; --accent-soft:#1e2738; --direct:#e381a8; --direct-soft:#3a1f2b; --imai:#6aa9ea; --imai-soft:#1c2c40; --ham:#6cc48f; --ham-soft:#18301f; --diff:#e381a8; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12161d; --surface:#1a202a; --ink:#e6e9ef; --muted:#9aa3b2; --line:#2c3441; --land:#202734;
+  --accent:#9db6e6; --accent-soft:#1e2738; --direct:#e381a8; --direct-soft:#3a1f2b; --imai:#6aa9ea; --imai-soft:#1c2c40; --ham:#6cc48f; --ham-soft:#18301f; --diff:#e381a8; color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:15px;line-height:1.6;padding:20px 16px 64px}
+.wrap{max-width:1040px;margin:0 auto;display:flex;flex-direction:column;gap:36px}
+h1,h2{font-family:var(--font-display);text-wrap:balance;margin:0;letter-spacing:-.01em}
+h1{font-size:clamp(26px,6vw,38px);font-weight:800;line-height:1.25}
+h2{font-size:21px;font-weight:800}
+h3{margin:0;font-size:15px}
+p{margin:0}
+a{color:var(--accent)}
+.muted{color:var(--muted)} .small{font-size:13px}
+.num{font-variant-numeric:tabular-nums}
+header{display:flex;flex-direction:column;gap:8px}
+.eyebrow{font-size:12px;letter-spacing:.08em;color:var(--accent);font-weight:600}
+section{display:flex;flex-direction:column;gap:14px;min-width:0;scroll-margin-top:60px}
+.sec-head{display:flex;flex-direction:column;gap:4px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;min-width:0}
+.frow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.lbl{font-size:12px;color:var(--muted);font-weight:600}
+button{font:inherit}
+button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.qnav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;display:flex;gap:4px;overflow-x:auto;background:var(--bg);padding:8px 0;margin:-18px 0;border-bottom:1px solid var(--line);scrollbar-width:none}
+.qnav::-webkit-scrollbar{display:none}
+.qnav a{flex:none;font-size:13px;font-weight:600;color:var(--ink);text-decoration:none;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--surface);gap:2px;flex-wrap:wrap}
+.seg button{font-size:13px;border:0;background:transparent;color:var(--ink);padding:7px 14px;border-radius:999px;cursor:pointer;min-height:36px}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{font-size:13px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:5px 12px;border-radius:999px;cursor:pointer;min-height:34px}
+.chips button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+select{font:inherit;font-size:14px;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);min-height:38px;min-width:0;width:100%}
+.via{font-size:11px;font-weight:700;padding:1px 8px;border-radius:999px;white-space:nowrap;display:inline-block;line-height:1.6}
+.via.직접{background:var(--direct-soft);color:var(--direct)} .via.이마이웨딩{background:var(--imai-soft);color:var(--imai)} .via.함웨딩{background:var(--ham-soft);color:var(--ham)}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:13px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:12px;height:12px;border-radius:3px;display:inline-block}
+
+/* 한눈에 */
+.glance{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:12px}
+.gc{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:10px;cursor:pointer;text-align:left;color:inherit}
+.gc:hover{border-color:var(--accent)}
+.gc .t{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.gc .t b{font-size:17px}
+.gc .big{font-family:var(--font-display);font-size:26px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.1}
+.gc dl{margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:3px 10px;font-size:13px}
+.gc dt{color:var(--muted)} .gc dd{margin:0;text-align:right;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.range{position:relative;height:18px}
+.range .ax{position:absolute;left:0;right:0;top:8px;height:2px;background:var(--land)}
+.range i{position:absolute;top:4px;width:10px;height:10px;border-radius:50%;margin-left:-5px;opacity:.85}
+
+/* 계산기 */
+.calc{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,280px),1fr));gap:12px}
+.pick{display:flex;flex-direction:column;gap:6px}
+.pick .info{font-size:12px;color:var(--muted);min-height:2.6em}
+.total{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:baseline;border-top:1px solid var(--line);padding-top:12px;margin-top:4px}
+.total .sum{font-family:var(--font-display);font-size:30px;font-weight:800;font-variant-numeric:tabular-nums}
+.total .part{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+
+/* 막대 */
+.bars{display:flex;flex-direction:column}
+.br{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"name val" "bar bar";gap:3px 10px;padding:8px 2px;border-bottom:1px solid var(--line)}
+.br:last-child{border-bottom:0}
+.br .nm{grid-area:name;font-weight:600;font-size:14px;display:flex;gap:6px;align-items:center;flex-wrap:wrap;min-width:0}
+.br .val{grid-area:val;font-size:14px;font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right}
+.br .bar{grid-area:bar;position:relative;height:10px;background:var(--land);border-radius:5px;overflow:hidden}
+.br .bar i{position:absolute;top:0;bottom:0;border-radius:5px}
+.br .bar i.r{opacity:.35}
+.br.cheap .val{color:var(--ham);font-weight:700}
+.scale{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums;padding:2px 2px 0}
+
+/* 표 */
+.tbl{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:12px;-webkit-overflow-scrolling:touch}
+.tbl table{border-collapse:collapse;width:100%;min-width:860px;font-size:13px}
+.tbl th,.tbl td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.tbl tr:last-child td{border-bottom:0}
+.tbl th{padding:0;white-space:nowrap}
+.tbl th button{font:inherit;font-weight:600;color:var(--muted);background:none;border:0;padding:10px;cursor:pointer;width:100%;text-align:left;white-space:nowrap}
+.tbl th[aria-sort] button{color:var(--ink)}
+.tbl td.n,.tbl th.n button{text-align:right}
+.tbl td.n{font-variant-numeric:tabular-nums;white-space:nowrap}
+.tbl td.w{color:var(--muted);font-size:12px;min-width:200px}
+.tbl td:first-child,.tbl th:first-child{position:sticky;left:0;background:var(--surface);z-index:1}
+.dim{color:var(--muted)}
+
+/* 같은 샵 */
+.same{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:10px}
+.sm{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.sm .h{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.sm .h b{font-size:15px}
+.sm .h span{font-size:12px;color:var(--muted)}
+.sm .ln{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px;align-items:center;font-size:13px;font-variant-numeric:tabular-nums}
+.sm .d{font-weight:700;color:var(--diff);font-size:13px}
+
+/* 업체 */
+.vendors{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:10px}
+.vd{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:5px}
+.vd .h{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.vd .h b{font-size:16px}
+.vd .k{font-size:12px;color:var(--muted)}
+.note{font-size:13px;color:var(--muted);display:flex;flex-direction:column;gap:4px;padding-left:1.1em;margin:0}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">준비업체 폴더 6곳 · 참소비자원 공개 가격표 기준</div>
+  <h1>대전 스드메 비교</h1>
+  <p class="muted small">스튜디오·드레스·메이크업 가격을 한곳에 모았습니다. 같은 샵이라도 직접 계약하느냐, 이마이웨딩·함웨딩을 거치느냐에 따라 가격과 헬퍼비가 다릅니다. 금액은 VAT 포함입니다.</p>
+  <div class="legend"><span><i class="sw" style="background:var(--direct)"></i>샵 직접</span><span><i class="sw" style="background:var(--imai)"></i>이마이웨딩</span><span><i class="sw" style="background:var(--ham)"></i>함웨딩</span></div>
+  <p class="small"><a href="https://kijang-ik.github.io/wedding-dj-ocz8b/" target="_blank" rel="noopener">웨딩홀 가격비교 ↗</a> · <a href="https://kijang-ik.github.io/wedding-dj-ocz8b/checklist.html" target="_blank" rel="noopener">준비 체크리스트 ↗</a></p>
+</header>
+
+<nav class="qnav" aria-label="바로가기"><a href="#glance">한눈에</a><a href="#calc">조합 계산</a><a href="#list">샵별 비교</a><a href="#same">같은 샵 두 경로</a><a href="#vendors">업체 6곳</a></nav>
+
+<section id="glance">
+  <div class="sec-head"><h2>한눈에 보기</h2><p class="muted small">분류별 기본가격 범위와 가장 싼 곳입니다. 점 하나가 샵 하나입니다. 카드를 누르면 아래 목록이 그 분류로 바뀝니다.</p></div>
+  <div class="glance" id="gl"></div>
+</section>
+
+<section id="calc">
+  <div class="sec-head"><h2>스드메 조합 계산</h2><p class="muted small">스튜디오·드레스·메이크업을 하나씩 고르면 기본가격과 헬퍼비, 원본비를 더한 금액을 보여줍니다. 디자인 추가금·야외 촬영·혼주 메이크업은 빠져 있습니다.</p></div>
+  <div class="panel">
+    <div class="calc" id="picks"></div>
+    <div class="total" id="tot"></div>
+  </div>
+</section>
+
+<section id="list">
+  <div class="sec-head"><h2>샵별 비교</h2><p class="muted small">막대는 기본가격 최저~최고입니다(같은 분류 안에서 같은 눈금). 표의 열 이름을 누르면 정렬됩니다.</p></div>
+  <div class="frow"><div class="seg" id="cat" role="group" aria-label="분류"></div><div class="chips" id="via" aria-label="경로"></div></div>
+  <div class="panel"><div class="bars" id="bars"></div><div class="scale" id="scale"></div></div>
+  <div class="tbl"><table><thead id="th"></thead><tbody id="tb"></tbody></table></div>
+</section>
+
+<section id="same">
+  <div class="sec-head"><h2>같은 샵, 두 경로</h2><p class="muted small">이마이웨딩과 함웨딩 양쪽에 있는 샵입니다. 계약 전에 두 곳 견적을 함께 받아 보세요.</p></div>
+  <div class="same" id="sm"></div>
+</section>
+
+<section id="vendors">
+  <div class="sec-head"><h2>업체 6곳</h2><p class="muted small">드레스샵 4곳은 샵에 직접 계약하고, 웨딩 대행 2곳은 여러 샵을 묶어 소개합니다. 대행은 고객이 업체에 직접 결제해서 대행사 자체 위약금은 없고 계약금 규정만 있습니다.</p></div>
+  <div class="vendors" id="vd"></div>
+  <ul class="note">
+    <li>스튜디오 가격은 모두 20페이지 앨범 기준입니다.</li>
+    <li>헬퍼비·야외 추가금 일부는 현금 결제 조건입니다. 헬퍼비가 비어 있는 곳은 가격표에 적혀 있지 않은 것이라 상담 때 확인하세요.</li>
+    <li>루아스포사·더루아는 엑셀이 아니라 업체 이미지 자료라 작성일 정보가 없습니다.</li>
+  </ul>
+</section>
+</div>
+
+<script>
+const RAW={"S": [["드레스", "라메종블랑쉬", "직접", 900000, 900000, "본식 피팅 1회 5벌", 150000, "추가 피팅 2만/벌", "디자인 추가 30~300만 · 턱시도 25만", "15일 전까지 30%, 14~1일 전 50%"], ["드레스", "바비블랑브라이드", "직접", 1000000, 1500000, "본식 + 피팅 1회", 120000, "재피팅 15만", "디자인 추가 100~250만 · 2부 드레스 50~100만", "소비자 귀책 시 적용"], ["드레스", "블랙라벨 웨딩샵", "직접", 1375000, 5500000, "본식 피팅 1회 3벌", 150000, "재피팅 없음", "디자인 추가 없음 · 드레스 1벌 기본 제공", "1달~1주 전 30%"], ["드레스", "루아스포사", "직접", 1600000, 1900000, "피팅 1회 4벌", 170000, "", "디자인 추가 없음 · 2부·외부 피팅 시 헬퍼비 +3만", "30일 미만 30%, 7일 미만 100%"], ["드레스", "더루아", "직접", 2500000, 3400000, "본식 피팅 1회 4벌 (촬영 30~80만 별도)", 200000, "", "디자인 추가 본식 60만 · 촬영 드레스 30만 · 헬퍼비 20~50만(지역별)", "30일 미만 30%, 7일 미만 100%"], ["드레스", "클라라 대전점", "이마이웨딩", 1375000, 1375000, "본식", 150000, "재가봉 5만", "디자인 추가 33~220만 · 드레스 추가 20~30만", "90일 전 20% ~ 15일 전 100%"], ["드레스", "하우스오브에이미 대전점", "이마이웨딩", 1650000, 1870000, "본식 (에이미 165만 / 하오에 187만, 헤메·부케 미포함)", 170000, "재가봉 2벌 5만", "디자인 추가 0~55만 · 턱시도 0~45만", "별도 시트 참고"], ["드레스", "르메리", "이마이웨딩", 1650000, 1650000, "본식", 220000, "재가봉 10만", "디자인 추가 55~198만(제휴가) · 턱시도 25~35만", "45일 전 취소 30만"], ["드레스", "드메리", "이마이웨딩", 1320000, 1320000, "본식", 170000, "재가봉 2벌 10만", "디자인 추가 0~200만", "확정 후 45~15일 전 80%, 14일~ 100%"], ["드레스", "웨이비웨딩", "이마이웨딩", 1540000, 1540000, "본식", 150000, "재가봉 3벌 8.8만", "디자인 추가 0~143만 · 퍼스트웨어 110~220만 · 턱시도 22~33만", "확정 후 30%, 2주 전 50%, 1주 전 100%"], ["드레스", "루즈앤모니끄", "이마이웨딩", 1540000, 1540000, "본식", 150000, "재가봉 5만", "추가금 없음 · 턱시도 서비스", "확정 후·1달 전 50%, 1주 전 100%"], ["드레스", "레아브", "이마이웨딩", 1705000, 1705000, "본식", 170000, "재가봉 3만", "추가금 없음 · 턱시도 서비스", "초이스 후 30%, 2주 전 100%"], ["드레스", "블랙스완", "함웨딩", 1540000, 1540000, "본식", 150000, "재피팅 5만", "퍼스트웨어·신상·스페셜라인 추가비 없음", "1달 전 30%, 2주 전 50%, 1주 전 100%"], ["드레스", "레아브", "함웨딩", 1430000, 1430000, "본식", 150000, "재피팅 5만", "셀프촬영 드레스 22~44만 · 2부 드레스 44만 · 부케 27.5만", "셀렉 후 50%, 1주 전 100%"], ["드레스", "루즈앤모니끄", "함웨딩", 1540000, 1540000, "본식", 150000, "재피팅 5만", "퍼스트웨어·신상·스페셜라인 추가비 없음", "1달 전 50%, 1주 전 100%"], ["스튜디오", "그레이스케일", "이마이웨딩", 1265000, 1265000, "20p 앨범", null, "원본 25만", "야간 10만 · 주말 10만 · 페이지 추가 4만", "90일 전 10% ~ 15일 전 100%"], ["스튜디오", "청주비마이", "이마이웨딩", 1100000, 1100000, "20p 앨범", null, "원본 33만", "야외·야간 컨셉 15~30만 · 주말 10만", "60~90일 30% ~ 촬영 후 100%"], ["스튜디오", "달콤", "이마이웨딩", 1210000, 1210000, "20p 앨범", null, "원본 38.5만", "야외·야간·로드씬 각 16.5만", "2주 전 20%, 1주 전 30%"], ["스튜디오", "올제", "이마이웨딩", 1000000, 1000000, "20p 앨범", null, "원본 22만", "야외 22만 · 페이지 추가 3.3만", "30일 전 20만 ~ 당일 100%"], ["스튜디오", "바로오늘그날 대전점", "이마이웨딩", 1100000, 1100000, "20p 앨범", null, "원본 40만", "야외 20만 · 선수정본 5장", "30일 이내 20만"], ["스튜디오", "더숲", "이마이웨딩", 1980000, 1980000, "20p 앨범", null, "원본 포함", "대표 지정 30만 · 주말 27만 · 시간 추가 10만/30분", "60일 전 30% ~ 10일 내 100%"], ["스튜디오", "오브하우스", "이마이웨딩", 2090000, 2090000, "20p 앨범", null, "원본 포함", "대표 지정 30만 · 주말 27만", "60일 전 30% ~ 10일 내 100%"], ["스튜디오", "밀라드", "이마이웨딩", 1870000, 1870000, "20p 앨범", null, "원본 포함", "야외 30만 · 대표 지정 30만 · 주말 27만", "60일 전 30% ~ 10일 내 100%"], ["스튜디오", "블랙라벨", "함웨딩", 1650000, 1650000, "20p 앨범", 130000, "원본 33만", "의상·배경 추가 각 11만 · 주말 11만", "2주 전 10%"], ["스튜디오", "시크릿가든", "함웨딩", 1870000, 1870000, "20p 앨범", 150000, "원본 33만", "야외·노을 촬영 추가비 없음", "1달 전 30%"], ["스튜디오", "바라봄", "함웨딩", 1100000, 1100000, "20p 앨범", 130000, "원본 33만", "유색 드레스 22만 · 한복 27.5만 · 주말 11만", "30일 전 40% ~ 당일 100%"], ["스튜디오", "오드스튜디오", "함웨딩", 1650000, 1650000, "20p 앨범", 130000, "원본 33만", "야외 33만 · 주말 11만", "2주 전 10%"], ["스튜디오", "더숲", "함웨딩", 1980000, 1980000, "20p 앨범", 170000, "", "드레스 추가 16.5~27.5만 · 주말 27만 · 시간 추가 11만", "60일 전 30% ~ 10일 전 100%"], ["스튜디오", "클라르떼", "함웨딩", 1650000, 1650000, "20p 앨범", 130000, "원본 33만", "야외 33만 · 주말 11만", "2주 전 10%"], ["스튜디오", "밀라드", "함웨딩", 1870000, 1870000, "20p 앨범", 180000, "", "야외 33만 · 플라워 디렉팅 50만 · 주말 27만", "60일 전 30% ~ 10일 전 100%"], ["스튜디오", "오브하우스", "함웨딩", 2090000, 2090000, "20p 앨범", 200000, "", "야외 33만 · 플라워 디렉팅 50만 · 주말 27만", "60일 전 30% ~ 10일 전 100%"], ["스튜디오", "올제", "함웨딩", 1000000, 1000000, "20p 앨범", 100000, "원본 22만", "야외 11만 · 아크릴 액자 22만", "30일 전 40% ~ 당일 100%"], ["메이크업", "블랙라벨 웨딩샵", "직접", 330000, 550000, "신랑·신부", null, "", "여자 혼주 17~20만 · 남자 혼주 5.5~7만 · 테스트 22만", "1달~1주 전 30%"], ["메이크업", "루아스포사 메이크업", "직접", 550000, 550000, "신랑·신부", null, "", "여자 혼주 20만 · 남자 혼주 7만 · 테스트 22만", "30일 미만 30%, 7일 미만 100%"], ["메이크업", "리라메이크업", "이마이웨딩", 440000, 440000, "본식", null, "", "헤어피스 8.8만 · 헤어 변경 27.5만 · 가발 3.3~5.5만", "3개월 전 이후 환불 불가"], ["메이크업", "온뉴아", "함웨딩", 330000, 330000, "신부 (신랑 포함)", null, "", "여자 혼주 17만 · 남자 혼주 6만 · 테스트 20만(현금)", "1달 전 50%, 1주 전 100%"], ["메이크업", "레아브", "함웨딩", 550000, 550000, "신부 (신랑 포함)", null, "", "여자 혼주 16만 · 남자 혼주 5만(현금)", "1달 전 50%, 1주 전 100%"], ["메이크업", "루즈앤모니끄", "함웨딩", 550000, 550000, "신부 (신랑 포함)", null, "", "여자 혼주 17만 · 남자 혼주 6만 · 테스트 20만(현금)", "1달 전 50%, 1주 전 100%"]], "V": [{"n": "라메종블랑쉬", "kind": "드레스샵", "file": "엑셀", "src": "참소비자원", "mod": "2026-06-01", "cancel": "예식 15일 전까지 30%, 14~1일 전 50% 공제 후 환급"}, {"n": "바비블랑브라이드", "kind": "드레스샵", "file": "엑셀", "src": "참소비자원", "mod": "2026-04-20", "cancel": "소비자 귀책 시에만 위약금 적용(세부 금액 미기재)"}, {"n": "블랙라벨 웨딩샵", "kind": "드레스·메이크업", "file": "엑셀", "src": "참소비자원", "mod": "2026-10-07", "cancel": "예식 1달·2주·1주 전 취소 모두 정상가의 30%"}, {"n": "루아스포사", "kind": "드레스·메이크업", "file": "이미지", "src": "업체 자료", "mod": null, "cancel": "예식 30일 미만 30%, 15일 미만 50%, 7일 미만 100%"}, {"n": "이마이웨딩", "kind": "웨딩 대행", "file": "엑셀", "src": "참소비자원", "mod": "2026-10-07", "cancel": "계약금 5만(박람회)·10만(내사), 상담 진행 후 반환 안 됨"}, {"n": "함께하는 함웨딩", "kind": "웨딩 대행", "file": "엑셀", "src": "참소비자원", "mod": "2026-10-01", "cancel": "계약금 10만, 상담 진행 후 반환 안 됨"}]};
+const S=RAW.S.map(r=>({cat:r[0],shop:r[1],via:r[2],price:r[3],pmax:r[4],base:r[5],helper:r[6],extra:r[7],opts:r[8],cancel:r[9]}));
+const V=RAW.V;
+const CATS=["스튜디오","드레스","메이크업"], VIAS=["직접","이마이웨딩","함웨딩"];
+const M=1e4, man=x=>(x/M).toLocaleString("ko-KR",{maximumFractionDigits:1})+"만", manR=(a,b)=>a===b?man(a):man(a)+"~"+man(b);
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const cv=v=>v==="직접"?"var(--direct)":v==="이마이웨딩"?"var(--imai)":"var(--ham)";
+const viaL=v=>v==="직접"?"샵 직접":v;
+const $=id=>document.getElementById(id);
+// 원본비: "원본 33만" 같은 표기에서 숫자만 (포함이면 0)
+const orig=r=>{const m=/원본\s*([\d.]+)\s*만/.exec(r.extra||""); return m?Math.round(+m[1]*M):0};
+const store={get(k,d){try{const x=localStorage.getItem(k);return x?JSON.parse(x):d}catch(e){return d}},set(k,x){try{localStorage.setItem(k,JSON.stringify(x))}catch(e){}}};
+let cat="드레스", via="전체", sk="price", asc=true;
+const same=c=>{const by={}; S.filter(r=>r.cat===c).forEach(r=>(by[r.shop]=by[r.shop]||[]).push(r)); return Object.entries(by).filter(([,a])=>a.length>1)};
+
+function drawGlance(){
+  $("gl").innerHTML=CATS.map(c=>{const rs=S.filter(r=>r.cat===c), lo=Math.min(...rs.map(r=>r.price)), hi=Math.max(...rs.map(r=>r.pmax));
+    const cheap=rs.filter(r=>r.price===lo), med=[...rs].map(r=>r.price).sort((a,b)=>a-b)[Math.floor(rs.length/2)];
+    const span=hi-lo||1, pos=x=>(x-lo)/span*100;
+    return `<button type="button" class="gc" data-c="${c}"><div class="t"><b>${c}</b><span class="small muted">${rs.length}곳</span></div>
+     <span class="big">${man(lo)} ~ ${man(hi)}</span>
+     <div class="range" aria-hidden="true"><span class="ax"></span>${rs.map(r=>`<i style="left:${pos(r.price)}%;background:${cv(r.via)}"></i>`).join("")}</div>
+     <dl><dt>가장 싼 곳</dt><dd>${cheap.map(r=>`${esc(r.shop)} <span class="via ${r.via}">${viaL(r.via)}</span>`).join("<br>")}</dd><dt>가운데 값</dt><dd>${man(med)}</dd><dt>같은 샵 두 경로</dt><dd>${same(c).length}곳</dd></dl></button>`}).join("");
+}
+$("gl").addEventListener("click",e=>{const b=e.target.closest("[data-c]"); if(!b) return; cat=b.dataset.c; drawList(); $("list").scrollIntoView({block:"start"})});
+
+// 계산기
+let PK=store.get("sdm-pick",{});
+function drawPicks(){
+  $("picks").innerHTML=CATS.map(c=>{const rs=S.map((r,i)=>({r,i})).filter(x=>x.r.cat===c).sort((a,b)=>a.r.price-b.r.price);
+    const sel=PK[c], r=sel!=null?S[sel]:null;
+    return `<div class="pick"><label class="lbl" for="pk_${c}">${c}</label><select id="pk_${c}" data-c="${c}"><option value="">고르지 않음</option>${rs.map(x=>`<option value="${x.i}" ${+sel===x.i?"selected":""}>${esc(x.r.shop)} (${viaL(x.r.via)}) · ${manR(x.r.price,x.r.pmax)}</option>`).join("")}</select>
+     <span class="info">${r?`${esc(r.base)}${r.helper?` · 헬퍼비 ${man(r.helper)}`:""}${r.extra?` · ${esc(r.extra)}`:""}`:""}</span></div>`}).join("");
+  const rs=CATS.map(c=>PK[c]!=null&&PK[c]!==""?S[PK[c]]:null).filter(Boolean);
+  const base=rs.reduce((a,r)=>a+r.price,0), baseHi=rs.reduce((a,r)=>a+r.pmax,0), hel=rs.reduce((a,r)=>a+(r.helper||0),0), og=rs.reduce((a,r)=>a+orig(r),0);
+  const noHelper=rs.filter(r=>r.cat==="드레스"&&!r.helper).length;
+  $("tot").innerHTML=rs.length?`<span class="sum">${manR(base+hel+og,baseHi+hel+og)}</span>
+    <span class="part">기본 ${manR(base,baseHi)} + 헬퍼비 ${man(hel)} + 원본비 ${man(og)}</span>
+    ${noHelper?'<span class="part">드레스 헬퍼비가 가격표에 없어 빠져 있습니다</span>':""}`:'<span class="part">위에서 하나 이상 고르면 합계가 나옵니다.</span>';
+}
+$("picks").addEventListener("change",e=>{const s=e.target.closest("select"); if(!s) return; PK[s.dataset.c]=s.value===""?null:+s.value; store.set("sdm-pick",PK); drawPicks()});
+
+// 목록
+const COLS=[{k:"shop",t:"샵"},{k:"via",t:"경로"},{k:"price",t:"기본가격",n:1},{k:"helper",t:"헬퍼비",n:1},{k:"base",t:"기본 구성"},{k:"extra",t:"원본·재피팅"},{k:"opts",t:"주요 옵션",w:1},{k:"cancel",t:"위약금 요약",w:1}];
+function rows(){const rs=S.filter(r=>r.cat===cat&&(via==="전체"||r.via===via)), c=COLS.find(x=>x.k===sk), d=asc?1:-1;
+  return rs.sort((a,b)=>{const x=a[sk],y=b[sk]; if(x==null||x==="") return 1; if(y==null||y==="") return -1; return (c.n?x-y:String(x).localeCompare(String(y),"ko"))*d||a.price-b.price})}
+function drawList(){
+  $("cat").innerHTML=CATS.map(c=>`<button type="button" data-c="${c}" aria-pressed="${c===cat}">${c} ${S.filter(r=>r.cat===c).length}</button>`).join("");
+  $("via").innerHTML=["전체",...VIAS].map(v=>`<button type="button" data-v="${v}" aria-pressed="${v===via}">${v==="전체"?"전체 경로":viaL(v)}</button>`).join("");
+  const rs=rows(), all=S.filter(r=>r.cat===cat), MAX=Math.ceil(Math.max(...all.map(r=>r.pmax))*1.02/(50*M))*50*M, pct=x=>x/MAX*100, lo=Math.min(...all.map(r=>r.price));
+  const multi=new Set(same(cat).map(([k])=>k));
+  $("bars").innerHTML=[...rs].sort((a,b)=>a.price-b.price).map(r=>`<div class="br${r.price===lo?" cheap":""}"><span class="nm">${esc(r.shop)} <span class="via ${r.via}">${viaL(r.via)}</span>${multi.has(r.shop)?' <span class="small muted">두 경로</span>':""}</span>
+    <span class="val">${manR(r.price,r.pmax)}${r.helper?` <span class="small muted">+헬퍼 ${man(r.helper)}</span>`:""}</span>
+    <span class="bar"><i style="left:0;width:${pct(r.price)}%;background:${cv(r.via)}"></i>${r.pmax>r.price?`<i class="r" style="left:${pct(r.price)}%;width:${pct(r.pmax)-pct(r.price)}%;background:${cv(r.via)}"></i>`:""}</span></div>`).join("")||'<p class="muted small">이 경로에는 해당 분류 샵이 없습니다.</p>';
+  let sc=""; for(let i=0;i<=4;i++) sc+=`<span>${man(MAX/4*i)}</span>`; $("scale").innerHTML=sc;
+  $("th").innerHTML="<tr>"+COLS.map(c=>`<th class="${c.n?"n":""}"${c.k===sk?` aria-sort="${asc?"ascending":"descending"}"`:""}><button type="button" data-k="${c.k}">${c.t}${c.k===sk?(asc?" ↑":" ↓"):""}</button></th>`).join("")+"</tr>";
+  $("tb").innerHTML=rs.map(r=>"<tr>"+COLS.map(c=>{const x=r[c.k];
+    if(c.k==="shop") return `<td><b>${esc(x)}</b></td>`;
+    if(c.k==="via") return `<td><span class="via ${x}">${viaL(x)}</span></td>`;
+    if(c.k==="price") return `<td class="n">${manR(r.price,r.pmax)}</td>`;
+    if(x==null||x==="") return `<td class="${c.n?"n ":""}dim">–</td>`;
+    if(c.n) return `<td class="n">${man(x)}</td>`;
+    return `<td class="${c.w?"w":""}">${esc(x)}</td>`}).join("")+"</tr>").join("");
+}
+$("cat").addEventListener("click",e=>{const b=e.target.closest("button"); if(!b) return; cat=b.dataset.c; drawList()});
+$("via").addEventListener("click",e=>{const b=e.target.closest("button"); if(!b) return; via=b.dataset.v; drawList()});
+$("th").addEventListener("click",e=>{const b=e.target.closest("button"); if(!b) return; const k=b.dataset.k; if(k===sk) asc=!asc; else {sk=k; asc=true} drawList()});
+
+function drawSame(){
+  $("sm").innerHTML=CATS.flatMap(c=>same(c).map(([k,a])=>{const ps=a.map(r=>r.price), d=Math.max(...ps)-Math.min(...ps), hs=a.map(r=>r.helper||0), hd=Math.max(...hs)-Math.min(...hs);
+    return `<div class="sm"><div class="h"><b>${esc(k)}</b><span>${c}</span></div>
+     ${a.map(r=>`<div class="ln"><span class="via ${r.via}">${viaL(r.via)}</span><span>${manR(r.price,r.pmax)}${r.helper?` · 헬퍼 ${man(r.helper)}`:" · 헬퍼 미기재"}</span><span class="small muted">${esc(r.extra||"")}</span></div>`).join("")}
+     <span class="${d?"d":"small muted"}">${d?`기본가 ${man(d)} 차이`:"기본가 같음"}${hd&&a.every(r=>r.helper)?` · 헬퍼비 ${man(hd)} 차이`:""}</span></div>`})).join("");
+}
+function drawVendors(){
+  $("vd").innerHTML=V.map(v=>{const via2=v.kind==="웨딩 대행"?v.n.replace("함께하는 ",""):"직접";
+    const rs=S.filter(r=>via2==="직접"?(r.via==="직접"&&(r.shop.startsWith(v.n.split(" ")[0])||(v.n==="루아스포사"&&r.shop==="더루아"))):r.via===via2);
+    const cats=CATS.filter(c=>rs.some(r=>r.cat===c)).map(c=>`${c} ${rs.filter(r=>r.cat===c).length}`).join(" · ");
+    return `<div class="vd"><div class="h"><b>${esc(v.n)}</b><span class="via ${via2}">${v.kind}</span></div>
+     <span class="k">${cats}</span><span class="small num">${manR(Math.min(...rs.map(r=>r.price)),Math.max(...rs.map(r=>r.pmax)))}</span>
+     <span class="k">${v.src==="참소비자원"?"참소비자원 가격표":"업체 자료(이미지)"} · ${v.mod?`수정 ${v.mod}`:"작성일 정보 없음"}</span>
+     <span class="k">${esc(v.cancel)}</span></div>`}).join("");
+}
+drawGlance(); drawPicks(); drawList(); drawSame(); drawVendors();
+</script>
+</body>
+</html>
